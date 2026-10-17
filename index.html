@@ -51,7 +51,15 @@ input:focus{outline:2px solid var(--p)}
 .upl{display:grid;gap:8px;margin-bottom:22px}
 .posts{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
 .post{padding:0;overflow:hidden}
-.post img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.post img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;cursor:zoom-in}
+.drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:120px;border:2px dashed var(--p);border-radius:20px;background:rgba(168,85,247,.08);cursor:pointer;text-align:center;padding:14px;transition:.2s;color:var(--m);overflow:hidden}
+.drop:hover,.drop.over{background:rgba(168,85,247,.18);box-shadow:var(--glow)}
+.drop .di{font-size:34px}
+.drop img{max-height:140px;max-width:100%;border-radius:14px;display:none}
+#file{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+#lb{position:fixed;inset:0;z-index:30;background:rgba(5,2,12,.88);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px;cursor:zoom-out}
+#lb.on{display:flex}
+#lb img{max-width:100%;max-height:100%;border-radius:20px;box-shadow:var(--glow)}
 .pb{padding:14px}
 .pb p{margin:4px 0;color:var(--t)}
 .like,.del{border:1px solid var(--line);background:rgba(255,255,255,.07);color:var(--t);border-radius:999px;padding:6px 14px;cursor:pointer;font:600 14px Outfit,system-ui,sans-serif}
@@ -106,7 +114,8 @@ small{color:var(--m)}
   <h2>Community-Galerie</h2>
   <p class="sub">Lade deine besten Screenshots hoch, like und kommentiere.</p>
   <div class="card upl" id="upbox" style="display:none">
-    <input class="in" type="file" id="file" accept="image/*">
+    <label class="drop" id="drop" for="file"><span class="di" id="di">📷</span><span id="fname">Bild auswählen oder hierher ziehen</span><img id="prev" alt=""></label>
+    <input type="file" id="file" accept="image/*">
     <input type="text" id="cap" placeholder="Beschreibung (optional)" maxlength="200">
     <button class="btn" id="up">Bild hochladen</button>
     <div class="msg" id="upMsg"></div>
@@ -125,6 +134,8 @@ small{color:var(--m)}
 </section>
 
 <footer>© 2026 Inkogniflix · Fan-Projekt, nicht mit Mojang oder Microsoft verbunden.</footer>
+
+<div id="lb"><img id="lbi" alt=""></div>
 
 <div id="modal">
   <div class="box">
@@ -180,6 +191,7 @@ async function loadPosts(){
   }catch(e){$('posts').innerHTML='<p class="sub">Galerie konnte nicht geladen werden.</p>'}
 }
 $('posts').onclick=async e=>{
+  if(e.target.tagName=='IMG'){$('lbi').src=e.target.src;$('lb').classList.add('on');return}
   const b=e.target.closest('button');if(!b||!cur)return;
   const post=b.closest('.post'),id=post.dataset.id,a=b.dataset.a;
   try{
@@ -202,9 +214,21 @@ $('up').onclick=async()=>{
     let r=await sb.storage.from('images').upload(path,b,{contentType:'image/jpeg'});if(r.error)throw r.error;
     const url=sb.storage.from('images').getPublicUrl(path).data.publicUrl;
     r=await sb.from('posts').insert({user_id:cur.id,user_name:name(),image_url:url,caption:$('cap').value.slice(0,200)});if(r.error)throw r.error;
-    $('file').value=$('cap').value='';$('upMsg').textContent='Hochgeladen!';loadPosts();
+    $('file').value=$('cap').value='';showFile();$('upMsg').textContent='Hochgeladen!';loadPosts();
   }catch(e){$('upMsg').textContent='Fehler: '+(e.message||e)}
 };
+function showFile(){
+  const f=$('file').files[0],p=$('prev');
+  $('fname').textContent=f?f.name:'Bild auswählen oder hierher ziehen';
+  $('di').style.display=f?'none':'';
+  if(f){p.src=URL.createObjectURL(f);p.style.display='block'}else{p.style.display='none';p.removeAttribute('src')}
+}
+$('file').onchange=showFile;
+['dragover','dragenter'].forEach(t=>$('drop').addEventListener(t,e=>{e.preventDefault();$('drop').classList.add('over')}));
+['dragleave','drop'].forEach(t=>$('drop').addEventListener(t,e=>{e.preventDefault();$('drop').classList.remove('over')}));
+$('drop').addEventListener('drop',e=>{if(e.dataTransfer.files.length){$('file').files=e.dataTransfer.files;showFile()}});
+$('lb').onclick=()=>$('lb').classList.remove('on');
+document.addEventListener('keydown',e=>{if(e.key=='Escape')$('lb').classList.remove('on')});
 function setMode(m){
   mode=m;$('tLogin').className='btn'+(m=='login'?'':' ghost');$('tReg').className='btn'+(m=='reg'?'':' ghost');
   $('go').textContent=m=='login'?'Anmelden':'Konto erstellen';$('msg').textContent='';
