@@ -75,6 +75,8 @@ footer{text-align:center;padding:28px 16px;color:var(--m);font-size:13px;border-
 .tabs{display:flex;gap:8px;margin-bottom:12px}.tabs .btn{flex:1;padding:10px}
 small{color:var(--m)}
 textarea.in{resize:vertical}
+.cn{cursor:pointer;color:var(--p2);font-weight:600}.cn:hover{text-decoration:underline}
+.cdel{border:0;background:none;color:var(--m);cursor:pointer;font-size:13px;padding:0 4px}.cdel:hover{color:#fda4af}
 .who{display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:6px}
 .av{width:34px;height:34px;border-radius:50%;object-fit:cover;border:1px solid var(--p2);box-shadow:0 0 10px rgba(168,85,247,.5)}
 .av.ph{display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--p),var(--p2));font-weight:800}
@@ -133,7 +135,7 @@ textarea.in{resize:vertical}
 <section id="server" class="center">
   <h2>Server beitreten</h2>
   <div class="card">
-    <p><span class="dot"></span>Online · Java &amp; Bedrock</p>
+    <p><span class="dot"></span>Online · Java Edition</p>
     <div class="ip"><span id="ip">inkogniflix.g-portal.game</span><button class="btn" id="copy">Kopieren</button></div>
     <p class="msg" id="copyMsg"></p>
   </div>
@@ -203,7 +205,7 @@ async function setUser(u){
 async function saveItems(){if(cur){try{await sb.from('inventory').upsert({user_id:cur.id,items})}catch(e){}}}
 function postHTML(p,likes,coms){
   const l=likes.filter(x=>x.post_id==p.id),liked=cur&&l.some(x=>x.user_id==cur.id),cs=coms.filter(x=>x.post_id==p.id);
-  const cm=cs.map(c=>'<p><b>'+esc(dn(c.user_id,c.user_name))+':</b> '+esc(c.body)+'</p>').join('');
+  const cm=cs.map(c=>'<p><b class="cn" data-u="'+c.user_id+'">'+esc(dn(c.user_id,c.user_name))+'</b>: '+esc(c.body)+(cur&&c.user_id==cur.id?' <button class="cdel" data-a="delc" data-c="'+c.id+'" title="Kommentar löschen">✕</button>':'')+'</p>').join('');
   return '<article class="card post" data-id="'+p.id+'"><img src="'+esc(p.image_url)+'" alt="" loading="lazy"><div class="pb"><div class="who" data-u="'+p.user_id+'">'+av(p.user_id)+'<b>'+esc(dn(p.user_id,p.user_name))+'</b></div><p>'+esc(p.caption||'')+'</p>'
     +'<button class="like'+(liked?' on':'')+'" data-a="like">♥ '+l.length+'</button> '
     +(cur&&p.user_id==cur.id?'<button class="del" data-a="del">Löschen</button>':'')
@@ -225,7 +227,7 @@ async function loadPosts(){
 }
 $('posts').onclick=async e=>{
   if(e.target.matches('.post>img')){$('lbi').src=e.target.src;$('lb').classList.add('on');return}
-  const w=e.target.closest('.who');if(w){openPv(w.dataset.u);return}
+  const w=e.target.closest('.who,.cn');if(w){openPv(w.dataset.u);return}
   const b=e.target.closest('button');if(!b||!cur)return;
   const post=b.closest('.post'),id=post.dataset.id,a=b.dataset.a;
   try{
@@ -235,6 +237,7 @@ $('posts').onclick=async e=>{
     }else if(a=='com'){
       const t=post.querySelector('input').value.trim();if(!t)return;
       await sb.from('comments').insert({post_id:id,user_id:cur.id,user_name:name(),body:t});
+    }else if(a=='delc'){await sb.from('comments').delete().eq('id',b.dataset.c)
     }else if(a=='del'){await sb.from('posts').delete().eq('id',id)}
   }catch(err){}
   loadPosts();
