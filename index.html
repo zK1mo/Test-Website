@@ -2,147 +2,216 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>BlockCraft – Deine Minecraft-Welt</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inkogniflix – Minecraft Community</title>
+<link rel="icon" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#1b2a1b;--bg2:#243524;--card:#2e422e;--text:#f1f5e9;--mute:#b5c4a8;--green:#5fbf3a;--dirt:#8b5a2b;--gold:#f5c542;--line:#0e170e;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#e8f3dc;--bg2:#d6e8c4;--card:#fff;--text:#1d2b14;--mute:#4d6140;--line:#2a3a1f}}
-:root[data-theme="light"]{--bg:#e8f3dc;--bg2:#d6e8c4;--card:#fff;--text:#1d2b14;--mute:#4d6140;--line:#2a3a1f}
-:root[data-theme="dark"]{--bg:#1b2a1b;--bg2:#243524;--card:#2e422e;--text:#f1f5e9;--mute:#b5c4a8;--line:#0e170e}
-html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+:root{--bg:#0b0618;--card:rgba(255,255,255,.06);--line:rgba(192,132,252,.28);--p:#a855f7;--p2:#e879f9;--t:#f5ecff;--m:#b9a6d6;--glow:0 0 18px rgba(168,85,247,.55),0 0 46px rgba(168,85,247,.25)}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
-h1,h2,h3,.px{font-family:"Press Start 2P",monospace,system-ui;line-height:1.4}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg2);z-index:10}
-nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg2);border-bottom:4px solid var(--line);display:flex;align-items:center;gap:12px;padding:10px 16px;flex-wrap:wrap}
-.logo{font-size:14px;color:var(--green);margin-right:auto}
-nav a{color:var(--text);text-decoration:none;font-size:14px}
-.btn{font-family:"Press Start 2P",monospace,system-ui;font-size:11px;padding:12px 14px;background:var(--green);color:#10200a;border:0;box-shadow:inset -4px -4px #3c8a22,inset 4px 4px #8be065,0 4px 0 var(--line);cursor:pointer}
-.btn:active{transform:translateY(3px)}
-.btn.alt{background:var(--card);color:var(--text);box-shadow:inset -4px -4px rgba(0,0,0,.25),inset 4px 4px rgba(255,255,255,.2),0 4px 0 var(--line)}
-section{max-width:960px;margin:0 auto;padding:40px 16px}
-.hero{text-align:center;background:linear-gradient(var(--bg2),var(--bg));max-width:none}
-.hero h1{font-size:clamp(20px,6vw,40px);margin:0 0 12px;text-shadow:3px 3px 0 var(--line)}
-.hero p{color:var(--mute);max-width:520px;margin:0 auto 20px}
-h2{font-size:clamp(14px,4vw,20px);margin:0 0 20px;color:var(--gold)}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;font-family:Outfit,system-ui,sans-serif;color:var(--t);line-height:1.55;overflow-x:hidden;
+background:radial-gradient(900px 500px at 10% -10%,#3b1573,transparent 60%),radial-gradient(800px 500px at 100% 15%,#5b1a7a,transparent 55%),var(--bg)}
+nav{position:sticky;top:0;z-index:9;display:flex;align-items:center;gap:14px;padding:10px 18px;flex-wrap:wrap;background:rgba(11,6,24,.7);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:1px;margin-right:auto;color:var(--t);text-decoration:none}
+.brand img{width:38px;height:38px;border-radius:12px}
+nav a{color:var(--m);text-decoration:none;font-weight:600;font-size:15px}
+nav a:hover{color:#fff}
+.btn{border:0;border-radius:999px;padding:12px 22px;font:600 15px Outfit,system-ui,sans-serif;color:#fff;background:linear-gradient(135deg,var(--p),var(--p2));box-shadow:var(--glow);cursor:pointer;transition:.2s;text-decoration:none;display:inline-block}
+.btn:hover{transform:translateY(-2px) scale(1.03)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:rgba(255,255,255,.07);border:1px solid var(--line);box-shadow:none}
+section{max-width:1000px;margin:0 auto;padding:48px 18px}
+h2{font-size:clamp(24px,5vw,34px);font-weight:800;margin:0 0 8px;background:linear-gradient(90deg,#fff,var(--p2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--m);margin:0 0 24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:20px;backdrop-filter:blur(10px)}
+.hero{text-align:center;position:relative;padding-top:56px}
+.hero .logo{width:min(260px,60vw);border-radius:32px;box-shadow:var(--glow);animation:fl 5s ease-in-out infinite}
+.hero h1{font-size:clamp(38px,10vw,76px);font-weight:800;margin:18px 0 6px;letter-spacing:2px;background:linear-gradient(90deg,#fff,var(--p2),var(--p));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 22px rgba(168,85,247,.6))}
+.hero p{color:var(--m);max-width:520px;margin:0 auto 24px;font-size:18px}
+.hero .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cube{position:absolute;border-radius:18px;background:linear-gradient(135deg,rgba(168,85,247,.5),rgba(232,121,249,.15));border:1px solid var(--line);box-shadow:var(--glow);animation:fl 6s ease-in-out infinite;z-index:-1}
+@keyframes fl{50%{transform:translateY(-14px) rotate(4deg)}}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-.card{background:var(--card);border:4px solid var(--line);padding:16px}
-.card h3{font-size:12px;margin:8px 0}
-.card p{margin:0;color:var(--mute);font-size:14px}
-.ic{font-size:30px}
-#block{width:150px;height:150px;margin:20px auto;cursor:pointer;border:4px solid var(--line);user-select:none;-webkit-tap-highlight-color:transparent;
-background:linear-gradient(var(--green) 0 28%,transparent 28%),repeating-linear-gradient(90deg,rgba(0,0,0,.18) 0 4px,transparent 4px 25px),var(--dirt);image-rendering:pixelated;position:relative}
-#block.hit{animation:shake .15s}
-@keyframes shake{25%{transform:translate(-4px,2px)}75%{transform:translate(4px,-2px)}}
-#crack{position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent 0 10px,rgba(0,0,0,.55) 10px 12px);opacity:0}
-.bar{height:14px;background:var(--line);max-width:240px;margin:0 auto 16px;border:2px solid var(--line)}
-.bar i{display:block;height:100%;width:0;background:var(--green)}
-.inv{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.slot{background:var(--card);border:3px solid var(--line);padding:8px 12px;font-size:14px;min-width:90px;text-align:center}
+.ic{font-size:34px}
+.card h3{margin:6px 0;font-size:18px}.card p{margin:0;color:var(--m)}
 .center{text-align:center}
-.ip{display:inline-flex;gap:10px;align-items:center;background:var(--line);color:#fff;padding:10px 14px;font-family:monospace;font-size:16px;margin:10px 0}
-.dot{width:12px;height:12px;background:#3be05a;display:inline-block;margin-right:6px}
-footer{text-align:center;padding:24px 16px;color:var(--mute);font-size:13px;border-top:4px solid var(--line);background:var(--bg2)}
-#modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
+#block{width:150px;height:150px;margin:18px auto;border-radius:30px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;position:relative;overflow:hidden;
+background:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 2px,transparent 2px 30px),repeating-linear-gradient(0deg,rgba(255,255,255,.07) 0 2px,transparent 2px 30px),linear-gradient(135deg,#6d28d9,#c026d3);border:2px solid var(--p2);box-shadow:var(--glow)}
+#block.hit{animation:sh .15s}
+@keyframes sh{25%{transform:translate(-4px,2px)}75%{transform:translate(4px,-2px)}}
+#crack{position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent 0 10px,rgba(0,0,0,.5) 10px 12px);opacity:0}
+.bar{height:10px;border-radius:99px;background:rgba(255,255,255,.1);max-width:240px;margin:0 auto 18px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--p),var(--p2))}
+.inv{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.slot{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:8px 14px;min-width:92px;text-align:center}
+input[type=text],input[type=email],input[type=password],.in{width:100%;padding:12px 16px;margin:6px 0;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--t);font:16px Outfit,system-ui,sans-serif}
+input:focus{outline:2px solid var(--p)}
+.msg{font-size:14px;min-height:20px;color:var(--p2);margin:6px 0}
+.upl{display:grid;gap:8px;margin-bottom:22px}
+.posts{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.post{padding:0;overflow:hidden}
+.post img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.pb{padding:14px}
+.pb p{margin:4px 0;color:var(--t)}
+.like,.del{border:1px solid var(--line);background:rgba(255,255,255,.07);color:var(--t);border-radius:999px;padding:6px 14px;cursor:pointer;font:600 14px Outfit,system-ui,sans-serif}
+.like.on{background:linear-gradient(135deg,var(--p),var(--p2));box-shadow:var(--glow)}
+.cm{margin:10px 0;font-size:14px;color:var(--m)}.cm p{color:var(--m)}
+.row{display:flex;gap:8px}.row input{margin:0}.row .btn{padding:10px 16px}
+.ip{display:inline-flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center;background:rgba(0,0,0,.35);border:1px solid var(--p);border-radius:999px;padding:10px 12px 10px 22px;box-shadow:var(--glow);font-family:ui-monospace,monospace;font-size:17px;margin:12px 0}
+.dot{width:10px;height:10px;border-radius:50%;background:#4ade80;box-shadow:0 0 10px #4ade80;display:inline-block;margin-right:8px}
+footer{text-align:center;padding:28px 16px;color:var(--m);font-size:13px;border-top:1px solid var(--line)}
+#modal{position:fixed;inset:0;background:rgba(5,2,12,.75);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
 #modal.on{display:flex}
-.box{background:var(--card);border:4px solid var(--line);padding:20px;width:100%;max-width:340px}
-.tabs{display:flex;gap:8px;margin-bottom:14px}
-.tabs .btn{flex:1;font-size:10px}
-input{width:100%;padding:12px;margin:6px 0;background:var(--bg);color:var(--text);border:3px solid var(--line);font-size:16px}
-.msg{font-size:13px;min-height:20px;color:var(--gold)}
-small{color:var(--mute)}
+.box{background:#1a0d33;border:1px solid var(--line);border-radius:28px;padding:24px;width:100%;max-width:350px;box-shadow:var(--glow)}
+.tabs{display:flex;gap:8px;margin-bottom:12px}.tabs .btn{flex:1;padding:10px}
+small{color:var(--m)}
 </style>
 </head>
 <body>
 <nav>
-  <span class="logo px">⛏ BlockCraft</span>
-  <a href="#spiel">Mining</a><a href="#features">Features</a><a href="#server">Server</a>
-  <button class="btn alt" id="theme" aria-label="Design wechseln">◐</button>
+  <a class="brand" href="#top"><img src="logo.png" alt="" onerror="this.style.display='none'">INKOGNIFLIX</a>
+  <a href="#spiel">Mining</a><a href="#galerie">Galerie</a><a href="#server">Server</a>
   <button class="btn" id="authBtn">Anmelden</button>
 </nav>
 
-<section class="hero">
-  <h1>Baue. Erkunde. Überlebe.</h1>
-  <p>Willkommen bei BlockCraft, der Community für alle Minecraft-Fans. Melde dich an, baue Ressourcen ab und tritt unserem Server bei.</p>
-  <a class="btn" href="#spiel">Jetzt losmienen</a>
-  <p id="hello" class="px" style="margin-top:20px;font-size:11px;color:var(--gold)"></p>
+<section class="hero" id="top">
+  <div class="cube" style="width:70px;height:70px;left:6%;top:70px"></div>
+  <div class="cube" style="width:44px;height:44px;right:9%;top:150px;animation-delay:-2s"></div>
+  <div class="cube" style="width:90px;height:90px;right:4%;bottom:40px;animation-delay:-4s"></div>
+  <img class="logo" src="logo.png" alt="Inkogniflix Logo" onerror="this.style.display='none'">
+  <h1>INKOGNIFLIX</h1>
+  <p>Deine Minecraft-Community im Verborgenen. Baue, teile deine Screenshots und spiele mit uns auf dem Server.</p>
+  <div class="btns"><a class="btn" href="#server">Server-IP</a><a class="btn ghost" href="#galerie">Galerie ansehen</a></div>
+  <p id="hello" style="margin-top:22px;color:var(--p2);font-weight:600"></p>
+</section>
+
+<section id="features">
+  <div class="grid">
+    <div class="card"><div class="ic">🌌</div><h3>Survival</h3><p>Große Welt, faire Regeln, nette Leute.</p></div>
+    <div class="card"><div class="ic">🏗</div><h3>Bauen</h3><p>Zeige deine Projekte in der Community-Galerie.</p></div>
+    <div class="card"><div class="ic">💜</div><h3>Community</h3><p>Liken, kommentieren und gemeinsam Neues entdecken.</p></div>
+  </div>
 </section>
 
 <section id="spiel" class="center">
   <h2>Mining-Minispiel</h2>
-  <p style="color:var(--mute)">Klicke 5-mal auf den Block, um ihn abzubauen. Dein Inventar wird für jedes Konto gespeichert.</p>
+  <p class="sub">Klicke 5-mal auf den Block. Dein Inventar wird bei deinem Konto gespeichert.</p>
   <div id="block"><div id="crack"></div></div>
   <div class="bar"><i id="prog"></i></div>
   <div class="inv" id="inv"></div>
 </section>
 
-<section id="features">
-  <h2>Was dich erwartet</h2>
-  <div class="grid">
-    <div class="card"><div class="ic">🏰</div><h3>Survival-Welt</h3><p>Große Karte, faire Regeln und eine freundliche Community.</p></div>
-    <div class="card"><div class="ic">🛠</div><h3>Creative-Plots</h3><p>Dein eigenes Grundstück für riesige Bauprojekte.</p></div>
-    <div class="card"><div class="ic">🏆</div><h3>Events</h3><p>Wöchentliche Bau-Wettbewerbe mit Preisen und Ranglisten.</p></div>
-    <div class="card"><div class="ic">💎</div><h3>Eigene Wirtschaft</h3><p>Handle Erze, verkaufe Items und werde zum Händler.</p></div>
+<section id="galerie">
+  <h2>Community-Galerie</h2>
+  <p class="sub">Lade deine besten Screenshots hoch, like und kommentiere.</p>
+  <div class="card upl" id="upbox" style="display:none">
+    <input class="in" type="file" id="file" accept="image/*">
+    <input type="text" id="cap" placeholder="Beschreibung (optional)" maxlength="200">
+    <button class="btn" id="up">Bild hochladen</button>
+    <div class="msg" id="upMsg"></div>
   </div>
+  <p class="sub" id="gHint"></p>
+  <div class="posts" id="posts"></div>
 </section>
 
 <section id="server" class="center">
   <h2>Server beitreten</h2>
   <div class="card">
-    <p><span class="dot"></span>Online · Java 1.21 · Bedrock</p>
-    <div class="ip"><span id="ip">play.blockcraft.example</span><button class="btn alt" id="copy">Kopieren</button></div>
+    <p><span class="dot"></span>Online · Java &amp; Bedrock</p>
+    <div class="ip"><span id="ip">inkogniflix.g-portal.game</span><button class="btn" id="copy">Kopieren</button></div>
     <p class="msg" id="copyMsg"></p>
   </div>
 </section>
 
-<footer>© 2026 BlockCraft · Fan-Projekt, nicht mit Mojang oder Microsoft verbunden.</footer>
+<footer>© 2026 Inkogniflix · Fan-Projekt, nicht mit Mojang oder Microsoft verbunden.</footer>
 
 <div id="modal">
   <div class="box">
-    <div class="tabs"><button class="btn" id="tLogin">Login</button><button class="btn alt" id="tReg">Registrieren</button></div>
+    <div class="tabs"><button class="btn" id="tLogin">Login</button><button class="btn ghost" id="tReg">Registrieren</button></div>
     <input id="user" type="email" placeholder="E-Mail" autocomplete="email">
-    <input id="pass" type="password" placeholder="Passwort" autocomplete="current-password">
+    <input id="pass" type="password" placeholder="Passwort (mind. 6 Zeichen)" autocomplete="current-password">
     <p class="msg" id="msg"></p>
     <button class="btn" id="go" style="width:100%">Anmelden</button>
-    <p><small>Dein Konto und dein Inventar werden sicher bei Supabase gespeichert.</small></p>
-    <button class="btn alt" id="close" style="width:100%;margin-top:6px">Schließen</button>
+    <p><small>Dein Konto wird sicher bei Supabase gespeichert.</small></p>
+    <button class="btn ghost" id="close" style="width:100%">Schließen</button>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
 <script>
-// === HIER EINTRAGEN (Supabase: Project Settings → API) ===
-const SUPABASE_URL= 'https://hzvnbtksanoonvkblded.supabase.co';
-const SUPABASE_KEY= 'sb_publishable_BXqu2VmFxndAXpF4FAqlAg_3Dpr4Lsf';
-// =========================================================
+const SUPABASE_URL='https://hzvnbtksanoonvkblded.supabase.co';
+const SUPABASE_KEY='sb_publishable_BXqu2VmFxndAXpF4FAqlAg_3Dpr4Lsf';
 const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let mode='login',sb=null,cur=null,hits=0,items={};
-const LOOT=[['Erde','🟫',40],['Stein','⬜',30],['Eisen','🔩',15],['Gold','🟨',10],['Diamant','💎',5]];
+const LOOT=[['Erde','🟫',32],['Stein','⬜',28],['Eisen','🔩',15],['Gold','🟨',10],['Amethyst','🔮',10],['Diamant','💎',5]];
+const name=()=>cur.email.split('@')[0];
 function render(){
   $('authBtn').textContent=cur?'Abmelden':'Anmelden';
-  $('hello').textContent=cur?'Willkommen zurück, '+cur.email.split('@')[0]+'!':(sb?'':'Gastmodus (Supabase nicht eingerichtet)');
+  $('hello').textContent=cur?'Willkommen zurück, '+name()+'!':'';
+  $('upbox').style.display=cur?'grid':'none';
+  $('gHint').textContent=!sb?'Galerie nicht verfügbar (Supabase fehlt).':(cur?'':'Melde dich an, um Bilder hochzuladen, zu liken und zu kommentieren.');
   $('inv').innerHTML=LOOT.map(l=>`<div class="slot">${l[1]} ${l[0]}<br><b>${items[l[0]]||0}</b></div>`).join('');
 }
 async function setUser(u){
   cur=u||null;items={};
-  if(cur){
-    try{const r=await sb.from('inventory').select('items').eq('user_id',cur.id).maybeSingle();items=(r.data&&r.data.items)||{}}catch(e){}
-  }
-  render();
+  if(cur){try{const r=await sb.from('inventory').select('items').eq('user_id',cur.id).maybeSingle();items=(r.data&&r.data.items)||{}}catch(e){}}
+  render();loadPosts();
 }
-async function saveItems(){
-  if(!cur)return;
-  try{await sb.from('inventory').upsert({user_id:cur.id,items})}catch(e){}
+async function saveItems(){if(cur){try{await sb.from('inventory').upsert({user_id:cur.id,items})}catch(e){}}}
+function postHTML(p,likes,coms){
+  const l=likes.filter(x=>x.post_id==p.id),liked=cur&&l.some(x=>x.user_id==cur.id),cs=coms.filter(x=>x.post_id==p.id);
+  const cm=cs.map(c=>'<p><b>'+esc(c.user_name||'Anonym')+':</b> '+esc(c.body)+'</p>').join('');
+  return '<article class="card post" data-id="'+p.id+'"><img src="'+esc(p.image_url)+'" alt="" loading="lazy"><div class="pb"><b>'+esc(p.user_name||'Anonym')+'</b><p>'+esc(p.caption||'')+'</p>'
+    +'<button class="like'+(liked?' on':'')+'" data-a="like">♥ '+l.length+'</button> '
+    +(cur&&p.user_id==cur.id?'<button class="del" data-a="del">Löschen</button>':'')
+    +'<div class="cm">'+cm+'</div>'
+    +(cur?'<div class="row"><input type="text" placeholder="Kommentieren …" maxlength="200"><button class="btn" data-a="com">Senden</button></div>':'')+'</div></article>';
 }
+async function loadPosts(){
+  if(!sb){$('posts').innerHTML='';return}
+  try{
+    const pr=await sb.from('posts').select('*').order('created_at',{ascending:false}).limit(30);
+    const ps=pr.data||[];if(!ps.length){$('posts').innerHTML='<p class="sub">Noch keine Bilder. Sei der Erste!</p>';return}
+    const ids=ps.map(p=>p.id);
+    const [lr,cr]=await Promise.all([sb.from('likes').select('post_id,user_id').in('post_id',ids),sb.from('comments').select('*').in('post_id',ids).order('created_at')]);
+    $('posts').innerHTML=ps.map(p=>postHTML(p,lr.data||[],cr.data||[])).join('');
+  }catch(e){$('posts').innerHTML='<p class="sub">Galerie konnte nicht geladen werden.</p>'}
+}
+$('posts').onclick=async e=>{
+  const b=e.target.closest('button');if(!b||!cur)return;
+  const post=b.closest('.post'),id=post.dataset.id,a=b.dataset.a;
+  try{
+    if(a=='like'){
+      if(b.classList.contains('on'))await sb.from('likes').delete().eq('post_id',id).eq('user_id',cur.id);
+      else await sb.from('likes').insert({post_id:id,user_id:cur.id});
+    }else if(a=='com'){
+      const t=post.querySelector('input').value.trim();if(!t)return;
+      await sb.from('comments').insert({post_id:id,user_id:cur.id,user_name:name(),body:t});
+    }else if(a=='del'){await sb.from('posts').delete().eq('id',id)}
+  }catch(err){}
+  loadPosts();
+};
+function shrink(f){return new Promise((ok,no)=>{const im=new Image();im.onload=()=>{const s=Math.min(1,1200/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);c.toBlob(b=>b?ok(b):no(new Error('Bild nicht lesbar')),'image/jpeg',.85)};im.onerror=()=>no(new Error('Bild nicht lesbar'));im.src=URL.createObjectURL(f)})}
+$('up').onclick=async()=>{
+  const f=$('file').files[0];if(!f){$('upMsg').textContent='Bitte zuerst ein Bild wählen.';return}
+  $('upMsg').textContent='Lade hoch …';
+  try{
+    const b=await shrink(f),path=cur.id+'/'+Date.now()+'.jpg';
+    let r=await sb.storage.from('images').upload(path,b,{contentType:'image/jpeg'});if(r.error)throw r.error;
+    const url=sb.storage.from('images').getPublicUrl(path).data.publicUrl;
+    r=await sb.from('posts').insert({user_id:cur.id,user_name:name(),image_url:url,caption:$('cap').value.slice(0,200)});if(r.error)throw r.error;
+    $('file').value=$('cap').value='';$('upMsg').textContent='Hochgeladen!';loadPosts();
+  }catch(e){$('upMsg').textContent='Fehler: '+(e.message||e)}
+};
 function setMode(m){
-  mode=m;$('tLogin').className='btn'+(m=='login'?'':' alt');$('tReg').className='btn'+(m=='reg'?'':' alt');
+  mode=m;$('tLogin').className='btn'+(m=='login'?'':' ghost');$('tReg').className='btn'+(m=='reg'?'':' ghost');
   $('go').textContent=m=='login'?'Anmelden':'Konto erstellen';$('msg').textContent='';
 }
 $('authBtn').onclick=async()=>{
   if(cur){await sb.auth.signOut()}
-  else if(!sb){alert('Bitte zuerst Supabase-URL und Key oben in der Datei eintragen.')}
+  else if(!sb){alert('Supabase ist nicht eingerichtet.')}
   else{$('modal').classList.add('on');setMode('login')}
 };
 $('close').onclick=()=>$('modal').classList.remove('on');
@@ -170,12 +239,8 @@ $('copy').onclick=async()=>{
   try{await navigator.clipboard.writeText($('ip').textContent);$('copyMsg').textContent='IP kopiert!'}
   catch(e){$('copyMsg').textContent='Bitte manuell kopieren.'}
 };
-$('theme').onclick=()=>{
-  const r=document.documentElement,dark=getComputedStyle(r).getPropertyValue('--bg').trim()=='#1b2a1b';
-  r.setAttribute('data-theme',dark?'light':'dark');
-};
 try{
-  if(window.supabase&&!SUPABASE_URL.startsWith('DEINE')){
+  if(window.supabase){
     sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
     sb.auth.onAuthStateChange((_e,s)=>{setUser(s&&s.user)});
   }
