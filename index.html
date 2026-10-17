@@ -93,6 +93,10 @@ footer a{color:var(--m);margin:0 8px;text-decoration:none}footer a:hover{color:#
 .lbrow .rk{font-weight:800;font-size:20px;text-align:center}
 .lbrow .h{font-weight:600;color:var(--p2)}
 .lbrow:first-child{border-color:var(--p2);box-shadow:var(--glow)}
+.gst{color:var(--m);margin:18px 0 10px}
+.btns2{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.mh{margin:30px 0 10px;font-size:18px;color:var(--p2)}
+#miners{max-width:520px;margin:0 auto;text-align:left}
 .pd{font-size:12px;color:var(--m);font-weight:400}
 .ct{font-size:11px;color:var(--m);opacity:.75;margin-left:6px}
 @media (hover:hover){.ct{opacity:0;transition:.15s}.cm p:hover .ct{opacity:.85}}
@@ -133,6 +137,11 @@ footer a{color:var(--m);margin:0 8px;text-decoration:none}footer a:hover{color:#
   <div id="block"><div id="crack"></div></div>
   <div class="bar"><i id="prog"></i></div>
   <div class="inv" id="inv"></div>
+  <p class="gst" id="gstat"></p>
+  <div class="btns2"><button class="btn" id="upg">Upgrade</button><button class="btn ghost" id="daily">🎁 Tägliche Belohnung</button></div>
+  <p class="msg" id="gmsg"></p>
+  <h3 class="mh">Top Miner</h3>
+  <div id="miners"></div>
 </section>
 
 <section id="galerie">
@@ -172,8 +181,8 @@ footer a{color:var(--m);margin:0 8px;text-decoration:none}footer a:hover{color:#
 <h3>2. Hosting (GitHub Pages)</h3><p>Die Website wird über GitHub Pages bereitgestellt (GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA). Beim Aufruf verarbeitet GitHub technisch notwendige Daten, vor allem deine IP-Adresse, um die Seite auszuliefern und Missbrauch abzuwehren. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (sicherer, stabiler Betrieb). Für Übermittlungen in die USA beruft sich GitHub auf Garantien wie das EU-US Data Privacy Framework oder Standardvertragsklauseln.</p>
 <h3>3. Schriften und Skripte</h3><p>Schriftart und Skripte werden vom selben Server geladen. Es gibt keine Verbindung zu Google Fonts oder anderen CDNs. Wir setzen keine Analyse-, Tracking- oder Werbedienste ein.</p>
 <h3>4. Serverstatus (mcsrvstat.us)</h3><p>Die Startseite zeigt an, ob der Minecraft-Server online ist. Dafür ruft dein Browser beim Laden der Seite (und danach etwa jede Minute, solange sie offen ist) den Statusdienst mcsrvstat.us ab. Dabei wird deine IP-Adresse an den Betreiber dieses Dienstes übertragen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (Anzeige des Serverstatus für die Community).</p>
-<h3>5. Konto und Community (Supabase)</h3><p>Für Registrierung, Login und Community-Funktionen nutzen wir Supabase als Auftragsverarbeiter (Supabase Inc., USA). Gespeichert werden: E-Mail-Adresse, Passwort (nur als Hash, nicht lesbar), Benutzername, Beschreibung, Profilbild, hochgeladene Bilder, Kommentare, Likes, Spielstand des Mining-Minispiels sowie Zeitstempel. Bestätigungs-E-Mails werden über Supabase versendet. Der Datenbankstandort ist Irland (AWS-Region eu-west-1, also innerhalb der EU). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Nutzungsvertrag).</p>
-<h3>6. Öffentliche Inhalte</h3><p>Benutzername, Profilbild, Beschreibung, Bilder, Kommentare und Likes sind für alle Besucher sichtbar, auch ohne Login. Deine E-Mail-Adresse ist nicht öffentlich. Bitte veröffentliche keine personenbezogenen Daten Dritter und keine Fotos von Personen ohne deren Einwilligung.</p>
+<h3>5. Konto und Community (Supabase)</h3><p>Für Registrierung, Login und Community-Funktionen nutzen wir Supabase als Auftragsverarbeiter (Supabase Inc., USA). Gespeichert werden: E-Mail-Adresse, Passwort (nur als Hash, nicht lesbar), Benutzername, Beschreibung, Profilbild, optional dein Minecraft-Name, hochgeladene Bilder, Kommentare, Likes, Spielstand des Mining-Minispiels (Inventar, Münzen, Spitzhacke, abgebaute Blöcke) sowie Zeitstempel. Bestätigungs-E-Mails werden über Supabase versendet. Der Datenbankstandort ist Irland (AWS-Region eu-west-1, also innerhalb der EU). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Nutzungsvertrag).</p>
+<h3>6. Öffentliche Inhalte</h3><p>Benutzername, Profilbild, Beschreibung, Minecraft-Name, Bilder, Kommentare, Likes und die Mining-Rangliste (Name und Anzahl abgebauter Blöcke) sind für alle Besucher sichtbar, auch ohne Login. Deine E-Mail-Adresse ist nicht öffentlich. Bitte veröffentliche keine personenbezogenen Daten Dritter und keine Fotos von Personen ohne deren Einwilligung.</p>
 <h3>7. Rangliste (Spielzeit)</h3><p>Die Rangliste zeigt Minecraft-Spielernamen und die auf dem Server verbrachte Spielzeit öffentlich an. Die Daten stammen vom Minecraft-Server (Hoster: G-Portal) und werden regelmäßig automatisch in Supabase gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Wenn du nicht in der Rangliste stehen möchtest, schreib mir eine E-Mail, dann entferne ich dich.</p>
 <h3>8. Lokale Speicherung</h3><p>Deine Login-Sitzung wird im Speicher deines Browsers (localStorage) abgelegt. Das ist für den Login technisch erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Tracking- oder Werbe-Cookies setzen wir nicht.</p>
 <h3>9. Speicherdauer und Löschung</h3><p>Wir speichern deine Daten, bis du dein Profil löschst. Die Funktion „Profil löschen“ entfernt Konto, Profil, Bilder, Kommentare, Likes und Spielstand. Gesetzliche Aufbewahrungspflichten und die Speicherfristen von GitHub für Server-Protokolle bleiben unberührt.</p>
@@ -194,6 +203,8 @@ footer a{color:var(--m);margin:0 8px;text-decoration:none}footer a:hover{color:#
   <p><small>Auf das Bild tippen, um es zu ändern</small></p>
   <input type="text" id="pName" placeholder="Benutzername (3–20 Zeichen)" maxlength="20">
   <textarea class="in" id="pBio" rows="4" maxlength="300" placeholder="Über mich …"></textarea>
+  <input type="text" id="pMc" placeholder="Minecraft-Name (optional)" maxlength="16">
+  <p id="pStat" style="margin:2px 0 0;font-size:14px;color:var(--p2)"></p>
   <p class="msg" id="pMsg"></p>
   <button class="btn" id="pSave" style="width:100%">Speichern</button>
   <button class="btn ghost" id="pClose" style="width:100%;margin-top:8px">Schließen</button>
@@ -206,7 +217,7 @@ footer a{color:var(--m);margin:0 8px;text-decoration:none}footer a:hover{color:#
 </div></div>
 
 <div id="pv"><div class="box center">
-  <div id="pvAv"></div><h3 id="pvName"></h3><p id="pvBio" style="color:var(--m)"></p>
+  <div id="pvAv"></div><h3 id="pvName"></h3><p id="pvMc" style="color:var(--p2);margin:2px 0 8px"></p><p id="pvBio" style="color:var(--m)"></p>
   <button class="btn ghost" id="pvClose" style="width:100%">Schließen</button>
 </div></div>
 
@@ -232,7 +243,7 @@ const SUPABASE_KEY='sb_publishable_BXqu2VmFxndAXpF4FAqlAg_3Dpr4Lsf';
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=t=>t?new Date(t).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}):'';
-let mode='login',sb=null,cur=null,hits=0,items={};
+let mode='login',sb=null,cur=null,hits=0,items={},BOARD=[],G={blocks:0,pick:1,coins:0,last:null};
 const LOOT=[['Erde','🟫',32],['Stein','⬜',28],['Eisen','🔩',15],['Gold','🟨',10],['Amethyst','🔮',10],['Diamant','💎',5]];
 let me={},PROF={},newAv=null;
 const name=()=>(me.username||'Spieler-'+cur.id.slice(0,4));
@@ -243,13 +254,14 @@ function render(){
   $('upbox').style.display=cur?'grid':'none';
   $('gHint').textContent=!sb?'Galerie nicht verfügbar (Supabase fehlt).':(cur?'':'Melde dich an, um Bilder hochzuladen, zu liken und zu kommentieren.');
   $('inv').innerHTML=LOOT.map(l=>`<div class="slot">${l[1]} ${l[0]}<br><b>${items[l[0]]||0}</b></div>`).join('');
+  renderGame();
 }
 async function setUser(u){
-  cur=u||null;items={};me={};
-  if(cur){try{const r=await sb.from('inventory').select('items').eq('user_id',cur.id).maybeSingle();items=(r.data&&r.data.items)||{};const pr=await sb.from('profiles').select('*').eq('user_id',cur.id).maybeSingle();me=pr.data||{}}catch(e){}}
-  render();loadPosts();
+  cur=u||null;items={};me={};G={blocks:0,pick:1,coins:0,last:null};
+  if(cur){try{const r=await sb.from('inventory').select('items,blocks,pick,coins,last_daily').eq('user_id',cur.id).maybeSingle();items=(r.data&&r.data.items)||{};if(r.data)G={blocks:r.data.blocks||0,pick:r.data.pick||1,coins:r.data.coins||0,last:r.data.last_daily||null};const pr=await sb.from('profiles').select('*').eq('user_id',cur.id).maybeSingle();me=pr.data||{}}catch(e){}}
+  render();loadPosts();loadMiners();
 }
-async function saveItems(){if(cur){try{await sb.from('inventory').upsert({user_id:cur.id,items})}catch(e){}}}
+async function saveItems(){if(cur){try{await sb.from('inventory').upsert({user_id:cur.id,items,blocks:G.blocks,pick:G.pick,coins:G.coins,last_daily:G.last,user_name:name()})}catch(e){}}}
 function postHTML(p,likes,coms){
   const l=likes.filter(x=>x.post_id==p.id),liked=cur&&l.some(x=>x.user_id==cur.id),cs=coms.filter(x=>x.post_id==p.id);
   const cm=cs.map(c=>'<p><b class="cn" data-u="'+c.user_id+'">'+esc(dn(c.user_id,c.user_name))+'</b>: '+esc(c.body)+' <span class="ct">'+fmt(c.created_at)+'</span>'+(cur&&c.user_id==cur.id?' <button class="cdel" data-a="delc" data-c="'+c.id+'" title="Kommentar löschen">✕</button>':'')+'</p>').join('');
@@ -267,7 +279,7 @@ async function loadPosts(){
     const ids=ps.map(p=>p.id);
     const [lr,cr]=await Promise.all([sb.from('likes').select('post_id,user_id').in('post_id',ids),sb.from('comments').select('*').in('post_id',ids).order('created_at')]);
     const uids=[...new Set(ps.map(p=>p.user_id).concat((cr.data||[]).map(c=>c.user_id)))];
-    const pf=await sb.from('profiles').select('user_id,username,bio,avatar_url').in('user_id',uids);
+    const pf=await sb.from('profiles').select('user_id,username,bio,avatar_url,mc_name').in('user_id',uids);
     PROF={};(pf.data||[]).forEach(x=>{PROF[x.user_id]=x});
     $('posts').innerHTML=ps.map(p=>postHTML(p,lr.data||[],cr.data||[])).join('');
   }catch(e){$('posts').innerHTML='<p class="sub">Galerie konnte nicht geladen werden.</p>'}
@@ -316,8 +328,14 @@ document.addEventListener('keydown',e=>{if(e.key=='Escape')$('lb').classList.rem
 const dn=(id,fb)=>(PROF[id]&&PROF[id].username)||fb||'Anonym';
 const avH=(url,nm,big)=>url?'<img class="av'+(big?' avbig':'')+'" src="'+esc(url)+'" alt="">':'<span class="av ph'+(big?' avbig':'')+'">'+esc((nm||'?').charAt(0).toUpperCase())+'</span>';
 const av=(id,big)=>avH(PROF[id]&&PROF[id].avatar_url,dn(id),big);
-function openPv(id){const p=PROF[id]||{};$('pvAv').innerHTML=av(id,1);$('pvName').textContent=dn(id);$('pvBio').textContent=p.bio||'Noch keine Beschreibung.';$('pv').classList.add('on')}
-function openPm(){newAv=null;$('pAv').innerHTML=avH(me.avatar_url,name(),1);$('pName').value=me.username||'';$('pBio').value=me.bio||'';$('pMsg').textContent='';$('delbox').style.display='none';$('pDel').style.display='';$('pm').classList.add('on')}
+function statLine(mc){
+  if(!mc)return '';
+  const i=BOARD.findIndex(x=>x.name.toLowerCase()==mc.toLowerCase());
+  if(i<0)return 'Noch keine Spielzeit gefunden.';
+  const m=BOARD[i].minutes;return 'Spielzeit: '+Math.floor(m/60)+' h '+(m%60)+' min · Platz '+(i+1);
+}
+function openPv(id){const p=PROF[id]||{};$('pvMc').textContent=p.mc_name?('Minecraft: '+p.mc_name+(statLine(p.mc_name)?' · '+statLine(p.mc_name):'')):'';$('pvAv').innerHTML=av(id,1);$('pvName').textContent=dn(id);$('pvBio').textContent=p.bio||'Noch keine Beschreibung.';$('pv').classList.add('on')}
+function openPm(){newAv=null;$('pAv').innerHTML=avH(me.avatar_url,name(),1);$('pName').value=me.username||'';$('pBio').value=me.bio||'';$('pMc').value=me.mc_name||'';$('pStat').textContent=statLine(me.mc_name);$('pMsg').textContent='';$('delbox').style.display='none';$('pDel').style.display='';$('pm').classList.add('on')}
 function avatarBlob(f){return new Promise((ok,no)=>{const im=new Image();im.onload=()=>{const m=Math.min(im.width,im.height),c=document.createElement('canvas');c.width=c.height=256;c.getContext('2d').drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,256,256);c.toBlob(b=>b?ok(b):no(new Error('Bild nicht lesbar')),'image/jpeg',.88)};im.onerror=()=>no(new Error('Bild nicht lesbar'));im.src=URL.createObjectURL(f)})}
 $('profBtn').onclick=openPm;
 $('pClose').onclick=()=>$('pm').classList.remove('on');
@@ -326,13 +344,15 @@ $('avfile').onchange=async()=>{const f=$('avfile').files[0];if(!f)return;try{new
 $('pSave').onclick=async()=>{
   const un=$('pName').value.trim(),bio=$('pBio').value.trim().slice(0,300);
   if(!/^[A-Za-z0-9_.\-äöüÄÖÜß]{3,20}$/.test(un)){$('pMsg').textContent='Name: 3–20 Zeichen, nur Buchstaben, Zahlen, _ . -';return}
+  const mc=$('pMc').value.trim();
+  if(mc&&!/^[A-Za-z0-9_]{3,16}$/.test(mc)){$('pMsg').textContent='Minecraft-Name: 3–16 Zeichen (Buchstaben, Zahlen, _)';return}
   $('pMsg').textContent='Speichere …';
   try{
     let a=me.avatar_url||null;
     if(newAv){const path=cur.id+'/avatar-'+Date.now()+'.jpg';const u=await sb.storage.from('images').upload(path,newAv,{contentType:'image/jpeg'});if(u.error)throw u.error;a=sb.storage.from('images').getPublicUrl(path).data.publicUrl}
-    const r=await sb.from('profiles').upsert({user_id:cur.id,username:un,bio,avatar_url:a,updated_at:new Date().toISOString()});
-    if(r.error){$('pMsg').textContent=r.error.code=='23505'?'Dieser Name ist schon vergeben.':r.error.message;return}
-    me={username:un,bio,avatar_url:a};newAv=null;render();loadPosts();$('pMsg').textContent='Gespeichert!';
+    const r=await sb.from('profiles').upsert({user_id:cur.id,username:un,bio,avatar_url:a,mc_name:mc||null,updated_at:new Date().toISOString()});
+    if(r.error){$('pMsg').textContent=r.error.code=='23505'?(r.error.message.includes('mc_key')?'Dieser Minecraft-Name ist schon verknüpft.':'Dieser Name ist schon vergeben.'):r.error.message;return}
+    me={username:un,bio,avatar_url:a,mc_name:mc||null};newAv=null;render();loadPosts();$('pStat').textContent=statLine(mc);$('pMsg').textContent='Gespeichert!';
   }catch(e){$('pMsg').textContent='Fehler: '+(e.message||e)}
 };
 $('pDel').onclick=()=>{$('delbox').style.display='block';$('pDel').style.display='none'};
@@ -372,16 +392,50 @@ $('go').onclick=async()=>{
   if(mode=='reg'&&!r.data.session){$('msg').textContent='Bitte bestätige deine E-Mail und melde dich dann an.';return}
   $('modal').classList.remove('on');$('user').value=$('pass').value='';
 };
+const PICKS=['Holz','Stein','Eisen','Diamant','Netherit'],COST=[0,50,150,400,1000],VAL={Erde:1,Stein:2,Eisen:5,Gold:10,Amethyst:15,Diamant:40};
+const clicksNeeded=()=>Math.max(1,6-G.pick);
+function renderGame(){
+  $('gstat').textContent='⛏ '+PICKS[G.pick-1]+'spitzhacke (Stufe '+G.pick+') · 🪙 '+G.coins+' Münzen · 🧱 '+G.blocks+' Blöcke';
+  const u=$('upg');
+  if(G.pick>=5){u.textContent='Maximale Stufe erreicht';u.style.opacity=.5}
+  else{u.textContent='Upgrade: '+PICKS[G.pick]+'spitzhacke ('+COST[G.pick]+' 🪙)';u.style.opacity=G.coins>=COST[G.pick]?1:.5}
+}
 $('block').onclick=()=>{
   const b=$('block');b.classList.remove('hit');void b.offsetWidth;b.classList.add('hit');
-  hits++;$('prog').style.width=hits*20+'%';$('crack').style.opacity=hits*.18;
-  if(hits>=5){
+  const n=clicksNeeded();hits++;$('prog').style.width=Math.min(100,hits/n*100)+'%';$('crack').style.opacity=Math.min(.9,hits/n*.9);
+  if(hits>=n){
     let r=Math.random()*100,d=LOOT[0];
     for(const l of LOOT){if(r<l[2]){d=l;break}r-=l[2]}
-    items[d[0]]=(items[d[0]]||0)+1;saveItems();
-    hits=0;$('prog').style.width='0';$('crack').style.opacity=0;render();
+    items[d[0]]=(items[d[0]]||0)+1;G.blocks++;G.coins+=VAL[d[0]];saveItems();
+    hits=0;$('prog').style.width='0';$('crack').style.opacity=0;
+    $('gmsg').textContent='+1 '+d[0]+' · +'+VAL[d[0]]+' 🪙';
+    render();if(G.blocks%5==0)loadMiners();
   }
 };
+$('upg').onclick=()=>{
+  if(G.pick>=5)return;
+  const c=COST[G.pick];
+  if(G.coins<c){$('gmsg').textContent='Dir fehlen noch '+(c-G.coins)+' Münzen.';return}
+  G.coins-=c;G.pick++;saveItems();render();$('gmsg').textContent='Neue Spitzhacke: '+PICKS[G.pick-1]+'!';
+};
+$('daily').onclick=()=>{
+  if(!cur){$('gmsg').textContent='Melde dich an, um die Belohnung abzuholen.';return}
+  const t=new Date().toLocaleDateString('sv-SE');
+  if(G.last===t){$('gmsg').textContent='Heute schon abgeholt. Komm morgen wieder!';return}
+  G.coins+=50;G.last=t;saveItems();render();$('gmsg').textContent='+50 🪙 Tagesbelohnung! Bis morgen.';
+};
+async function loadMiners(){
+  const box=$('miners');if(!sb)return;
+  try{
+    const r=await sb.from('inventory').select('user_id,user_name,blocks').gt('blocks',0).order('blocks',{ascending:false}).limit(5);
+    const d=r.data||[];
+    if(!d.length){box.innerHTML='<p class="sub">Noch keine Miner.</p>';return}
+    const pf=await sb.from('profiles').select('user_id,username').in('user_id',d.map(x=>x.user_id));
+    const nm={};(pf.data||[]).forEach(x=>{nm[x.user_id]=x.username});
+    const top=d[0].blocks,medal=['🥇','🥈','🥉'];
+    box.innerHTML=d.map((x,i)=>'<div class="lbrow"><span class="fb" style="width:'+Math.max(6,Math.round(x.blocks/top*100))+'%"></span><span class="rk">'+(medal[i]||(i+1))+'</span><b>'+esc(nm[x.user_id]||x.user_name||'Spieler')+'</b><span class="h">'+x.blocks+' Blöcke</span></div>').join('');
+  }catch(e){box.innerHTML=''}
+}
 $('copy').onclick=async()=>{
   try{await navigator.clipboard.writeText($('ip').textContent);$('copyMsg').textContent='IP kopiert!'}
   catch(e){$('copyMsg').textContent='Bitte manuell kopieren.'}
@@ -389,11 +443,11 @@ $('copy').onclick=async()=>{
 async function loadBoard(){
   const box=$('board');
   try{
-    const r=await sb.from('playtime').select('name,minutes,updated_at').order('minutes',{ascending:false}).limit(10);
-    const d=r.data||[];
+    const r=await sb.from('playtime').select('name,minutes,updated_at').order('minutes',{ascending:false}).limit(100);
+    const d=r.data||[];BOARD=d;
     if(!d.length){box.innerHTML='<p class="sub">Noch keine Daten.</p>';return}
     const top=d[0].minutes,medal=['🥇','🥈','🥉'];
-    box.innerHTML=d.map((x,i)=>'<div class="lbrow"><span class="fb" style="width:'+Math.max(6,Math.round(x.minutes/top*100))+'%"></span><span class="rk">'+(medal[i]||(i+1))+'</span><b>'+esc(x.name)+'</b><span class="h">'+Math.floor(x.minutes/60)+' h '+(x.minutes%60)+' min</span></div>').join('');
+    box.innerHTML=d.slice(0,10).map((x,i)=>'<div class="lbrow"><span class="fb" style="width:'+Math.max(6,Math.round(x.minutes/top*100))+'%"></span><span class="rk">'+(medal[i]||(i+1))+'</span><b>'+esc(x.name)+'</b><span class="h">'+Math.floor(x.minutes/60)+' h '+(x.minutes%60)+' min</span></div>').join('');
     const up=d.reduce((a,x)=>x.updated_at>a?x.updated_at:a,'');
     $('lbUp').textContent=up?'Stand: '+fmt(up):'';
   }catch(e){box.innerHTML='<p class="sub">Rangliste konnte nicht geladen werden.</p>'}
