@@ -336,7 +336,7 @@ async function loadPosts(){
     const [lr,cr]=await Promise.all([sb.from('likes').select('post_id,user_id').in('post_id',ids),sb.from('comments').select('*').in('post_id',ids).order('created_at')]);
     const uids=[...new Set(ps.map(p=>p.user_id).concat((cr.data||[]).map(c=>c.user_id)))];
     const pf=await sb.from('profiles').select('user_id,username,bio,avatar_url,mc_name').in('user_id',uids);
-    PROF={};(pf.data||[]).forEach(x=>{PROF[x.user_id]=x});
+    (pf.data||[]).forEach(x=>{PROF[x.user_id]=x});
     $('posts').innerHTML=ps.map(p=>postHTML(p,lr.data||[],cr.data||[])).join('');
   }catch(e){$('posts').innerHTML='<p class="sub">Galerie konnte nicht geladen werden.</p>'}
 }
@@ -540,16 +540,17 @@ $('daily').onclick=()=>{
   if(G.last===t){$('gmsg').textContent='Heute schon abgeholt. Komm morgen wieder!';return}
   G.coins+=50;G.last=t;saveItems();render();$('gmsg').textContent='+50 🪙 Tagesbelohnung! Bis morgen.';
 };
+$('miners').onclick=e=>{const w=e.target.closest('.cn');if(w)openPv(w.dataset.u)};
 async function loadMiners(){
   const box=$('miners');if(!sb)return;
   try{
     const r=await sb.from('inventory').select('user_id,user_name,blocks').gt('blocks',0).order('blocks',{ascending:false}).limit(5);
     const d=r.data||[];
     if(!d.length){box.innerHTML='<p class="sub">Noch keine Miner.</p>';return}
-    const pf=await sb.from('profiles').select('user_id,username').in('user_id',d.map(x=>x.user_id));
-    const nm={};(pf.data||[]).forEach(x=>{nm[x.user_id]=x.username});
+    const pf=await sb.from('profiles').select('user_id,username,bio,avatar_url,mc_name').in('user_id',d.map(x=>x.user_id));
+    (pf.data||[]).forEach(x=>{PROF[x.user_id]=x});d.forEach(x=>{if(!PROF[x.user_id])PROF[x.user_id]={user_id:x.user_id,username:x.user_name}});
     const top=d[0].blocks,medal=['🥇','🥈','🥉'];
-    box.innerHTML=d.map((x,i)=>'<div class="lbrow"><span class="fb" style="width:'+Math.max(6,Math.round(x.blocks/top*100))+'%"></span><span class="rk">'+(medal[i]||(i+1))+'</span><b>'+esc(nm[x.user_id]||x.user_name||'Spieler')+'</b><span class="h">'+x.blocks+' Blöcke</span></div>').join('');
+    box.innerHTML=d.map((x,i)=>'<div class="lbrow"><span class="fb" style="width:'+Math.max(6,Math.round(x.blocks/top*100))+'%"></span><span class="rk">'+(medal[i]||(i+1))+'</span><b class="cn" data-u="'+x.user_id+'">'+esc(dn(x.user_id,x.user_name))+'</b><span class="h">'+x.blocks+' Blöcke</span></div>').join('');
   }catch(e){box.innerHTML=''}
 }
 $('copy').onclick=async()=>{
