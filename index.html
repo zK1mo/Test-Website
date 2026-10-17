@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Inkogniflix – Minecraft Community</title>
 <link rel="icon" href="logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
+@font-face{font-family:Outfit;src:url(outfit.woff2) format("woff2");font-weight:100 900;font-display:swap}
 :root{--bg:#0b0618;--card:rgba(255,255,255,.06);--line:rgba(192,132,252,.28);--p:#a855f7;--p2:#e879f9;--t:#f5ecff;--m:#b9a6d6;--glow:0 0 18px rgba(168,85,247,.55),0 0 46px rgba(168,85,247,.25)}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:80px}
@@ -69,12 +69,17 @@ input:focus{outline:2px solid var(--p)}
 .ip{display:inline-flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center;background:rgba(0,0,0,.35);border:1px solid var(--p);border-radius:999px;padding:10px 12px 10px 22px;box-shadow:var(--glow);font-family:ui-monospace,monospace;font-size:17px;margin:12px 0}
 .dot{width:10px;height:10px;border-radius:50%;background:#4ade80;box-shadow:0 0 10px #4ade80;display:inline-block;margin-right:8px}
 footer{text-align:center;padding:28px 16px;color:var(--m);font-size:13px;border-top:1px solid var(--line)}
-#modal,#pm,#pv{position:fixed;inset:0;background:rgba(5,2,12,.75);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
-#modal.on,#pm.on,#pv.on{display:flex}
+#modal,#pm,#pv,#lg{position:fixed;inset:0;background:rgba(5,2,12,.75);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
+#modal.on,#pm.on,#pv.on,#lg.on{display:flex}
+#lg{z-index:40}#lg .box{max-width:680px;text-align:left}
 .box{background:#1a0d33;border:1px solid var(--line);border-radius:28px;padding:24px;width:100%;max-width:350px;max-height:92vh;overflow:auto;box-shadow:var(--glow)}
 .tabs{display:flex;gap:8px;margin-bottom:12px}.tabs .btn{flex:1;padding:10px}
 small{color:var(--m)}
 textarea.in{resize:vertical}
+.legal{display:none}.legal h3{margin:18px 0 4px;font-size:16px;color:var(--p2)}.legal p,.legal li{font-size:14px;color:var(--m);margin:4px 0}.legal ul{padding-left:20px;margin:4px 0}
+.fill{background:rgba(250,204,21,.18);color:#fde047;border-radius:6px;padding:0 4px}
+footer a{color:var(--m);margin:0 8px;text-decoration:none}footer a:hover{color:#fff}
+#acc a{color:var(--p2)}
 .cn{cursor:pointer;color:var(--p2);font-weight:600}.cn:hover{text-decoration:underline}
 .cdel{border:0;background:none;color:var(--m);cursor:pointer;font-size:13px;padding:0 4px}.cdel:hover{color:#fda4af}
 @media (hover:hover){.cdel{opacity:0;transition:.15s}.cm p:hover .cdel,.cdel:focus-visible{opacity:1}}
@@ -142,7 +147,27 @@ textarea.in{resize:vertical}
   </div>
 </section>
 
-<footer>© 2026 Inkogniflix · Fan-Projekt, nicht mit Mojang oder Microsoft verbunden.</footer>
+<footer><div style="margin-bottom:8px"><a href="#l-datenschutz" data-l="datenschutz">Datenschutz</a><a href="#l-nutzung" data-l="nutzung">Regeln</a></div>© 2026 Inkogniflix · Fan-Projekt, nicht mit Mojang oder Microsoft verbunden.</footer>
+
+<div id="lg"><div class="box"><div id="lgBody">
+<div class="legal" id="l-datenschutz"><h2>Datenschutzhinweise</h2><p>Stand: Oktober 2026</p>
+<h3>1. Verantwortlicher</h3><p>Hakim Sid Ahmed, E-Mail: hakim1010sid@gmail.com</p>
+<h3>2. Hosting (GitHub Pages)</h3><p>Die Website wird über GitHub Pages bereitgestellt (GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA). Beim Aufruf verarbeitet GitHub technisch notwendige Daten, vor allem deine IP-Adresse, um die Seite auszuliefern und Missbrauch abzuwehren. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (sicherer, stabiler Betrieb). Für Übermittlungen in die USA beruft sich GitHub auf Garantien wie das EU-US Data Privacy Framework oder Standardvertragsklauseln.</p>
+<h3>3. Schriften und Skripte</h3><p>Schriftart und Skripte werden vom selben Server geladen. Es gibt keine Verbindung zu Google Fonts oder anderen CDNs. Wir setzen keine Analyse-, Tracking- oder Werbedienste ein.</p>
+<h3>4. Konto und Community (Supabase)</h3><p>Für Registrierung, Login und Community-Funktionen nutzen wir Supabase als Auftragsverarbeiter (Supabase Inc., USA). Gespeichert werden: E-Mail-Adresse, Passwort (nur als Hash, nicht lesbar), Benutzername, Beschreibung, Profilbild, hochgeladene Bilder, Kommentare, Likes, Spielstand des Mining-Minispiels sowie Zeitstempel. Bestätigungs-E-Mails werden über Supabase versendet. Der Datenbankstandort ist Irland (AWS-Region eu-west-1, also innerhalb der EU). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Nutzungsvertrag).</p>
+<h3>5. Öffentliche Inhalte</h3><p>Benutzername, Profilbild, Beschreibung, Bilder, Kommentare und Likes sind für alle Besucher sichtbar, auch ohne Login. Deine E-Mail-Adresse ist nicht öffentlich. Bitte veröffentliche keine personenbezogenen Daten Dritter und keine Fotos von Personen ohne deren Einwilligung.</p>
+<h3>6. Lokale Speicherung</h3><p>Deine Login-Sitzung wird im Speicher deines Browsers (localStorage) abgelegt. Das ist für den Login technisch erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Tracking- oder Werbe-Cookies setzen wir nicht.</p>
+<h3>7. Speicherdauer und Löschung</h3><p>Wir speichern deine Daten, bis du dein Profil löschst. Die Funktion „Profil löschen“ entfernt Konto, Profil, Bilder, Kommentare, Likes und Spielstand. Gesetzliche Aufbewahrungspflichten und die Speicherfristen von GitHub für Server-Protokolle bleiben unberührt.</p>
+<h3>8. Deine Rechte</h3><p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch (Art. 15 bis 21 DSGVO) sowie auf Widerruf erteilter Einwilligungen. Schreib uns dazu eine E-Mail. Du kannst dich außerdem bei einer Datenschutzaufsichtsbehörde beschweren, zum Beispiel beim Landesbeauftragten für den Datenschutz und die Informationsfreiheit Rheinland-Pfalz.</p>
+<h3>9. Alter und automatisierte Entscheidungen</h3><p>Die Nutzung des Kontos ist ab 16 Jahren vorgesehen. Eine automatisierte Entscheidungsfindung findet nicht statt.</p></div>
+
+<div class="legal" id="l-nutzung"><h2>Regeln</h2>
+<p>Inkogniflix ist eine private Seite für Freunde und Mitspieler. Damit es angenehm bleibt:</p>
+<ul><li>Sei respektvoll, keine Beleidigungen oder Hassinhalte.</li><li>Lade nur Bilder hoch, an denen du die Rechte hast (zum Beispiel eigene Screenshots), und keine Fotos von Personen ohne deren Einverständnis.</li><li>Keine rechtswidrigen, gewaltverherrlichenden, pornografischen oder jugendgefährdenden Inhalte und kein Spam.</li></ul>
+<p>Für Inhalte sind die jeweiligen Nutzer selbst verantwortlich. Du bleibst Urheber deiner Inhalte und räumst mir das Recht ein, sie hier anzuzeigen, solange sie online sind. Du kannst sie jederzeit selbst löschen. Verstöße kannst du mir per E-Mail melden (hakim1010sid@gmail.com). Ich darf Inhalte entfernen und Konten sperren, wenn gegen die Regeln verstoßen wird.</p>
+<p>Die Nutzung ist kostenlos, ohne Anspruch auf ständige Verfügbarkeit. Es gilt deutsches Recht. Minecraft ist eine Marke von Mojang Synergies AB, diese Seite ist ein inoffizielles Fan-Projekt.</p></div>
+
+</div><button class="btn ghost" id="lgClose" style="width:100%;margin-top:18px">Schließen</button></div></div>
 
 <div id="pm"><div class="box center">
   <label for="avfile" style="cursor:pointer;display:inline-block" title="Profilbild ändern"><span id="pAv"></span></label>
@@ -173,6 +198,7 @@ textarea.in{resize:vertical}
     <div class="tabs"><button class="btn" id="tLogin">Login</button><button class="btn ghost" id="tReg">Registrieren</button></div>
     <input id="user" type="email" placeholder="E-Mail" autocomplete="email">
     <input id="pass" type="password" placeholder="Passwort (mind. 6 Zeichen)" autocomplete="current-password">
+    <label id="acc" style="display:none;gap:8px;align-items:flex-start;font-size:13px;color:var(--m);margin:8px 0"><input type="checkbox" id="accCb" style="margin:3px 0 0"><span>Ich bin mindestens 16 Jahre alt und akzeptiere die <a href="#l-nutzung" data-l="nutzung">Regeln</a> und die <a href="#l-datenschutz" data-l="datenschutz">Datenschutzhinweise</a>.</span></label>
     <p class="msg" id="msg"></p>
     <button class="btn" id="go" style="width:100%">Anmelden</button>
     <p><small>Dein Konto wird sicher bei Supabase gespeichert.</small></p>
@@ -180,7 +206,7 @@ textarea.in{resize:vertical}
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
+<script src="supabase.js"></script>
 <script>
 const SUPABASE_URL='https://hzvnbtksanoonvkblded.supabase.co';
 const SUPABASE_KEY='sb_publishable_BXqu2VmFxndAXpF4FAqlAg_3Dpr4Lsf';
@@ -189,7 +215,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 let mode='login',sb=null,cur=null,hits=0,items={};
 const LOOT=[['Erde','🟫',32],['Stein','⬜',28],['Eisen','🔩',15],['Gold','🟨',10],['Amethyst','🔮',10],['Diamant','💎',5]];
 let me={},PROF={},newAv=null;
-const name=()=>(me.username||cur.email.split('@')[0]);
+const name=()=>(me.username||'Spieler-'+cur.id.slice(0,4));
 function render(){
   $('authBtn').textContent=cur?'Abmelden':'Anmelden';
   $('hello').textContent=cur?'Willkommen zurück, '+name()+'!':'';
@@ -300,9 +326,14 @@ $('delYes').onclick=async()=>{
     $('pm').classList.remove('on');await sb.auth.signOut({scope:'local'});
   }catch(e){$('pMsg').textContent='Fehler: '+(e.message||e)}
 };
+function openL(k){document.querySelectorAll('.legal').forEach(x=>{x.style.display=x.id=='l-'+k?'block':'none'});$('lg').classList.add('on');$('lg').querySelector('.box').scrollTop=0}
+document.addEventListener('click',e=>{const a=e.target.closest('[data-l]');if(a){e.preventDefault();openL(a.dataset.l)}});
+$('lgClose').onclick=()=>$('lg').classList.remove('on');
+document.addEventListener('keydown',e=>{if(e.key=='Escape')$('lg').classList.remove('on')});
+if(location.hash.startsWith('#l-'))openL(location.hash.slice(3));
 function setMode(m){
   mode=m;$('tLogin').className='btn'+(m=='login'?'':' ghost');$('tReg').className='btn'+(m=='reg'?'':' ghost');
-  $('go').textContent=m=='login'?'Anmelden':'Konto erstellen';$('msg').textContent='';
+  $('go').textContent=m=='login'?'Anmelden':'Konto erstellen';$('acc').style.display=m=='reg'?'flex':'none';$('msg').textContent='';
 }
 $('authBtn').onclick=async()=>{
   if(cur){await sb.auth.signOut()}
@@ -314,6 +345,7 @@ $('tLogin').onclick=()=>setMode('login');$('tReg').onclick=()=>setMode('reg');
 $('go').onclick=async()=>{
   const email=$('user').value.trim(),password=$('pass').value;
   if(!email.includes('@')||password.length<6){$('msg').textContent='Gültige E-Mail und mind. 6 Zeichen Passwort.';return}
+  if(mode=='reg'&&!$('accCb').checked){$('msg').textContent='Bitte bestätige Alter und Bedingungen.';return}
   $('msg').textContent='Einen Moment …';
   const r=mode=='reg'?await sb.auth.signUp({email,password}):await sb.auth.signInWithPassword({email,password});
   if(r.error){$('msg').textContent=r.error.message;return}
