@@ -384,7 +384,7 @@ async function checkSrv(){
       if(j.version)parts.push(j.version);
       parts.push('Java Edition');
       dot.className='dot';t.textContent=parts.join(' · ');
-    }else{dot.className='dot off';t.textContent='Offline'}
+    }else{dot.className='dot off';t.textContent='Offline · Java Edition'}
   }catch(e){dot.className='dot chk';t.textContent='Status gerade nicht verfügbar'}
 }
 checkSrv();setInterval(checkSrv,60000);
