@@ -82,7 +82,18 @@ footer a{color:var(--m);margin:0 8px;text-decoration:none}footer a:hover{color:#
 #acc a{color:var(--p2)}
 .cn{cursor:pointer;color:var(--p2);font-weight:600}.cn:hover{text-decoration:underline}
 .cdel{border:0;background:none;color:var(--m);cursor:pointer;font-size:13px;padding:0 4px}.cdel:hover{color:#fda4af}
-@media (hover:hover){.cdel{opacity:0;transition:.15s}.cm p:hover .cdel,.cdel:focus-visible{opacity:1}}
+.post{position:relative}
+.pinb{position:absolute;top:10px;left:10px;z-index:2;background:rgba(11,6,24,.75);border:1px solid var(--line);border-radius:999px;padding:3px 9px;font-size:16px;backdrop-filter:blur(6px)}
+.acts{display:flex;align-items:center;gap:6px;margin-top:6px}.sp{flex:1}
+.ib{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.07);color:var(--t);cursor:pointer;font-size:15px;display:inline-flex;align-items:center;justify-content:center;padding:0;transition:.15s}
+.ib:hover{background:rgba(255,255,255,.15);transform:translateY(-1px)}
+.ib.on{background:linear-gradient(135deg,var(--p),var(--p2));box-shadow:var(--glow)}
+.opts{display:grid;gap:10px;margin:14px 0;text-align:left}
+.opt{display:block;position:relative;cursor:pointer}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt span{display:block;padding:12px 16px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.06);transition:.15s}
+.opt:hover span{background:rgba(255,255,255,.1)}
+.opt input:checked+span{border-color:var(--p2);background:rgba(168,85,247,.25);box-shadow:var(--glow)}
 .who{display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:6px}
 .av{width:34px;height:34px;border-radius:50%;object-fit:cover;border:1px solid var(--p2);box-shadow:0 0 10px rgba(168,85,247,.5)}
 .av.ph{display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--p),var(--p2));font-weight:800}
@@ -101,8 +112,11 @@ select.in option{background:#1a0d33;color:#f5ecff}
 .mh{margin:30px 0 10px;font-size:18px;color:var(--p2)}
 #miners{max-width:520px;margin:0 auto;text-align:left}
 .pd{font-size:12px;color:var(--m);font-weight:400}
-.ct{font-size:11px;color:var(--m);opacity:.75;margin-left:6px}
-@media (hover:hover){.ct{opacity:0;transition:.15s}.cm p:hover .ct{opacity:.85}}
+.ct{font-size:11px;color:var(--m)}
+.cm p{position:relative}
+.cx{display:none;position:absolute;right:0;top:50%;transform:translateY(-50%);align-items:center;gap:4px;background:#241046;border:1px solid var(--line);border-radius:999px;padding:1px 8px;white-space:nowrap}
+.cm p:hover .cx{display:inline-flex}
+@media (hover:none){.cx{display:inline-flex;position:static;transform:none;background:none;border:0;padding:0;margin-left:6px}}
 .dot.off{background:#f43f5e;box-shadow:0 0 10px #f43f5e}
 .dot.chk{background:#9ca3af;box-shadow:none}
 </style>
@@ -213,7 +227,12 @@ select.in option{background:#1a0d33;color:#f5ecff}
 
 <div id="rm"><div class="box center">
   <h3 style="margin-top:0">Melden</h3>
-  <select class="in" id="rReason"><option>Spam oder Werbung</option><option>Beleidigung oder Hass</option><option>Unangemessenes Bild</option><option>Sonstiges</option></select>
+  <div class="opts">
+    <label class="opt"><input type="radio" name="rr" value="Spam oder Werbung" checked><span>Spam oder Werbung</span></label>
+    <label class="opt"><input type="radio" name="rr" value="Beleidigung oder Hass"><span>Beleidigung oder Hass</span></label>
+    <label class="opt"><input type="radio" name="rr" value="Unangemessenes Bild"><span>Unangemessenes Bild</span></label>
+    <label class="opt"><input type="radio" name="rr" value="Sonstiges"><span>Sonstiges</span></label>
+  </div>
   <input type="text" id="rNote" placeholder="Anmerkung (optional)" maxlength="200">
   <p class="msg" id="rMsg"></p>
   <button class="btn" id="rSend" style="width:100%">Absenden</button>
@@ -295,16 +314,16 @@ async function setUser(u){
 async function saveItems(){if(cur){try{await sb.from('inventory').upsert({user_id:cur.id,items,blocks:G.blocks,pick:G.pick,coins:G.coins,last_daily:G.last,user_name:name()})}catch(e){}}}
 function postHTML(p,likes,coms){
   const l=likes.filter(x=>x.post_id==p.id),liked=cur&&l.some(x=>x.user_id==cur.id),cs=coms.filter(x=>x.post_id==p.id),can=cur&&!BANNED,mine=cur&&p.user_id==cur.id;
-  const cm=cs.map(c=>{const own=cur&&c.user_id==cur.id;return '<p data-c="'+c.id+'" data-body="'+esc(c.body)+'"><b class="cn" data-u="'+c.user_id+'">'+esc(dn(c.user_id,c.user_name))+'</b>: '+esc(c.body)+' <span class="ct">'+fmt(c.created_at)+(c.edited_at?' · bearbeitet':'')+'</span>'
-    +(can&&own?' <button class="cdel" data-a="cedit" title="Bearbeiten">✎</button>':'')
-    +((own||ADMIN)?' <button class="cdel" data-a="delc" data-c="'+c.id+'" title="Löschen">✕</button>':'')
-    +(can&&!own?' <button class="cdel" data-a="repc" data-c="'+c.id+'" data-u="'+c.user_id+'" title="Melden">⚑</button>':'')+'</p>'}).join('');
-  return '<article class="card post" data-id="'+p.id+'" data-u="'+p.user_id+'"><img src="'+esc(p.image_url)+'" alt="" loading="lazy"><div class="pb">'+(p.pinned?'<div class="pin">📌 Angepinnt</div>':'')+'<div class="who" data-u="'+p.user_id+'">'+av(p.user_id)+'<div><b>'+esc(dn(p.user_id,p.user_name))+'</b><div class="pd">'+fmt(p.created_at)+(p.edited_at?' · bearbeitet':'')+'</div></div></div><p>'+esc(p.caption||'')+'</p>'
-    +'<button class="like'+(liked?' on':'')+'" data-a="like">♥ '+l.length+'</button>'
-    +(mine&&can?' <button class="del" data-a="edit">Bearbeiten</button>':'')
-    +((mine||ADMIN)?' <button class="del" data-a="del">Löschen</button>':'')
-    +(can&&!mine?' <button class="del" data-a="rep">⚑ Melden</button>':'')
-    +(ADMIN?' <button class="del" data-a="pin">'+(p.pinned?'Lösen':'📌 Anpinnen')+'</button>':'')
+  const cm=cs.map(c=>{const own=cur&&c.user_id==cur.id;return '<p data-c="'+c.id+'" data-body="'+esc(c.body)+'"><span class="ctx"><b class="cn" data-u="'+c.user_id+'">'+esc(dn(c.user_id,c.user_name))+'</b>: '+esc(c.body)+'</span><span class="cx"><span class="ct">'+fmt(c.created_at)+(c.edited_at?' · bearbeitet':'')+'</span>'
+    +(can&&own?'<button class="cdel" data-a="cedit" title="Bearbeiten">✎</button>':'')
+    +((own||ADMIN)?'<button class="cdel" data-a="delc" data-c="'+c.id+'" title="Löschen">✕</button>':'')
+    +(can&&!own?'<button class="cdel" data-a="repc" data-c="'+c.id+'" data-u="'+c.user_id+'" title="Melden">⚑</button>':'')+'</span></p>'}).join('');
+  return '<article class="card post" data-id="'+p.id+'" data-u="'+p.user_id+'">'+(p.pinned?'<span class="pinb" title="Angepinnt">📌</span>':'')+'<img src="'+esc(p.image_url)+'" alt="" loading="lazy"><div class="pb"><div class="who" data-u="'+p.user_id+'">'+av(p.user_id)+'<div><b>'+esc(dn(p.user_id,p.user_name))+'</b><div class="pd">'+fmt(p.created_at)+(p.edited_at?' · bearbeitet':'')+'</div></div></div><p>'+esc(p.caption||'')+'</p>'
+    +'<div class="acts"><button class="like'+(liked?' on':'')+'" data-a="like">♥ '+l.length+'</button><span class="sp"></span>'
+    +(ADMIN?'<button class="ib'+(p.pinned?' on':'')+'" data-a="pin" title="'+(p.pinned?'Lösen':'Anpinnen')+'">📌</button>':'')
+    +(mine&&can?'<button class="ib" data-a="edit" title="Bearbeiten">✎</button>':'')
+    +((mine||ADMIN)?'<button class="ib" data-a="del" title="Löschen">🗑</button>':'')
+    +(can&&!mine?'<button class="ib" data-a="rep" title="Melden">⚑</button>':'')+'</div>'
     +'<div class="cm">'+cm+'</div>'
     +(can?'<div class="row"><input type="text" placeholder="Kommentieren …" maxlength="200"><button class="btn" data-a="com">Senden</button></div>':'')+'</div></article>';
 }
@@ -335,7 +354,7 @@ $('posts').onclick=async e=>{
       await sb.from('comments').insert({post_id:id,user_id:cur.id,user_name:name(),body:t});
     }else if(a=='delc'){await sb.from('comments').delete().eq('id',b.dataset.c)
     }else if(a=='del'){const im=post.querySelector('img').src;await sb.from('posts').delete().eq('id',id);removeImg(im)
-    }else if(a=='pin'){await sb.rpc('admin_pin',{p_id:id,p_pinned:!post.querySelector('.pin')})
+    }else if(a=='pin'){await sb.rpc('admin_pin',{p_id:id,p_pinned:!post.querySelector('.pinb')})
     }else if(a=='edit'){openEdit(id,post);return
     }else if(a=='rep'){openRep('post',id,post.dataset.u);return
     }else if(a=='repc'){openRep('comment',b.dataset.c,b.dataset.u);return
@@ -423,10 +442,10 @@ $('eSave').onclick=async()=>{
     $('em').classList.remove('on');loadPosts();
   }catch(e){$('eMsg').textContent='Fehler: '+(e.message||e)}
 };
-function openRep(type,id,uid){REP={type,id,uid};$('rNote').value='';$('rMsg').textContent='';$('rm').classList.add('on')}
+function openRep(type,id,uid){REP={type,id,uid};document.querySelector('input[name=rr]').checked=true;$('rNote').value='';$('rMsg').textContent='';$('rm').classList.add('on')}
 $('rClose').onclick=()=>$('rm').classList.remove('on');
 $('rSend').onclick=async()=>{
-  const note=$('rNote').value.trim(),reason=($('rReason').value+(note?': '+note:'')).slice(0,300);
+  const note=$('rNote').value.trim(),reason=(document.querySelector('input[name=rr]:checked').value+(note?': '+note:'')).slice(0,300);
   const r=await sb.from('reports').insert({reporter_id:cur.id,target_type:REP.type,target_id:REP.id,target_user_id:REP.uid,reason});
   if(r.error){$('rMsg').textContent=r.error.code=='23505'?'Das hast du schon gemeldet.':'Fehler: '+r.error.message;return}
   $('rMsg').textContent='Danke, die Meldung ist angekommen.';setTimeout(()=>$('rm').classList.remove('on'),1200);
