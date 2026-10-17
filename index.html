@@ -51,12 +51,12 @@ input:focus{outline:2px solid var(--p)}
 .upl{display:grid;gap:8px;margin-bottom:22px}
 .posts{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
 .post{padding:0;overflow:hidden}
-.post img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;cursor:zoom-in}
+.post>img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;cursor:zoom-in}
 .drop{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:120px;border:2px dashed var(--p);border-radius:20px;background:rgba(168,85,247,.08);cursor:pointer;text-align:center;padding:14px;transition:.2s;color:var(--m);overflow:hidden}
 .drop:hover,.drop.over{background:rgba(168,85,247,.18);box-shadow:var(--glow)}
 .drop .di{font-size:34px}
 .drop img{max-height:140px;max-width:100%;border-radius:14px;display:none}
-#file{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+#file,#avfile{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
 #lb{position:fixed;inset:0;z-index:30;background:rgba(5,2,12,.88);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px;cursor:zoom-out}
 #lb.on{display:flex}
 #lb img{max-width:100%;max-height:100%;border-radius:20px;box-shadow:var(--glow)}
@@ -69,17 +69,23 @@ input:focus{outline:2px solid var(--p)}
 .ip{display:inline-flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center;background:rgba(0,0,0,.35);border:1px solid var(--p);border-radius:999px;padding:10px 12px 10px 22px;box-shadow:var(--glow);font-family:ui-monospace,monospace;font-size:17px;margin:12px 0}
 .dot{width:10px;height:10px;border-radius:50%;background:#4ade80;box-shadow:0 0 10px #4ade80;display:inline-block;margin-right:8px}
 footer{text-align:center;padding:28px 16px;color:var(--m);font-size:13px;border-top:1px solid var(--line)}
-#modal{position:fixed;inset:0;background:rgba(5,2,12,.75);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
-#modal.on{display:flex}
-.box{background:#1a0d33;border:1px solid var(--line);border-radius:28px;padding:24px;width:100%;max-width:350px;box-shadow:var(--glow)}
+#modal,#pm,#pv{position:fixed;inset:0;background:rgba(5,2,12,.75);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
+#modal.on,#pm.on,#pv.on{display:flex}
+.box{background:#1a0d33;border:1px solid var(--line);border-radius:28px;padding:24px;width:100%;max-width:350px;max-height:92vh;overflow:auto;box-shadow:var(--glow)}
 .tabs{display:flex;gap:8px;margin-bottom:12px}.tabs .btn{flex:1;padding:10px}
 small{color:var(--m)}
+textarea.in{resize:vertical}
+.who{display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:6px}
+.av{width:34px;height:34px;border-radius:50%;object-fit:cover;border:1px solid var(--p2);box-shadow:0 0 10px rgba(168,85,247,.5)}
+.av.ph{display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--p),var(--p2));font-weight:800}
+.avbig{width:96px;height:96px;font-size:36px}
 </style>
 </head>
 <body>
 <nav>
   <a class="brand" href="#top"><img src="logo.png" alt="" onerror="this.style.display='none'">INKOGNIFLIX</a>
   <a href="#spiel">Mining</a><a href="#galerie">Galerie</a><a href="#server">Server</a>
+  <button class="btn ghost" id="profBtn" style="display:none">Profil</button>
   <button class="btn" id="authBtn">Anmelden</button>
 </nav>
 
@@ -135,6 +141,28 @@ small{color:var(--m)}
 
 <footer>© 2026 Inkogniflix · Fan-Projekt, nicht mit Mojang oder Microsoft verbunden.</footer>
 
+<div id="pm"><div class="box center">
+  <label for="avfile" style="cursor:pointer;display:inline-block" title="Profilbild ändern"><span id="pAv"></span></label>
+  <input type="file" id="avfile" accept="image/*">
+  <p><small>Auf das Bild tippen, um es zu ändern</small></p>
+  <input type="text" id="pName" placeholder="Benutzername (3–20 Zeichen)" maxlength="20">
+  <textarea class="in" id="pBio" rows="4" maxlength="300" placeholder="Über mich …"></textarea>
+  <p class="msg" id="pMsg"></p>
+  <button class="btn" id="pSave" style="width:100%">Speichern</button>
+  <button class="btn ghost" id="pClose" style="width:100%;margin-top:8px">Schließen</button>
+  <button class="btn ghost" id="pDel" style="width:100%;margin-top:18px;border-color:#f43f5e;color:#fda4af">Profil löschen</button>
+  <div id="delbox" style="display:none;margin-top:14px">
+    <p style="color:#fda4af;font-weight:600">Bist du sicher? Dein Konto, deine Bilder, Kommentare und Likes werden endgültig gelöscht.</p>
+    <button class="btn" id="delYes" style="width:100%;background:#e11d48;box-shadow:0 0 18px rgba(225,29,72,.5)">Ja, endgültig löschen</button>
+    <button class="btn ghost" id="delNo" style="width:100%;margin-top:8px">Abbrechen</button>
+  </div>
+</div></div>
+
+<div id="pv"><div class="box center">
+  <div id="pvAv"></div><h3 id="pvName"></h3><p id="pvBio" style="color:var(--m)"></p>
+  <button class="btn ghost" id="pvClose" style="width:100%">Schließen</button>
+</div></div>
+
 <div id="lb"><img id="lbi" alt=""></div>
 
 <div id="modal">
@@ -157,24 +185,26 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let mode='login',sb=null,cur=null,hits=0,items={};
 const LOOT=[['Erde','🟫',32],['Stein','⬜',28],['Eisen','🔩',15],['Gold','🟨',10],['Amethyst','🔮',10],['Diamant','💎',5]];
-const name=()=>cur.email.split('@')[0];
+let me={},PROF={},newAv=null;
+const name=()=>(me.username||cur.email.split('@')[0]);
 function render(){
   $('authBtn').textContent=cur?'Abmelden':'Anmelden';
   $('hello').textContent=cur?'Willkommen zurück, '+name()+'!':'';
+  $('profBtn').style.display=cur?'':'none';
   $('upbox').style.display=cur?'grid':'none';
   $('gHint').textContent=!sb?'Galerie nicht verfügbar (Supabase fehlt).':(cur?'':'Melde dich an, um Bilder hochzuladen, zu liken und zu kommentieren.');
   $('inv').innerHTML=LOOT.map(l=>`<div class="slot">${l[1]} ${l[0]}<br><b>${items[l[0]]||0}</b></div>`).join('');
 }
 async function setUser(u){
-  cur=u||null;items={};
-  if(cur){try{const r=await sb.from('inventory').select('items').eq('user_id',cur.id).maybeSingle();items=(r.data&&r.data.items)||{}}catch(e){}}
+  cur=u||null;items={};me={};
+  if(cur){try{const r=await sb.from('inventory').select('items').eq('user_id',cur.id).maybeSingle();items=(r.data&&r.data.items)||{};const pr=await sb.from('profiles').select('*').eq('user_id',cur.id).maybeSingle();me=pr.data||{}}catch(e){}}
   render();loadPosts();
 }
 async function saveItems(){if(cur){try{await sb.from('inventory').upsert({user_id:cur.id,items})}catch(e){}}}
 function postHTML(p,likes,coms){
   const l=likes.filter(x=>x.post_id==p.id),liked=cur&&l.some(x=>x.user_id==cur.id),cs=coms.filter(x=>x.post_id==p.id);
-  const cm=cs.map(c=>'<p><b>'+esc(c.user_name||'Anonym')+':</b> '+esc(c.body)+'</p>').join('');
-  return '<article class="card post" data-id="'+p.id+'"><img src="'+esc(p.image_url)+'" alt="" loading="lazy"><div class="pb"><b>'+esc(p.user_name||'Anonym')+'</b><p>'+esc(p.caption||'')+'</p>'
+  const cm=cs.map(c=>'<p><b>'+esc(dn(c.user_id,c.user_name))+':</b> '+esc(c.body)+'</p>').join('');
+  return '<article class="card post" data-id="'+p.id+'"><img src="'+esc(p.image_url)+'" alt="" loading="lazy"><div class="pb"><div class="who" data-u="'+p.user_id+'">'+av(p.user_id)+'<b>'+esc(dn(p.user_id,p.user_name))+'</b></div><p>'+esc(p.caption||'')+'</p>'
     +'<button class="like'+(liked?' on':'')+'" data-a="like">♥ '+l.length+'</button> '
     +(cur&&p.user_id==cur.id?'<button class="del" data-a="del">Löschen</button>':'')
     +'<div class="cm">'+cm+'</div>'
@@ -187,11 +217,15 @@ async function loadPosts(){
     const ps=pr.data||[];if(!ps.length){$('posts').innerHTML='<p class="sub">Noch keine Bilder. Sei der Erste!</p>';return}
     const ids=ps.map(p=>p.id);
     const [lr,cr]=await Promise.all([sb.from('likes').select('post_id,user_id').in('post_id',ids),sb.from('comments').select('*').in('post_id',ids).order('created_at')]);
+    const uids=[...new Set(ps.map(p=>p.user_id).concat((cr.data||[]).map(c=>c.user_id)))];
+    const pf=await sb.from('profiles').select('user_id,username,bio,avatar_url').in('user_id',uids);
+    PROF={};(pf.data||[]).forEach(x=>{PROF[x.user_id]=x});
     $('posts').innerHTML=ps.map(p=>postHTML(p,lr.data||[],cr.data||[])).join('');
   }catch(e){$('posts').innerHTML='<p class="sub">Galerie konnte nicht geladen werden.</p>'}
 }
 $('posts').onclick=async e=>{
-  if(e.target.tagName=='IMG'){$('lbi').src=e.target.src;$('lb').classList.add('on');return}
+  if(e.target.matches('.post>img')){$('lbi').src=e.target.src;$('lb').classList.add('on');return}
+  const w=e.target.closest('.who');if(w){openPv(w.dataset.u);return}
   const b=e.target.closest('button');if(!b||!cur)return;
   const post=b.closest('.post'),id=post.dataset.id,a=b.dataset.a;
   try{
@@ -229,6 +263,39 @@ $('file').onchange=showFile;
 $('drop').addEventListener('drop',e=>{if(e.dataTransfer.files.length){$('file').files=e.dataTransfer.files;showFile()}});
 $('lb').onclick=()=>$('lb').classList.remove('on');
 document.addEventListener('keydown',e=>{if(e.key=='Escape')$('lb').classList.remove('on')});
+const dn=(id,fb)=>(PROF[id]&&PROF[id].username)||fb||'Anonym';
+const avH=(url,nm,big)=>url?'<img class="av'+(big?' avbig':'')+'" src="'+esc(url)+'" alt="">':'<span class="av ph'+(big?' avbig':'')+'">'+esc((nm||'?').charAt(0).toUpperCase())+'</span>';
+const av=(id,big)=>avH(PROF[id]&&PROF[id].avatar_url,dn(id),big);
+function openPv(id){const p=PROF[id]||{};$('pvAv').innerHTML=av(id,1);$('pvName').textContent=dn(id);$('pvBio').textContent=p.bio||'Noch keine Beschreibung.';$('pv').classList.add('on')}
+function openPm(){newAv=null;$('pAv').innerHTML=avH(me.avatar_url,name(),1);$('pName').value=me.username||'';$('pBio').value=me.bio||'';$('pMsg').textContent='';$('delbox').style.display='none';$('pDel').style.display='';$('pm').classList.add('on')}
+function avatarBlob(f){return new Promise((ok,no)=>{const im=new Image();im.onload=()=>{const m=Math.min(im.width,im.height),c=document.createElement('canvas');c.width=c.height=256;c.getContext('2d').drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,256,256);c.toBlob(b=>b?ok(b):no(new Error('Bild nicht lesbar')),'image/jpeg',.88)};im.onerror=()=>no(new Error('Bild nicht lesbar'));im.src=URL.createObjectURL(f)})}
+$('profBtn').onclick=openPm;
+$('pClose').onclick=()=>$('pm').classList.remove('on');
+$('pvClose').onclick=()=>$('pv').classList.remove('on');
+$('avfile').onchange=async()=>{const f=$('avfile').files[0];if(!f)return;try{newAv=await avatarBlob(f);$('pAv').innerHTML=avH(URL.createObjectURL(newAv),name(),1)}catch(e){$('pMsg').textContent=e.message}};
+$('pSave').onclick=async()=>{
+  const un=$('pName').value.trim(),bio=$('pBio').value.trim().slice(0,300);
+  if(!/^[A-Za-z0-9_.\-äöüÄÖÜß]{3,20}$/.test(un)){$('pMsg').textContent='Name: 3–20 Zeichen, nur Buchstaben, Zahlen, _ . -';return}
+  $('pMsg').textContent='Speichere …';
+  try{
+    let a=me.avatar_url||null;
+    if(newAv){const path=cur.id+'/avatar-'+Date.now()+'.jpg';const u=await sb.storage.from('images').upload(path,newAv,{contentType:'image/jpeg'});if(u.error)throw u.error;a=sb.storage.from('images').getPublicUrl(path).data.publicUrl}
+    const r=await sb.from('profiles').upsert({user_id:cur.id,username:un,bio,avatar_url:a,updated_at:new Date().toISOString()});
+    if(r.error){$('pMsg').textContent=r.error.code=='23505'?'Dieser Name ist schon vergeben.':r.error.message;return}
+    me={username:un,bio,avatar_url:a};newAv=null;render();loadPosts();$('pMsg').textContent='Gespeichert!';
+  }catch(e){$('pMsg').textContent='Fehler: '+(e.message||e)}
+};
+$('pDel').onclick=()=>{$('delbox').style.display='block';$('pDel').style.display='none'};
+$('delNo').onclick=()=>{$('delbox').style.display='none';$('pDel').style.display=''};
+$('delYes').onclick=async()=>{
+  $('pMsg').textContent='Lösche …';
+  try{
+    const l=await sb.storage.from('images').list(cur.id,{limit:1000});
+    if(l.data&&l.data.length)await sb.storage.from('images').remove(l.data.map(f=>cur.id+'/'+f.name));
+    const r=await sb.rpc('delete_my_account');if(r.error)throw r.error;
+    $('pm').classList.remove('on');await sb.auth.signOut({scope:'local'});
+  }catch(e){$('pMsg').textContent='Fehler: '+(e.message||e)}
+};
 function setMode(m){
   mode=m;$('tLogin').className='btn'+(m=='login'?'':' ghost');$('tReg').className='btn'+(m=='reg'?'':' ghost');
   $('go').textContent=m=='login'?'Anmelden':'Konto erstellen';$('msg').textContent='';
