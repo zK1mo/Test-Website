@@ -87,6 +87,12 @@ footer a{color:var(--m);margin:0 8px;text-decoration:none}footer a:hover{color:#
 .av{width:34px;height:34px;border-radius:50%;object-fit:cover;border:1px solid var(--p2);box-shadow:0 0 10px rgba(168,85,247,.5)}
 .av.ph{display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--p),var(--p2));font-weight:800}
 .avbig{width:96px;height:96px;font-size:36px}
+.lbrow{display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:12px;padding:12px 16px;border:1px solid var(--line);border-radius:18px;background:var(--card);margin-bottom:10px;position:relative;overflow:hidden}
+.lbrow>*{position:relative;z-index:1}
+.lbrow .fb{position:absolute;left:0;top:0;bottom:0;z-index:0;background:linear-gradient(90deg,rgba(168,85,247,.38),transparent)}
+.lbrow .rk{font-weight:800;font-size:20px;text-align:center}
+.lbrow .h{font-weight:600;color:var(--p2)}
+.lbrow:first-child{border-color:var(--p2);box-shadow:var(--glow)}
 .pd{font-size:12px;color:var(--m);font-weight:400}
 .ct{font-size:11px;color:var(--m);opacity:.75;margin-left:6px}
 @media (hover:hover){.ct{opacity:0;transition:.15s}.cm p:hover .ct{opacity:.85}}
@@ -97,7 +103,7 @@ footer a{color:var(--m);margin:0 8px;text-decoration:none}footer a:hover{color:#
 <body>
 <nav>
   <a class="brand" href="#top"><img src="logo.png" alt="" onerror="this.style.display='none'">INKOGNIFLIX</a>
-  <a href="#spiel">Mining</a><a href="#galerie">Galerie</a><a href="#server">Server</a>
+  <a href="#spiel">Mining</a><a href="#galerie">Galerie</a><a href="#rangliste">Rangliste</a><a href="#server">Server</a>
   <button class="btn ghost" id="profBtn" style="display:none">Profil</button>
   <button class="btn" id="authBtn">Anmelden</button>
 </nav>
@@ -143,6 +149,12 @@ footer a{color:var(--m);margin:0 8px;text-decoration:none}footer a:hover{color:#
   <div class="posts" id="posts"></div>
 </section>
 
+<section id="rangliste">
+  <h2>Rangliste</h2>
+  <p class="sub">Wer hat die meisten Stunden auf dem Server verbracht? <span id="lbUp"></span></p>
+  <div id="board"></div>
+</section>
+
 <section id="server" class="center">
   <h2>Server beitreten</h2>
   <div class="card">
@@ -162,10 +174,11 @@ footer a{color:var(--m);margin:0 8px;text-decoration:none}footer a:hover{color:#
 <h3>4. Serverstatus (mcsrvstat.us)</h3><p>Die Startseite zeigt an, ob der Minecraft-Server online ist. Dafür ruft dein Browser beim Laden der Seite (und danach etwa jede Minute, solange sie offen ist) den Statusdienst mcsrvstat.us ab. Dabei wird deine IP-Adresse an den Betreiber dieses Dienstes übertragen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (Anzeige des Serverstatus für die Community).</p>
 <h3>5. Konto und Community (Supabase)</h3><p>Für Registrierung, Login und Community-Funktionen nutzen wir Supabase als Auftragsverarbeiter (Supabase Inc., USA). Gespeichert werden: E-Mail-Adresse, Passwort (nur als Hash, nicht lesbar), Benutzername, Beschreibung, Profilbild, hochgeladene Bilder, Kommentare, Likes, Spielstand des Mining-Minispiels sowie Zeitstempel. Bestätigungs-E-Mails werden über Supabase versendet. Der Datenbankstandort ist Irland (AWS-Region eu-west-1, also innerhalb der EU). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Nutzungsvertrag).</p>
 <h3>6. Öffentliche Inhalte</h3><p>Benutzername, Profilbild, Beschreibung, Bilder, Kommentare und Likes sind für alle Besucher sichtbar, auch ohne Login. Deine E-Mail-Adresse ist nicht öffentlich. Bitte veröffentliche keine personenbezogenen Daten Dritter und keine Fotos von Personen ohne deren Einwilligung.</p>
-<h3>7. Lokale Speicherung</h3><p>Deine Login-Sitzung wird im Speicher deines Browsers (localStorage) abgelegt. Das ist für den Login technisch erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Tracking- oder Werbe-Cookies setzen wir nicht.</p>
-<h3>8. Speicherdauer und Löschung</h3><p>Wir speichern deine Daten, bis du dein Profil löschst. Die Funktion „Profil löschen“ entfernt Konto, Profil, Bilder, Kommentare, Likes und Spielstand. Gesetzliche Aufbewahrungspflichten und die Speicherfristen von GitHub für Server-Protokolle bleiben unberührt.</p>
-<h3>9. Deine Rechte</h3><p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch (Art. 15 bis 21 DSGVO) sowie auf Widerruf erteilter Einwilligungen. Schreib uns dazu eine E-Mail. Du kannst dich außerdem bei einer Datenschutzaufsichtsbehörde beschweren, zum Beispiel beim Landesbeauftragten für den Datenschutz und die Informationsfreiheit Rheinland-Pfalz.</p>
-<h3>10. Alter und automatisierte Entscheidungen</h3><p>Die Nutzung des Kontos ist ab 16 Jahren vorgesehen. Eine automatisierte Entscheidungsfindung findet nicht statt.</p></div>
+<h3>7. Rangliste (Spielzeit)</h3><p>Die Rangliste zeigt Minecraft-Spielernamen und die auf dem Server verbrachte Spielzeit öffentlich an. Die Daten stammen vom Minecraft-Server (Hoster: G-Portal) und werden regelmäßig automatisch in Supabase gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Wenn du nicht in der Rangliste stehen möchtest, schreib mir eine E-Mail, dann entferne ich dich.</p>
+<h3>8. Lokale Speicherung</h3><p>Deine Login-Sitzung wird im Speicher deines Browsers (localStorage) abgelegt. Das ist für den Login technisch erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Tracking- oder Werbe-Cookies setzen wir nicht.</p>
+<h3>9. Speicherdauer und Löschung</h3><p>Wir speichern deine Daten, bis du dein Profil löschst. Die Funktion „Profil löschen“ entfernt Konto, Profil, Bilder, Kommentare, Likes und Spielstand. Gesetzliche Aufbewahrungspflichten und die Speicherfristen von GitHub für Server-Protokolle bleiben unberührt.</p>
+<h3>10. Deine Rechte</h3><p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch (Art. 15 bis 21 DSGVO) sowie auf Widerruf erteilter Einwilligungen. Schreib uns dazu eine E-Mail. Du kannst dich außerdem bei einer Datenschutzaufsichtsbehörde beschweren, zum Beispiel beim Landesbeauftragten für den Datenschutz und die Informationsfreiheit Rheinland-Pfalz.</p>
+<h3>11. Alter und automatisierte Entscheidungen</h3><p>Die Nutzung des Kontos ist ab 16 Jahren vorgesehen. Eine automatisierte Entscheidungsfindung findet nicht statt.</p></div>
 
 <div class="legal" id="l-nutzung"><h2>Regeln</h2>
 <p>Inkogniflix ist eine private Seite für Freunde und Mitspieler. Damit es angenehm bleibt:</p>
@@ -373,6 +386,18 @@ $('copy').onclick=async()=>{
   try{await navigator.clipboard.writeText($('ip').textContent);$('copyMsg').textContent='IP kopiert!'}
   catch(e){$('copyMsg').textContent='Bitte manuell kopieren.'}
 };
+async function loadBoard(){
+  const box=$('board');
+  try{
+    const r=await sb.from('playtime').select('name,minutes,updated_at').order('minutes',{ascending:false}).limit(10);
+    const d=r.data||[];
+    if(!d.length){box.innerHTML='<p class="sub">Noch keine Daten.</p>';return}
+    const top=d[0].minutes,medal=['🥇','🥈','🥉'];
+    box.innerHTML=d.map((x,i)=>'<div class="lbrow"><span class="fb" style="width:'+Math.max(6,Math.round(x.minutes/top*100))+'%"></span><span class="rk">'+(medal[i]||(i+1))+'</span><b>'+esc(x.name)+'</b><span class="h">'+Math.floor(x.minutes/60)+' h '+(x.minutes%60)+' min</span></div>').join('');
+    const up=d.reduce((a,x)=>x.updated_at>a?x.updated_at:a,'');
+    $('lbUp').textContent=up?'Stand: '+fmt(up):'';
+  }catch(e){box.innerHTML='<p class="sub">Rangliste konnte nicht geladen werden.</p>'}
+}
 async function checkSrv(){
   const dot=$('sdot'),t=$('stxt');
   try{
@@ -392,6 +417,7 @@ try{
   if(window.supabase){
     sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
     sb.auth.onAuthStateChange((_e,s)=>{setUser(s&&s.user)});
+    loadBoard();
   }
 }catch(e){sb=null}
 render();
