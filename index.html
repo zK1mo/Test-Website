@@ -77,8 +77,8 @@ input:focus{outline:2px solid var(--p)}
 .ip{display:inline-flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center;background:rgba(0,0,0,.35);border:1px solid var(--p);border-radius:999px;padding:10px 12px 10px 22px;box-shadow:var(--glow);font-family:ui-monospace,monospace;font-size:17px;margin:12px 0}
 .dot{width:10px;height:10px;border-radius:50%;background:#4ade80;box-shadow:0 0 10px #4ade80;display:inline-block;margin-right:8px}
 footer{text-align:center;padding:28px 16px;color:var(--m);font-size:13px;border-top:1px solid var(--line)}
-#modal,#pm,#pv,#lg,#em,#rm,#am,#mv{position:fixed;inset:0;background:rgba(5,2,12,.75);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
-#modal.on,#pm.on,#pv.on,#lg.on,#em.on,#rm.on,#am.on,#mv.on{display:flex}
+#modal,#pm,#pv,#lg,#em,#rm,#am,#mv,#sm,#tm{position:fixed;inset:0;background:rgba(5,2,12,.75);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
+#modal.on,#pm.on,#pv.on,#lg.on,#em.on,#rm.on,#am.on,#mv.on,#sm.on,#tm.on{display:flex}
 #lg{z-index:40}#lg .box{max-width:680px;text-align:left}
 .box{background:#1a0d33;border:1px solid var(--line);border-radius:28px;padding:24px;width:100%;max-width:350px;max-height:92vh;overflow:auto;box-shadow:var(--glow)}
 .tabs{display:flex;gap:8px;margin-bottom:12px}.tabs .btn{flex:1;padding:10px}
@@ -118,7 +118,17 @@ select.in option{background:#1a0d33;color:#f5ecff}
 .cath{display:flex;align-items:center;gap:8px;margin:26px 0 12px}
 .catt{flex:1;text-align:left;background:none;border:0;color:var(--t);font:800 20px Outfit,system-ui,sans-serif;cursor:pointer;padding:0}
 .catt small{color:var(--m);font-weight:400;font-size:14px}
-.cat.col .posts,.cat.col .cempty,.cat.col .cmore{display:none}
+.cat.col .posts,.cat.col .cempty,.cat.col .cmore,.cat.col .sheet{display:none}
+input[type=date]{color-scheme:dark}
+.sheet{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px 16px;margin-bottom:14px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 22px}.facts span{font-weight:600}.facts small{display:block;color:var(--m);font-size:12px;font-weight:400}
+.sheet p{margin:10px 0 0;color:var(--m)}.sheet .btn{margin-top:12px;padding:8px 16px;font-size:14px}
+.tl{position:relative;margin-left:8px;padding-left:24px;border-left:2px solid var(--line)}
+.tli{position:relative;margin-bottom:20px}
+.tli::before{content:"";position:absolute;left:-31px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--p);box-shadow:var(--glow)}
+.tli.srv::before{background:var(--p2)}
+.tld{font-size:13px;color:var(--p2);font-weight:600}.tli b{display:block}.tli p{margin:2px 0 0;color:var(--m);font-size:14px}.tli small{color:var(--m)}
+.tlb{display:inline-flex;gap:6px;margin-left:8px;vertical-align:middle}.tlb .ib{width:28px;height:28px;font-size:12px}
 .cchips,.chips{display:flex;flex-wrap:wrap;gap:8px}.chips{justify-content:center}
 .chip{position:relative;cursor:pointer}.chip input{position:absolute;opacity:0;pointer-events:none}
 .chip span{display:block;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.06);font-size:14px;transition:.15s}
@@ -142,7 +152,7 @@ select.in option{background:#1a0d33;color:#f5ecff}
 <body>
 <nav>
   <a class="brand" href="#top"><img src="logo.png" alt="" onerror="this.style.display='none'">INKOGNIFLIX</a>
-  <a href="#spiel">Mining</a><a href="#galerie">Galerie</a><a href="#rangliste">Rangliste</a><a href="#karte" id="navMap" style="display:none">Karte</a><a href="#server">Server</a>
+  <a href="#spiel">Mining</a><a href="#galerie">Galerie</a><a href="#zeitleiste">Zeitleiste</a><a href="#rangliste">Rangliste</a><a href="#karte" id="navMap" style="display:none">Karte</a><a href="#server">Server</a>
   <button class="btn ghost" id="adminBtn" style="display:none">Admin</button>
   <button class="btn ghost" id="profBtn" style="display:none">Profil</button>
   <button class="btn" id="authBtn">Anmelden</button>
@@ -194,6 +204,13 @@ select.in option{background:#1a0d33;color:#f5ecff}
   <p class="sub" id="gHint"></p>
   <div id="catAdd" style="display:none;margin-bottom:6px"><button class="btn ghost" id="addCat">＋ Neue Kategorie</button></div>
   <div id="posts"></div>
+</section>
+
+<section id="zeitleiste">
+  <h2>Zeitleiste</h2>
+  <p class="sub">Die Geschichte unserer Server und wichtige Ereignisse.</p>
+  <div id="tlAdd" style="display:none;margin-bottom:12px"><button class="btn ghost" id="addEv">＋ Ereignis</button></div>
+  <div class="tl" id="tl"></div>
 </section>
 
 <section id="rangliste">
@@ -276,6 +293,30 @@ select.in option{background:#1a0d33;color:#f5ecff}
   <button class="btn ghost" id="amClose" style="width:100%;margin-top:14px">Schließen</button>
 </div></div>
 
+<div id="sm"><div class="box" style="max-width:420px">
+  <h3 style="margin-top:0">Server-Steckbrief</h3><p class="sub" id="sName" style="margin-bottom:8px"></p>
+  <div class="row" style="margin-bottom:6px"><label style="flex:1;font-size:12px;color:var(--m)">Start<input class="in" type="date" id="sStart"></label><label style="flex:1;font-size:12px;color:var(--m)">Ende<input class="in" type="date" id="sEnd"></label></div>
+  <input type="text" id="sVer" placeholder="Version (zum Beispiel 1.21.4)" maxlength="40">
+  <input type="text" id="sMod" placeholder="Modpack oder Plugins" maxlength="100">
+  <input type="text" id="sSeed" placeholder="Seed" maxlength="40">
+  <input type="text" id="sSpawn" placeholder="Spawn (zum Beispiel x -843 / z -1592)" maxlength="40">
+  <input type="text" id="sMap" placeholder="Link zur Weltkarte (http:// oder https://)" maxlength="300">
+  <textarea class="in" id="sDesc" rows="3" maxlength="500" placeholder="Beschreibung und Highlights"></textarea>
+  <p class="msg" id="sMsg"></p>
+  <button class="btn" id="sSave" style="width:100%">Speichern</button>
+  <button class="btn ghost" id="sClose" style="width:100%;margin-top:8px">Abbrechen</button>
+</div></div>
+
+<div id="tm"><div class="box center">
+  <h3 style="margin-top:0">Ereignis</h3>
+  <input class="in" type="date" id="tDate">
+  <input type="text" id="tName" placeholder="Titel (zum Beispiel Weltreset)" maxlength="80">
+  <textarea class="in" id="tBody" rows="3" maxlength="400" placeholder="Beschreibung (optional)"></textarea>
+  <p class="msg" id="tMsg"></p>
+  <button class="btn" id="tSave" style="width:100%">Speichern</button>
+  <button class="btn ghost" id="tClose" style="width:100%;margin-top:8px">Abbrechen</button>
+</div></div>
+
 <div id="mv"><div class="box center">
   <h3 style="margin-top:0">In Kategorie verschieben</h3>
   <div class="cchips" id="mvCats" style="justify-content:center;margin:12px 0"></div>
@@ -343,6 +384,7 @@ function render(){
   $('profBtn').style.display=cur?'':'none';
   $('adminBtn').style.display=ADMIN?'':'none';
   $('catAdd').style.display=ADMIN?'':'none';
+  $('tlAdd').style.display=ADMIN?'':'none';
   $('upbox').style.display=cur&&!BANNED&&!MUTE?'grid':'none';
   $('gHint').textContent=!sb?'Galerie nicht verfügbar (Supabase fehlt).':(cur?(BANNED?'Dein Konto ist gesperrt. Du kannst weiter lesen, aber nichts mehr posten.':(MUTE?'Timeout bis '+fmt(MUTE)+': Du kannst gerade nichts posten oder kommentieren, aber liken.':'')):'Melde dich an, um Bilder hochzuladen, zu liken und zu kommentieren.');
   $('inv').innerHTML=LOOT.map(l=>`<div class="slot">${l[1]} ${l[0]}<br><b>${items[l[0]]||0}</b></div>`).join('');
@@ -351,7 +393,7 @@ function render(){
 async function setUser(u){
   cur=u||null;items={};me={};ADMIN=false;BANNED=false;MUTE=null;G={blocks:0,pick:1,coins:0,last:null};
   if(cur){try{const r=await sb.from('inventory').select('items,blocks,pick,coins,last_daily').eq('user_id',cur.id).maybeSingle();items=(r.data&&r.data.items)||{};if(r.data)G={blocks:r.data.blocks||0,pick:r.data.pick||1,coins:r.data.coins||0,last:r.data.last_daily||null};const pr=await sb.from('profiles').select('*').eq('user_id',cur.id).maybeSingle();me=pr.data||{};const ad=await sb.from('admins').select('user_id').eq('user_id',cur.id).maybeSingle();ADMIN=!!ad.data;const bn=await sb.from('banned_users').select('user_id').eq('user_id',cur.id).maybeSingle();BANNED=!!bn.data;const to=await sb.from('timeouts').select('ends_at').eq('user_id',cur.id).maybeSingle();MUTE=to.data&&new Date(to.data.ends_at)>new Date()?new Date(to.data.ends_at):null}catch(e){}}
-  render();loadPosts();loadMiners();
+  render();loadPosts();loadMiners();loadTimeline();
 }
 async function saveItems(){if(cur){try{await sb.from('inventory').upsert({user_id:cur.id,items,blocks:G.blocks,pick:G.pick,coins:G.coins,last_daily:G.last,user_name:name()})}catch(e){}}}
 function postHTML(p,likes,coms){
@@ -400,8 +442,8 @@ async function loadPosts(){
     (pf.data||[]).forEach(x=>{PROF[x.user_id]=x});
     $('posts').innerHTML=groups.map((g,gi)=>{
       const cl=col.includes(g.id),n=cnt[g.id]||0,l=g.list||[];
-      return '<div class="cat'+(cl?' col':'')+'" data-c="'+g.id+'" data-n="'+esc(g.name)+'"><div class="cath"><button class="catt" data-a="tog"><span class="arr">'+(cl?'▸':'▾')+'</span> '+esc(g.name)+' <small>('+n+')</small></button>'+(ADMIN&&g.id!='none'?(gi>0?'<button class="ib" data-a="up" title="Nach oben">▲</button>':'')+(gi<CATS.length-1?'<button class="ib" data-a="dn" title="Nach unten">▼</button>':'')+'<button class="ib" data-a="ren" title="Umbenennen">✎</button><button class="ib" data-a="dcat" title="Kategorie löschen">🗑</button>':'')+'</div>'
-        +(cl?'':(l.length?'<div class="posts">'+l.map(p=>postHTML(p,lr.data||[],cr.data||[])).join('')+'</div>'+(n>l.length?'<div class="cmore" style="text-align:center;margin-top:14px"><button class="btn ghost" data-a="more">Mehr anzeigen ('+(n-l.length)+')</button></div>':''):'<p class="sub cempty">Noch keine Bilder in dieser Kategorie.</p>'))+'</div>';
+      return '<div class="cat'+(cl?' col':'')+'" data-c="'+g.id+'" data-n="'+esc(g.name)+'"><div class="cath"><button class="catt" data-a="tog"><span class="arr">'+(cl?'▸':'▾')+'</span> '+esc(g.name)+' <small>('+n+')</small></button>'+(ADMIN&&g.id!='none'?(gi>0?'<button class="ib" data-a="up" title="Nach oben">▲</button>':'')+(gi<CATS.length-1?'<button class="ib" data-a="dn" title="Nach unten">▼</button>':'')+'<button class="ib" data-a="info" title="Steckbrief bearbeiten">📋</button><button class="ib" data-a="ren" title="Umbenennen">✎</button><button class="ib" data-a="dcat" title="Kategorie löschen">🗑</button>':'')+'</div>'
+        +(cl?'':sheetHTML(g.id)+(l.length?'<div class="posts">'+l.map(p=>postHTML(p,lr.data||[],cr.data||[])).join('')+'</div>'+(n>l.length?'<div class="cmore" style="text-align:center;margin-top:14px"><button class="btn ghost" data-a="more">Mehr anzeigen ('+(n-l.length)+')</button></div>':''):'<p class="sub cempty">Noch keine Bilder in dieser Kategorie.</p>'))+'</div>';
     }).join('');
   }catch(e){$('posts').innerHTML='<p class="sub">Galerie konnte nicht geladen werden.</p>'}
 }
@@ -413,6 +455,7 @@ $('posts').onclick=async e=>{
   if(a=='tog'){toggleCat(cat.dataset.c);return}
   if(a=='more'){LIM[cat.dataset.c]=(LIM[cat.dataset.c]||12)+12;loadPosts();return}
   if(!cur)return;
+  if(a=='info'){openSheet(cat.dataset.c);return}
   if(a=='up'||a=='dn'){
     const o=CATS.map(c=>c.id),i=o.indexOf(cat.dataset.c),j=a=='up'?i-1:i+1;
     if(i<0||j<0||j>=o.length)return;
@@ -583,6 +626,66 @@ $('am').onclick=async e=>{
     else if(a=='aign'){await resolveRep(c,'dismissed')}
   }catch(err){}
   loadAdmin();loadPosts();
+};
+const fd=d=>d?new Date(d+'T00:00').toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'}):'';
+function sheetHTML(id){
+  const c=CATS.find(x=>x.id==id);if(!c)return '';
+  const f=[];
+  if(c.start_date||c.end_date)f.push(['Zeitraum',fd(c.start_date)+' – '+(c.end_date?fd(c.end_date):'läuft noch')]);
+  [['Version',c.version],['Modpack',c.modpack],['Seed',c.seed],['Spawn',c.spawn]].forEach(x=>{if(x[1])f.push(x)});
+  const map=c.map_url&&/^https?:\/\//i.test(c.map_url);
+  if(!f.length&&!c.description&&!map)return '';
+  return '<div class="sheet"><div class="facts">'+f.map(x=>'<span><small>'+x[0]+'</small>'+esc(x[1])+'</span>').join('')+'</div>'+(c.description?'<p>'+esc(c.description)+'</p>':'')+(map?'<a class="btn ghost" href="'+esc(c.map_url)+'" target="_blank" rel="noopener">🗺 Weltkarte dieses Servers</a>':'')+'</div>';
+}
+let SHEET=null,TE=null;
+function openSheet(id){
+  const c=CATS.find(x=>x.id==id);if(!c)return;SHEET=id;$('sName').textContent=c.name;$('sMsg').textContent='';
+  [['sStart','start_date'],['sEnd','end_date'],['sVer','version'],['sMod','modpack'],['sSeed','seed'],['sSpawn','spawn'],['sMap','map_url'],['sDesc','description']].forEach(x=>{$(x[0]).value=c[x[1]]||''});
+  $('sm').classList.add('on');
+}
+$('sClose').onclick=()=>$('sm').classList.remove('on');
+$('sSave').onclick=async()=>{
+  const m=$('sMap').value.trim();
+  if(m&&!/^https?:\/\//i.test(m)){$('sMsg').textContent='Der Kartenlink muss mit http:// oder https:// beginnen.';return}
+  const v=id=>$(id).value.trim()||null;
+  const r=await sb.from('categories').update({start_date:v('sStart'),end_date:v('sEnd'),version:v('sVer'),modpack:v('sMod'),seed:v('sSeed'),spawn:v('sSpawn'),map_url:v('sMap'),description:v('sDesc')}).eq('id',SHEET);
+  if(r.error){$('sMsg').textContent='Fehler: '+r.error.message;return}
+  $('sm').classList.remove('on');loadPosts();loadTimeline();
+};
+let EVS=[];
+async function loadTimeline(){
+  if(!sb)return;
+  try{
+    const [ev,cg]=await Promise.all([sb.from('timeline_events').select('*'),sb.from('categories').select('*')]);
+    EVS=ev.data||[];const it=[];
+    EVS.forEach(e=>it.push({d:e.event_date,e}));
+    (cg.data||[]).forEach(c=>{if(c.start_date)it.push({d:c.start_date,c,k:'start'});if(c.end_date)it.push({d:c.end_date,c,k:'end'})});
+    it.sort((a,b)=>a.d<b.d?1:a.d>b.d?-1:0);
+    $('tl').innerHTML=it.length?it.map(x=>{
+      if(x.e)return '<div class="tli" data-id="'+x.e.id+'"><span class="tld">'+fd(x.d)+'</span><b>'+esc(x.e.title)+(ADMIN?'<span class="tlb"><button class="ib" data-a="eev" title="Bearbeiten">✎</button><button class="ib" data-a="dev" title="Löschen">🗑</button></span>':'')+'</b>'+(x.e.body?'<p>'+esc(x.e.body)+'</p>':'')+'</div>';
+      const c=x.c,sub=[c.version,c.modpack].filter(Boolean).join(' · ');
+      return '<div class="tli srv"><span class="tld">'+fd(x.d)+'</span><b>'+(x.k=='start'?'🟣 ':'🏁 ')+esc(c.name)+(x.k=='start'?' startet':' endet')+'</b>'+(sub?'<small>'+esc(sub)+'</small>':'')+'</div>';
+    }).join(''):'<p class="sub">Noch keine Einträge.</p>';
+  }catch(e){$('tl').innerHTML=''}
+}
+function openEv(id){
+  TE=id||null;const e=EVS.find(x=>x.id==id)||{};
+  $('tDate').value=e.event_date||'';$('tName').value=e.title||'';$('tBody').value=e.body||'';$('tMsg').textContent='';$('tm').classList.add('on');
+}
+$('addEv').onclick=()=>openEv(null);
+$('tClose').onclick=()=>$('tm').classList.remove('on');
+$('tSave').onclick=async()=>{
+  const d=$('tDate').value,t=$('tName').value.trim();
+  if(!d||!t){$('tMsg').textContent='Bitte Datum und Titel angeben.';return}
+  const row={event_date:d,title:t.slice(0,80),body:$('tBody').value.trim().slice(0,400)||null};
+  const r=TE?await sb.from('timeline_events').update(row).eq('id',TE):await sb.from('timeline_events').insert(row);
+  if(r.error){$('tMsg').textContent='Fehler: '+r.error.message;return}
+  $('tm').classList.remove('on');loadTimeline();
+};
+$('tl').onclick=async e=>{
+  const b=e.target.closest('button');if(!b||!ADMIN)return;const id=b.closest('.tli').dataset.id;
+  if(b.dataset.a=='eev'){openEv(id);return}
+  if(b.dataset.a=='dev'&&confirm('Dieses Ereignis löschen?')){await sb.from('timeline_events').delete().eq('id',id);loadTimeline()}
 };
 function openMove(id,cat){MV=id;$('mvCats').innerHTML=chips('mc',cat,true);$('mvMsg').textContent='';$('mv').classList.add('on')}
 $('mvClose').onclick=()=>$('mv').classList.remove('on');
