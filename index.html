@@ -124,7 +124,7 @@ select.in option{background:#1a0d33;color:#f5ecff}
 <body>
 <nav>
   <a class="brand" href="#top"><img src="logo.png" alt="" onerror="this.style.display='none'">INKOGNIFLIX</a>
-  <a href="#spiel">Mining</a><a href="#galerie">Galerie</a><a href="#rangliste">Rangliste</a><a href="#server">Server</a>
+  <a href="#spiel">Mining</a><a href="#galerie">Galerie</a><a href="#rangliste">Rangliste</a><a href="#karte" id="navMap" style="display:none">Karte</a><a href="#server">Server</a>
   <button class="btn ghost" id="adminBtn" style="display:none">Admin</button>
   <button class="btn ghost" id="profBtn" style="display:none">Profil</button>
   <button class="btn" id="authBtn">Anmelden</button>
@@ -180,6 +180,15 @@ select.in option{background:#1a0d33;color:#f5ecff}
   <h2>Rangliste</h2>
   <p class="sub">Wer hat die meisten Stunden auf dem Server verbracht? <span id="lbUp"></span></p>
   <div id="board"></div>
+</section>
+
+<section id="karte" class="center" style="display:none">
+  <h2>Weltkarte</h2>
+  <p class="sub">Schau dir unsere Welt von oben an, mit allen Bauten und Spielern.</p>
+  <div class="card">
+    <a class="btn" id="mapBtn" href="#" target="_blank" rel="noopener">🗺 Karte öffnen</a>
+    <p class="sub" style="margin:14px 0 0;font-size:14px">Öffnet sich in einem neuen Tab. Die Karte lädt beim ersten Mal etwas länger.</p>
+  </div>
 </section>
 
 <section id="server" class="center">
@@ -289,6 +298,8 @@ select.in option{background:#1a0d33;color:#f5ecff}
 <script>
 const SUPABASE_URL='https://hzvnbtksanoonvkblded.supabase.co';
 const SUPABASE_KEY='sb_publishable_BXqu2VmFxndAXpF4FAqlAg_3Dpr4Lsf';
+// Adresse der Weltkarte, zum Beispiel 'http://inkogniflix.g-portal.game:8123'. Leer lassen = Bereich bleibt versteckt.
+const MAP_URL='';
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=t=>t?new Date(t).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}):'';
@@ -591,6 +602,7 @@ try{
     loadBoard();
   }
 }catch(e){sb=null}
+if(MAP_URL){$('karte').style.display='';$('navMap').style.display='';$('mapBtn').href=MAP_URL}
 render();
 </script>
 </body>
