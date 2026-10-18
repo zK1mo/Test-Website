@@ -372,7 +372,7 @@ const chips=(nm,sel,none)=>{const has=CATS.some(c=>c.id==sel);return (none?'<lab
 async function loadPosts(){
   if(!sb){$('posts').innerHTML='';return}
   try{
-    const [pr,cg]=await Promise.all([sb.from('posts').select('*').order('pinned',{ascending:false}).order('created_at',{ascending:false}).limit(100),sb.from('categories').select('*').order('created_at',{ascending:false})]);
+    const [pr,cg]=await Promise.all([sb.from('posts').select('*').order('pinned',{ascending:false}).order('created_at',{ascending:false}).limit(100),sb.from('categories').select('*').order('sort',{ascending:true}).order('created_at',{ascending:false})]);
     CATS=cg.data||[];const ps=pr.data||[];
     const old=(document.querySelector('input[name=uc]:checked')||{}).value;$('upCats').innerHTML=chips('uc',old);
     if(!ps.length&&!CATS.length){$('posts').innerHTML='<p class="sub">Noch keine Bilder. Sei der Erste!</p>';return}
@@ -384,7 +384,7 @@ async function loadPosts(){
     const groups=CATS.map(c=>({id:c.id,name:c.name,list:ps.filter(p=>p.category_id==c.id)}));
     const rest=ps.filter(p=>!CATS.some(c=>c.id==p.category_id));if(rest.length)groups.push({id:'none',name:'Ohne Kategorie',list:rest});
     const col=colState();
-    $('posts').innerHTML=groups.map(g=>{const cl=col.includes(g.id);return '<div class="cat'+(cl?' col':'')+'" data-c="'+g.id+'" data-n="'+esc(g.name)+'"><div class="cath"><button class="catt" data-a="tog"><span class="arr">'+(cl?'▸':'▾')+'</span> '+esc(g.name)+' <small>('+g.list.length+')</small></button>'+(ADMIN&&g.id!='none'?'<button class="ib" data-a="ren" title="Umbenennen">✎</button><button class="ib" data-a="dcat" title="Kategorie löschen">🗑</button>':'')+'</div>'+(g.list.length?'<div class="posts">'+g.list.map(p=>postHTML(p,lr.data||[],cr.data||[])).join('')+'</div>':'<p class="sub cempty">Noch keine Bilder in dieser Kategorie.</p>')+'</div>'}).join('');
+    $('posts').innerHTML=groups.map((g,gi)=>{const cl=col.includes(g.id);return '<div class="cat'+(cl?' col':'')+'" data-c="'+g.id+'" data-n="'+esc(g.name)+'"><div class="cath"><button class="catt" data-a="tog"><span class="arr">'+(cl?'▸':'▾')+'</span> '+esc(g.name)+' <small>('+g.list.length+')</small></button>'+(ADMIN&&g.id!='none'?(gi>0?'<button class="ib" data-a="up" title="Nach oben">▲</button>':'')+(gi<CATS.length-1?'<button class="ib" data-a="dn" title="Nach unten">▼</button>':'')+'<button class="ib" data-a="ren" title="Umbenennen">✎</button><button class="ib" data-a="dcat" title="Kategorie löschen">🗑</button>':'')+'</div>'+(g.list.length?'<div class="posts">'+g.list.map(p=>postHTML(p,lr.data||[],cr.data||[])).join('')+'</div>':'<p class="sub cempty">Noch keine Bilder in dieser Kategorie.</p>')+'</div>'}).join('');
   }catch(e){$('posts').innerHTML='<p class="sub">Galerie konnte nicht geladen werden.</p>'}
 }
 $('posts').onclick=async e=>{
@@ -394,6 +394,13 @@ $('posts').onclick=async e=>{
   const a=b.dataset.a,cat=b.closest('.cat');
   if(a=='tog'){toggleCat(cat.dataset.c);return}
   if(!cur)return;
+  if(a=='up'||a=='dn'){
+    const o=CATS.map(c=>c.id),i=o.indexOf(cat.dataset.c),j=a=='up'?i-1:i+1;
+    if(i<0||j<0||j>=o.length)return;
+    [o[i],o[j]]=[o[j],o[i]];
+    try{await Promise.all(o.map((id,k)=>sb.from('categories').update({sort:k+1}).eq('id',id)))}catch(err){}
+    loadPosts();return;
+  }
   if(a=='ren'||a=='dcat'){
     const cid=cat.dataset.c,nm=cat.dataset.n;
     try{
