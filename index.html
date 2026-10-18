@@ -69,8 +69,8 @@ input:focus{outline:2px solid var(--p)}
 .ip{display:inline-flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center;background:rgba(0,0,0,.35);border:1px solid var(--p);border-radius:999px;padding:10px 12px 10px 22px;box-shadow:var(--glow);font-family:ui-monospace,monospace;font-size:17px;margin:12px 0}
 .dot{width:10px;height:10px;border-radius:50%;background:#4ade80;box-shadow:0 0 10px #4ade80;display:inline-block;margin-right:8px}
 footer{text-align:center;padding:28px 16px;color:var(--m);font-size:13px;border-top:1px solid var(--line)}
-#modal,#pm,#pv,#lg,#em,#rm,#am{position:fixed;inset:0;background:rgba(5,2,12,.75);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
-#modal.on,#pm.on,#pv.on,#lg.on,#em.on,#rm.on,#am.on{display:flex}
+#modal,#pm,#pv,#lg,#em,#rm,#am,#mv{position:fixed;inset:0;background:rgba(5,2,12,.75);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
+#modal.on,#pm.on,#pv.on,#lg.on,#em.on,#rm.on,#am.on,#mv.on{display:flex}
 #lg{z-index:40}#lg .box{max-width:680px;text-align:left}
 .box{background:#1a0d33;border:1px solid var(--line);border-radius:28px;padding:24px;width:100%;max-width:350px;max-height:92vh;overflow:auto;box-shadow:var(--glow)}
 .tabs{display:flex;gap:8px;margin-bottom:12px}.tabs .btn{flex:1;padding:10px}
@@ -107,6 +107,16 @@ footer a{color:var(--m);margin:0 8px;text-decoration:none}footer a:hover{color:#
 .pin{font-size:12px;color:var(--p2);font-weight:600;margin-bottom:6px}
 select.in option{background:#1a0d33;color:#f5ecff}
 .cm input.ce{width:60%;margin:0;padding:6px 10px}
+.cath{display:flex;align-items:center;gap:8px;margin:26px 0 12px}
+.catt{flex:1;text-align:left;background:none;border:0;color:var(--t);font:800 20px Outfit,system-ui,sans-serif;cursor:pointer;padding:0}
+.catt small{color:var(--m);font-weight:400;font-size:14px}
+.cat.col .posts,.cat.col .cempty{display:none}
+.cchips,.chips{display:flex;flex-wrap:wrap;gap:8px}.chips{justify-content:center}
+.chip{position:relative;cursor:pointer}.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip span{display:block;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.06);font-size:14px;transition:.15s}
+.chip input:checked+span{border-color:var(--p2);background:rgba(168,85,247,.28);box-shadow:var(--glow)}
+.chip2{border:1px solid var(--line);background:rgba(255,255,255,.07);color:var(--t);border-radius:999px;padding:7px 12px;cursor:pointer;font:600 13px Outfit,system-ui,sans-serif}
+.chip2:hover{background:rgba(255,255,255,.15)}
 .gst{color:var(--m);margin:18px 0 10px}
 .btns2{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .mh{margin:30px 0 10px;font-size:18px;color:var(--p2)}
@@ -168,12 +178,14 @@ select.in option{background:#1a0d33;color:#f5ecff}
   <div class="card upl" id="upbox" style="display:none">
     <label class="drop" id="drop" for="file"><span class="di" id="di">📷</span><span id="fname">Bild auswählen oder hierher ziehen</span><img id="prev" alt=""></label>
     <input type="file" id="file" accept="image/*">
+    <div class="cchips" id="upCats"></div>
     <input type="text" id="cap" placeholder="Beschreibung (optional)" maxlength="200">
     <button class="btn" id="up">Bild hochladen</button>
     <div class="msg" id="upMsg"></div>
   </div>
   <p class="sub" id="gHint"></p>
-  <div class="posts" id="posts"></div>
+  <div id="catAdd" style="display:none;margin-bottom:6px"><button class="btn ghost" id="addCat">＋ Neue Kategorie</button></div>
+  <div id="posts"></div>
 </section>
 
 <section id="rangliste">
@@ -208,7 +220,7 @@ select.in option{background:#1a0d33;color:#f5ecff}
 <h3>2. Hosting (GitHub Pages)</h3><p>Die Website wird über GitHub Pages bereitgestellt (GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA). Beim Aufruf verarbeitet GitHub technisch notwendige Daten, vor allem deine IP-Adresse, um die Seite auszuliefern und Missbrauch abzuwehren. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (sicherer, stabiler Betrieb). Für Übermittlungen in die USA beruft sich GitHub auf Garantien wie das EU-US Data Privacy Framework oder Standardvertragsklauseln.</p>
 <h3>3. Schriften und Skripte</h3><p>Schriftart und Skripte werden vom selben Server geladen. Es gibt keine Verbindung zu Google Fonts oder anderen CDNs. Wir setzen keine Analyse-, Tracking- oder Werbedienste ein.</p>
 <h3>4. Serverstatus (mcsrvstat.us)</h3><p>Die Startseite zeigt an, ob der Minecraft-Server online ist. Dafür ruft dein Browser beim Laden der Seite (und danach etwa jede Minute, solange sie offen ist) den Statusdienst mcsrvstat.us ab. Dabei wird deine IP-Adresse an den Betreiber dieses Dienstes übertragen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (Anzeige des Serverstatus für die Community).</p>
-<h3>5. Konto und Community (Supabase)</h3><p>Für Registrierung, Login und Community-Funktionen nutzen wir Supabase als Auftragsverarbeiter (Supabase Inc., USA). Gespeichert werden: E-Mail-Adresse, Passwort (nur als Hash, nicht lesbar), Benutzername, Beschreibung, Profilbild, optional dein Minecraft-Name, hochgeladene Bilder, Kommentare, Likes, Spielstand des Mining-Minispiels (Inventar, Münzen, Spitzhacke, abgebaute Blöcke) sowie Zeitstempel. Bestätigungs-E-Mails werden über Supabase versendet. Der Datenbankstandort ist Irland (AWS-Region eu-west-1, also innerhalb der EU). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Nutzungsvertrag). Meldungen von Beiträgen und Kommentaren (Melder, Grund) sowie Kontosperren werden zur Moderation gespeichert (Art. 6 Abs. 1 lit. f DSGVO).</p>
+<h3>5. Konto und Community (Supabase)</h3><p>Für Registrierung, Login und Community-Funktionen nutzen wir Supabase als Auftragsverarbeiter (Supabase Inc., USA). Gespeichert werden: E-Mail-Adresse, Passwort (nur als Hash, nicht lesbar), Benutzername, Beschreibung, Profilbild, optional dein Minecraft-Name, hochgeladene Bilder, Kommentare, Likes, Spielstand des Mining-Minispiels (Inventar, Münzen, Spitzhacke, abgebaute Blöcke) sowie Zeitstempel. Bestätigungs-E-Mails werden über Supabase versendet. Der Datenbankstandort ist Irland (AWS-Region eu-west-1, also innerhalb der EU). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Nutzungsvertrag). Meldungen von Beiträgen und Kommentaren (Melder, Grund) sowie Kontosperren und Timeouts werden zur Moderation gespeichert (Art. 6 Abs. 1 lit. f DSGVO).</p>
 <h3>6. Öffentliche Inhalte</h3><p>Benutzername, Profilbild, Beschreibung, Minecraft-Name, Bilder, Kommentare, Likes und die Mining-Rangliste (Name und Anzahl abgebauter Blöcke) sind für alle Besucher sichtbar, auch ohne Login. Deine E-Mail-Adresse ist nicht öffentlich. Bitte veröffentliche keine personenbezogenen Daten Dritter und keine Fotos von Personen ohne deren Einwilligung.</p>
 <h3>7. Rangliste (Spielzeit)</h3><p>Die Rangliste zeigt Minecraft-Spielernamen und die auf dem Server verbrachte Spielzeit öffentlich an. Die Daten stammen vom Minecraft-Server (Hoster: G-Portal) und werden regelmäßig automatisch in Supabase gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Wenn du nicht in der Rangliste stehen möchtest, schreib mir eine E-Mail, dann entferne ich dich.</p>
 <h3>8. Lokale Speicherung</h3><p>Deine Login-Sitzung wird im Speicher deines Browsers (localStorage) abgelegt. Das ist für den Login technisch erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Tracking- oder Werbe-Cookies setzen wir nicht.</p>
@@ -219,7 +231,7 @@ select.in option{background:#1a0d33;color:#f5ecff}
 <div class="legal" id="l-nutzung"><h2>Regeln</h2>
 <p>Inkogniflix ist eine private Seite für Freunde und Mitspieler. Damit es angenehm bleibt:</p>
 <ul><li>Sei respektvoll, keine Beleidigungen oder Hassinhalte.</li><li>Lade nur Bilder hoch, an denen du die Rechte hast (zum Beispiel eigene Screenshots), und keine Fotos von Personen ohne deren Einverständnis.</li><li>Keine rechtswidrigen, gewaltverherrlichenden, pornografischen oder jugendgefährdenden Inhalte und kein Spam.</li></ul>
-<p>Für Inhalte sind die jeweiligen Nutzer selbst verantwortlich. Du bleibst Urheber deiner Inhalte und räumst mir das Recht ein, sie hier anzuzeigen, solange sie online sind. Du kannst sie jederzeit selbst löschen. Verstöße kannst du über den Melden-Button oder per E-Mail melden (hakim1010sid@gmail.com). Ich darf Inhalte entfernen und Konten sperren, wenn gegen die Regeln verstoßen wird.</p>
+<p>Für Inhalte sind die jeweiligen Nutzer selbst verantwortlich. Du bleibst Urheber deiner Inhalte und räumst mir das Recht ein, sie hier anzuzeigen, solange sie online sind. Du kannst sie jederzeit selbst löschen. Verstöße kannst du über den Melden-Button oder per E-Mail melden (hakim1010sid@gmail.com). Ich darf Inhalte entfernen und Konten zeitweise (Timeout) oder dauerhaft sperren, wenn gegen die Regeln verstoßen wird.</p>
 <p>Die Nutzung ist kostenlos, ohne Anspruch auf ständige Verfügbarkeit. Es gilt deutsches Recht. Minecraft ist eine Marke von Mojang Synergies AB, diese Seite ist ein inoffizielles Fan-Projekt.</p></div>
 
 </div><button class="btn ghost" id="lgClose" style="width:100%;margin-top:18px">Schließen</button></div></div>
@@ -251,8 +263,17 @@ select.in option{background:#1a0d33;color:#f5ecff}
 <div id="am"><div class="box" style="max-width:640px;text-align:left">
   <h2>Admin</h2>
   <h3 class="mh" style="margin-top:6px">Offene Meldungen</h3><div id="repList"></div>
+  <h3 class="mh">Aktive Timeouts</h3><div id="toList"></div>
   <h3 class="mh">Gesperrte Nutzer</h3><div id="banList"></div>
   <button class="btn ghost" id="amClose" style="width:100%;margin-top:14px">Schließen</button>
+</div></div>
+
+<div id="mv"><div class="box center">
+  <h3 style="margin-top:0">In Kategorie verschieben</h3>
+  <div class="cchips" id="mvCats" style="justify-content:center;margin:12px 0"></div>
+  <p class="msg" id="mvMsg"></p>
+  <button class="btn" id="mvSave" style="width:100%">Verschieben</button>
+  <button class="btn ghost" id="mvClose" style="width:100%;margin-top:8px">Abbrechen</button>
 </div></div>
 
 <div id="pm"><div class="box center">
@@ -276,6 +297,7 @@ select.in option{background:#1a0d33;color:#f5ecff}
 
 <div id="pv"><div class="box center">
   <div id="pvAv"></div><h3 id="pvName"></h3><p id="pvMc" style="color:var(--p2);margin:2px 0 8px"></p><p id="pvBio" style="color:var(--m)"></p>
+  <div id="pvAdm" style="display:none;margin:10px 0"><p class="sub" style="margin:0 0 8px;font-size:13px">Admin: Timeout (nicht posten oder kommentieren)</p><div class="chips" id="tChips"><button class="chip2" data-m="60">1 Std</button><button class="chip2" data-m="360">6 Std</button><button class="chip2" data-m="1440">1 Tag</button><button class="chip2" data-m="4320">3 Tage</button><button class="chip2" data-m="10080">1 Woche</button><button class="chip2" data-m="20160">2 Wochen</button><button class="chip2" data-m="0">Aufheben</button></div><p class="msg" id="pvMsg"></p></div>
   <button class="btn ghost" id="pvClose" style="width:100%">Schließen</button>
 </div></div>
 
@@ -299,11 +321,11 @@ select.in option{background:#1a0d33;color:#f5ecff}
 const SUPABASE_URL='https://hzvnbtksanoonvkblded.supabase.co';
 const SUPABASE_KEY='sb_publishable_BXqu2VmFxndAXpF4FAqlAg_3Dpr4Lsf';
 // Adresse der Weltkarte, zum Beispiel 'http://inkogniflix.g-portal.game:8123'. Leer lassen = Bereich bleibt versteckt.
-const MAP_URL='http://inkogniflix.g-portal.game:8123';
+const MAP_URL='';
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=t=>t?new Date(t).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}):'';
-let mode='login',sb=null,cur=null,hits=0,items={},BOARD=[],ADMIN=false,BANNED=false,EDIT=null,REP=null,G={blocks:0,pick:1,coins:0,last:null};
+let mode='login',sb=null,cur=null,hits=0,items={},BOARD=[],ADMIN=false,BANNED=false,MUTE=null,CATS=[],MV=null,PVID=null,EDIT=null,REP=null,G={blocks:0,pick:1,coins:0,last:null};
 const LOOT=[['Erde','🟫',32],['Stein','⬜',28],['Eisen','🔩',15],['Gold','🟨',10],['Amethyst','🔮',10],['Diamant','💎',5]];
 let me={},PROF={},newAv=null;
 const name=()=>(me.username||'Spieler-'+cur.id.slice(0,4));
@@ -312,50 +334,75 @@ function render(){
   $('hello').textContent=cur?'Willkommen zurück, '+name()+'!':'';
   $('profBtn').style.display=cur?'':'none';
   $('adminBtn').style.display=ADMIN?'':'none';
-  $('upbox').style.display=cur&&!BANNED?'grid':'none';
-  $('gHint').textContent=!sb?'Galerie nicht verfügbar (Supabase fehlt).':(cur?(BANNED?'Dein Konto ist gesperrt. Du kannst weiter lesen, aber nichts mehr posten.':''):'Melde dich an, um Bilder hochzuladen, zu liken und zu kommentieren.');
+  $('catAdd').style.display=ADMIN?'':'none';
+  $('upbox').style.display=cur&&!BANNED&&!MUTE?'grid':'none';
+  $('gHint').textContent=!sb?'Galerie nicht verfügbar (Supabase fehlt).':(cur?(BANNED?'Dein Konto ist gesperrt. Du kannst weiter lesen, aber nichts mehr posten.':(MUTE?'Timeout bis '+fmt(MUTE)+': Du kannst gerade nichts posten oder kommentieren, aber liken.':'')):'Melde dich an, um Bilder hochzuladen, zu liken und zu kommentieren.');
   $('inv').innerHTML=LOOT.map(l=>`<div class="slot">${l[1]} ${l[0]}<br><b>${items[l[0]]||0}</b></div>`).join('');
   renderGame();
 }
 async function setUser(u){
-  cur=u||null;items={};me={};ADMIN=false;BANNED=false;G={blocks:0,pick:1,coins:0,last:null};
-  if(cur){try{const r=await sb.from('inventory').select('items,blocks,pick,coins,last_daily').eq('user_id',cur.id).maybeSingle();items=(r.data&&r.data.items)||{};if(r.data)G={blocks:r.data.blocks||0,pick:r.data.pick||1,coins:r.data.coins||0,last:r.data.last_daily||null};const pr=await sb.from('profiles').select('*').eq('user_id',cur.id).maybeSingle();me=pr.data||{};const ad=await sb.from('admins').select('user_id').eq('user_id',cur.id).maybeSingle();ADMIN=!!ad.data;const bn=await sb.from('banned_users').select('user_id').eq('user_id',cur.id).maybeSingle();BANNED=!!bn.data}catch(e){}}
+  cur=u||null;items={};me={};ADMIN=false;BANNED=false;MUTE=null;G={blocks:0,pick:1,coins:0,last:null};
+  if(cur){try{const r=await sb.from('inventory').select('items,blocks,pick,coins,last_daily').eq('user_id',cur.id).maybeSingle();items=(r.data&&r.data.items)||{};if(r.data)G={blocks:r.data.blocks||0,pick:r.data.pick||1,coins:r.data.coins||0,last:r.data.last_daily||null};const pr=await sb.from('profiles').select('*').eq('user_id',cur.id).maybeSingle();me=pr.data||{};const ad=await sb.from('admins').select('user_id').eq('user_id',cur.id).maybeSingle();ADMIN=!!ad.data;const bn=await sb.from('banned_users').select('user_id').eq('user_id',cur.id).maybeSingle();BANNED=!!bn.data;const to=await sb.from('timeouts').select('ends_at').eq('user_id',cur.id).maybeSingle();MUTE=to.data&&new Date(to.data.ends_at)>new Date()?new Date(to.data.ends_at):null}catch(e){}}
   render();loadPosts();loadMiners();
 }
 async function saveItems(){if(cur){try{await sb.from('inventory').upsert({user_id:cur.id,items,blocks:G.blocks,pick:G.pick,coins:G.coins,last_daily:G.last,user_name:name()})}catch(e){}}}
 function postHTML(p,likes,coms){
-  const l=likes.filter(x=>x.post_id==p.id),liked=cur&&l.some(x=>x.user_id==cur.id),cs=coms.filter(x=>x.post_id==p.id),can=cur&&!BANNED,mine=cur&&p.user_id==cur.id;
+  const l=likes.filter(x=>x.post_id==p.id),liked=cur&&l.some(x=>x.user_id==cur.id),cs=coms.filter(x=>x.post_id==p.id),can=cur&&!BANNED&&!MUTE,live=cur&&!BANNED,mine=cur&&p.user_id==cur.id;
   const cm=cs.map(c=>{const own=cur&&c.user_id==cur.id;return '<p data-c="'+c.id+'" data-body="'+esc(c.body)+'"><span class="ctx"><b class="cn" data-u="'+c.user_id+'">'+esc(dn(c.user_id,c.user_name))+'</b>: '+esc(c.body)+'</span><span class="cx"><span class="ct">'+fmt(c.created_at)+(c.edited_at?' · bearbeitet':'')+'</span>'
     +(can&&own?'<button class="cdel" data-a="cedit" title="Bearbeiten">✎</button>':'')
     +((own||ADMIN)?'<button class="cdel" data-a="delc" data-c="'+c.id+'" title="Löschen">✕</button>':'')
-    +(can&&!own?'<button class="cdel" data-a="repc" data-c="'+c.id+'" data-u="'+c.user_id+'" title="Melden">⚑</button>':'')+'</span></p>'}).join('');
-  return '<article class="card post" data-id="'+p.id+'" data-u="'+p.user_id+'">'+(p.pinned?'<span class="pinb" title="Angepinnt">📌</span>':'')+'<img src="'+esc(p.image_url)+'" alt="" loading="lazy"><div class="pb"><div class="who" data-u="'+p.user_id+'">'+av(p.user_id)+'<div><b>'+esc(dn(p.user_id,p.user_name))+'</b><div class="pd">'+fmt(p.created_at)+(p.edited_at?' · bearbeitet':'')+'</div></div></div><p>'+esc(p.caption||'')+'</p>'
+    +(live&&!own?'<button class="cdel" data-a="repc" data-c="'+c.id+'" data-u="'+c.user_id+'" title="Melden">⚑</button>':'')+'</span></p>'}).join('');
+  return '<article class="card post" data-id="'+p.id+'" data-u="'+p.user_id+'" data-cat="'+(p.category_id||'')+'">'+(p.pinned?'<span class="pinb" title="Angepinnt">📌</span>':'')+'<img src="'+esc(p.image_url)+'" alt="" loading="lazy"><div class="pb"><div class="who" data-u="'+p.user_id+'">'+av(p.user_id)+'<div><b>'+esc(dn(p.user_id,p.user_name))+'</b><div class="pd">'+fmt(p.created_at)+(p.edited_at?' · bearbeitet':'')+'</div></div></div><p>'+esc(p.caption||'')+'</p>'
     +'<div class="acts"><button class="like'+(liked?' on':'')+'" data-a="like">♥ '+l.length+'</button><span class="sp"></span>'
     +(ADMIN?'<button class="ib'+(p.pinned?' on':'')+'" data-a="pin" title="'+(p.pinned?'Lösen':'Anpinnen')+'">📌</button>':'')
+    +((mine&&can)||ADMIN?'<button class="ib" data-a="mv" title="In Kategorie verschieben">📁</button>':'')
     +(mine&&can?'<button class="ib" data-a="edit" title="Bearbeiten">✎</button>':'')
     +((mine||ADMIN)?'<button class="ib" data-a="del" title="Löschen">🗑</button>':'')
-    +(can&&!mine?'<button class="ib" data-a="rep" title="Melden">⚑</button>':'')+'</div>'
+    +(live&&!mine?'<button class="ib" data-a="rep" title="Melden">⚑</button>':'')+'</div>'
     +'<div class="cm">'+cm+'</div>'
     +(can?'<div class="row"><input type="text" placeholder="Kommentieren …" maxlength="200"><button class="btn" data-a="com">Senden</button></div>':'')+'</div></article>';
 }
+const colState=()=>{try{return JSON.parse(localStorage.getItem('bc_col')||'[]')}catch(e){return []}};
+function toggleCat(id){
+  const a=colState(),i=a.indexOf(id);if(i<0)a.push(id);else a.splice(i,1);
+  try{localStorage.setItem('bc_col',JSON.stringify(a))}catch(e){}
+  document.querySelectorAll('.cat').forEach(c=>{if(c.dataset.c==id){c.classList.toggle('col');c.querySelector('.arr').textContent=c.classList.contains('col')?'▸':'▾'}});
+}
+const chips=(nm,sel,none)=>{const has=CATS.some(c=>c.id==sel);return (none?'<label class="chip"><input type="radio" name="'+nm+'" value=""'+(has?'':' checked')+'><span>Ohne Kategorie</span></label>':'')+CATS.map((c,i)=>'<label class="chip"><input type="radio" name="'+nm+'" value="'+c.id+'"'+((has?c.id==sel:(!none&&i==0))?' checked':'')+'><span>'+esc(c.name)+'</span></label>').join('')};
 async function loadPosts(){
   if(!sb){$('posts').innerHTML='';return}
   try{
-    const pr=await sb.from('posts').select('*').order('pinned',{ascending:false}).order('created_at',{ascending:false}).limit(30);
-    const ps=pr.data||[];if(!ps.length){$('posts').innerHTML='<p class="sub">Noch keine Bilder. Sei der Erste!</p>';return}
+    const [pr,cg]=await Promise.all([sb.from('posts').select('*').order('pinned',{ascending:false}).order('created_at',{ascending:false}).limit(100),sb.from('categories').select('*').order('created_at',{ascending:false})]);
+    CATS=cg.data||[];const ps=pr.data||[];
+    const old=(document.querySelector('input[name=uc]:checked')||{}).value;$('upCats').innerHTML=chips('uc',old);
+    if(!ps.length&&!CATS.length){$('posts').innerHTML='<p class="sub">Noch keine Bilder. Sei der Erste!</p>';return}
     const ids=ps.map(p=>p.id);
-    const [lr,cr]=await Promise.all([sb.from('likes').select('post_id,user_id').in('post_id',ids),sb.from('comments').select('*').in('post_id',ids).order('created_at')]);
+    const [lr,cr]=ids.length?await Promise.all([sb.from('likes').select('post_id,user_id').in('post_id',ids),sb.from('comments').select('*').in('post_id',ids).order('created_at')]):[{data:[]},{data:[]}];
     const uids=[...new Set(ps.map(p=>p.user_id).concat((cr.data||[]).map(c=>c.user_id)))];
-    const pf=await sb.from('profiles').select('user_id,username,bio,avatar_url,mc_name').in('user_id',uids);
+    const pf=uids.length?await sb.from('profiles').select('user_id,username,bio,avatar_url,mc_name').in('user_id',uids):{data:[]};
     (pf.data||[]).forEach(x=>{PROF[x.user_id]=x});
-    $('posts').innerHTML=ps.map(p=>postHTML(p,lr.data||[],cr.data||[])).join('');
+    const groups=CATS.map(c=>({id:c.id,name:c.name,list:ps.filter(p=>p.category_id==c.id)}));
+    const rest=ps.filter(p=>!CATS.some(c=>c.id==p.category_id));if(rest.length)groups.push({id:'none',name:'Ohne Kategorie',list:rest});
+    const col=colState();
+    $('posts').innerHTML=groups.map(g=>{const cl=col.includes(g.id);return '<div class="cat'+(cl?' col':'')+'" data-c="'+g.id+'" data-n="'+esc(g.name)+'"><div class="cath"><button class="catt" data-a="tog"><span class="arr">'+(cl?'▸':'▾')+'</span> '+esc(g.name)+' <small>('+g.list.length+')</small></button>'+(ADMIN&&g.id!='none'?'<button class="ib" data-a="ren" title="Umbenennen">✎</button><button class="ib" data-a="dcat" title="Kategorie löschen">🗑</button>':'')+'</div>'+(g.list.length?'<div class="posts">'+g.list.map(p=>postHTML(p,lr.data||[],cr.data||[])).join('')+'</div>':'<p class="sub cempty">Noch keine Bilder in dieser Kategorie.</p>')+'</div>'}).join('');
   }catch(e){$('posts').innerHTML='<p class="sub">Galerie konnte nicht geladen werden.</p>'}
 }
 $('posts').onclick=async e=>{
   if(e.target.matches('.post>img')){$('lbi').src=e.target.src;$('lb').classList.add('on');return}
   const w=e.target.closest('.who,.cn');if(w){openPv(w.dataset.u);return}
-  const b=e.target.closest('button');if(!b||!cur)return;
-  const post=b.closest('.post'),id=post.dataset.id,a=b.dataset.a,cp=b.closest('p[data-c]');
+  const b=e.target.closest('button');if(!b)return;
+  const a=b.dataset.a,cat=b.closest('.cat');
+  if(a=='tog'){toggleCat(cat.dataset.c);return}
+  if(!cur)return;
+  if(a=='ren'||a=='dcat'){
+    const cid=cat.dataset.c,nm=cat.dataset.n;
+    try{
+      if(a=='ren'){const n=prompt('Neuer Name der Kategorie:',nm);if(!n||!n.trim())return;await sb.from('categories').update({name:n.trim().slice(0,40)}).eq('id',cid)}
+      else{if(!confirm('Kategorie „'+nm+'“ löschen? Die Bilder bleiben erhalten und landen unter „Ohne Kategorie“.'))return;await sb.from('categories').delete().eq('id',cid)}
+    }catch(err){}
+    loadPosts();return;
+  }
+  const post=b.closest('.post'),id=post.dataset.id,cp=b.closest('p[data-c]');
   try{
     if(a=='like'){
       if(b.classList.contains('on'))await sb.from('likes').delete().eq('post_id',id).eq('user_id',cur.id);
@@ -366,6 +413,7 @@ $('posts').onclick=async e=>{
     }else if(a=='delc'){await sb.from('comments').delete().eq('id',b.dataset.c)
     }else if(a=='del'){const im=post.querySelector('img').src;await sb.from('posts').delete().eq('id',id);removeImg(im)
     }else if(a=='pin'){await sb.rpc('admin_pin',{p_id:id,p_pinned:!post.querySelector('.pinb')})
+    }else if(a=='mv'){openMove(id,post.dataset.cat);return
     }else if(a=='edit'){openEdit(id,post);return
     }else if(a=='rep'){openRep('post',id,post.dataset.u);return
     }else if(a=='repc'){openRep('comment',b.dataset.c,b.dataset.u);return
@@ -382,7 +430,7 @@ $('up').onclick=async()=>{
     const b=await shrink(f),path=cur.id+'/'+Date.now()+'.jpg';
     let r=await sb.storage.from('images').upload(path,b,{contentType:'image/jpeg'});if(r.error)throw r.error;
     const url=sb.storage.from('images').getPublicUrl(path).data.publicUrl;
-    r=await sb.from('posts').insert({user_id:cur.id,user_name:name(),image_url:url,caption:$('cap').value.slice(0,200)});if(r.error)throw r.error;
+    r=await sb.from('posts').insert({user_id:cur.id,user_name:name(),image_url:url,caption:$('cap').value.slice(0,200),category_id:(document.querySelector('input[name=uc]:checked')||{}).value||null});if(r.error)throw r.error;
     $('file').value=$('cap').value='';showFile();$('upMsg').textContent='Hochgeladen!';loadPosts();
   }catch(e){$('upMsg').textContent='Fehler: '+(e.message||e)}
 };
@@ -407,7 +455,7 @@ function statLine(mc){
   if(i<0)return 'Noch keine Spielzeit gefunden.';
   const m=BOARD[i].minutes;return 'Spielzeit: '+Math.floor(m/60)+' h '+(m%60)+' min · Platz '+(i+1);
 }
-function openPv(id){const p=PROF[id]||{};$('pvMc').textContent=p.mc_name?('Minecraft: '+p.mc_name+(statLine(p.mc_name)?' · '+statLine(p.mc_name):'')):'';$('pvAv').innerHTML=av(id,1);$('pvName').textContent=dn(id);$('pvBio').textContent=p.bio||'Noch keine Beschreibung.';$('pv').classList.add('on')}
+function openPv(id){const p=PROF[id]||{};PVID=id;$('pvAdm').style.display=ADMIN&&cur&&id!=cur.id?'':'none';$('pvMsg').textContent='';$('pvMc').textContent=p.mc_name?('Minecraft: '+p.mc_name+(statLine(p.mc_name)?' · '+statLine(p.mc_name):'')):'';$('pvAv').innerHTML=av(id,1);$('pvName').textContent=dn(id);$('pvBio').textContent=p.bio||'Noch keine Beschreibung.';$('pv').classList.add('on')}
 function openPm(){newAv=null;$('pAv').innerHTML=avH(me.avatar_url,name(),1);$('pName').value=me.username||'';$('pBio').value=me.bio||'';$('pMc').value=me.mc_name||'';$('pStat').textContent=statLine(me.mc_name);$('pMsg').textContent='';$('delbox').style.display='none';$('pDel').style.display='';$('pm').classList.add('on')}
 function avatarBlob(f){return new Promise((ok,no)=>{const im=new Image();im.onload=()=>{const m=Math.min(im.width,im.height),c=document.createElement('canvas');c.width=c.height=256;c.getContext('2d').drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,256,256);c.toBlob(b=>b?ok(b):no(new Error('Bild nicht lesbar')),'image/jpeg',.88)};im.onerror=()=>no(new Error('Bild nicht lesbar'));im.src=URL.createObjectURL(f)})}
 $('profBtn').onclick=openPm;
@@ -467,15 +515,16 @@ async function loadAdmin(){
   const rr=await sb.from('reports').select('*').eq('status','open').order('created_at',{ascending:false}).limit(50);
   const R=rr.data||[];
   const pid=R.filter(x=>x.target_type=='post').map(x=>x.target_id),cid=R.filter(x=>x.target_type=='comment').map(x=>x.target_id);
-  const [pp,cc,br]=await Promise.all([pid.length?sb.from('posts').select('id,image_url,caption,user_name').in('id',pid):{data:[]},cid.length?sb.from('comments').select('id,body,user_name').in('id',cid):{data:[]},sb.from('banned_users').select('user_id')]);
+  const [pp,cc,br,tr]=await Promise.all([pid.length?sb.from('posts').select('id,image_url,caption,user_name').in('id',pid):{data:[]},cid.length?sb.from('comments').select('id,body,user_name').in('id',cid):{data:[]},sb.from('banned_users').select('user_id'),sb.from('timeouts').select('user_id,ends_at').gt('ends_at',new Date().toISOString())]);
   const T={};(pp.data||[]).forEach(x=>{T['post'+x.id]=x});(cc.data||[]).forEach(x=>{T['comment'+x.id]=x});
-  const B=br.data||[],ids=[...new Set(R.map(x=>x.target_user_id).concat(B.map(x=>x.user_id)).filter(Boolean))];
-  const pf=ids.length?await sb.from('profiles').select('user_id,username').in('user_id',ids):{data:[]};
-  const nm={};(pf.data||[]).forEach(x=>{nm[x.user_id]=x.username});
+  const B=br.data||[],TO=tr.data||[],ids=[...new Set(R.map(x=>x.target_user_id).concat(B.map(x=>x.user_id),TO.map(x=>x.user_id)).filter(Boolean))];
+  const pf=ids.length?await sb.from('profiles').select('user_id,username,bio,avatar_url,mc_name').in('user_id',ids):{data:[]};
+  const nm={};(pf.data||[]).forEach(x=>{nm[x.user_id]=x.username;PROF[x.user_id]=x});
   rl.innerHTML=R.length?R.map(x=>{const t=T[x.target_type+x.target_id];
     const prev=t?(x.target_type=='post'?'<img src="'+esc(t.image_url)+'" alt="" style="max-width:120px;border-radius:12px;display:block;margin:6px 0"><i>'+esc(t.caption||'')+'</i>':'„'+esc(t.body)+'“'):'<i>Inhalt wurde schon gelöscht.</i>';
-    return '<div class="card" style="margin-bottom:10px" data-r="'+x.id+'" data-t="'+x.target_type+'" data-i="'+x.target_id+'" data-u="'+(x.target_user_id||'')+'"><b>'+(x.target_type=='post'?'Beitrag':'Kommentar')+'</b> von '+esc(nm[x.target_user_id]||(t&&t.user_name)||'Unbekannt')+'<br><small>Grund: '+esc(x.reason||'')+' · '+fmt(x.created_at)+'</small><div>'+prev+'</div><div class="row" style="margin-top:8px;flex-wrap:wrap"><button class="btn" data-a="adel">Löschen</button><button class="btn" data-a="aban">Sperren</button><button class="btn ghost" data-a="aign">Ignorieren</button></div></div>'}).join(''):'<p class="sub">Keine offenen Meldungen.</p>';
+    return '<div class="card" style="margin-bottom:10px" data-r="'+x.id+'" data-t="'+x.target_type+'" data-i="'+x.target_id+'" data-u="'+(x.target_user_id||'')+'"><b>'+(x.target_type=='post'?'Beitrag':'Kommentar')+'</b> von '+esc(nm[x.target_user_id]||(t&&t.user_name)||'Unbekannt')+'<br><small>Grund: '+esc(x.reason||'')+' · '+fmt(x.created_at)+'</small><div>'+prev+'</div><div class="row" style="margin-top:8px;flex-wrap:wrap"><button class="btn" data-a="adel">Löschen</button><button class="btn" data-a="aban">Sperren</button><button class="btn ghost" data-a="aign">Ignorieren</button><button class="btn ghost" data-a="aprof">Profil</button></div></div>'}).join(''):'<p class="sub">Keine offenen Meldungen.</p>';
   bl.innerHTML=B.length?B.map(x=>'<div class="lbrow" style="grid-template-columns:1fr auto"><b>'+esc(nm[x.user_id]||'Spieler-'+x.user_id.slice(0,4))+'</b><button class="btn ghost" data-a="aun" data-u="'+x.user_id+'">Entsperren</button></div>').join(''):'<p class="sub">Niemand gesperrt.</p>';
+  $('toList').innerHTML=TO.length?TO.map(x=>'<div class="lbrow" style="grid-template-columns:1fr auto"><div><b>'+esc(nm[x.user_id]||'Spieler-'+x.user_id.slice(0,4))+'</b><br><small>bis '+fmt(x.ends_at)+'</small></div><button class="btn ghost" data-a="aunt" data-u="'+x.user_id+'">Aufheben</button></div>').join(''):'<p class="sub">Keine aktiven Timeouts.</p>';
 }
 $('adminBtn').onclick=()=>{$('am').classList.add('on');loadAdmin()};
 $('amClose').onclick=()=>$('am').classList.remove('on');
@@ -483,7 +532,9 @@ $('am').onclick=async e=>{
   const b=e.target.closest('button[data-a]');if(!b)return;
   const c=b.closest('[data-r]'),a=b.dataset.a;
   try{
-    if(a=='aun'){await sb.rpc('admin_unban',{p_user:b.dataset.u})}
+    if(a=='aprof'){openPv(c.dataset.u);return}
+    else if(a=='aunt'){await sb.rpc('admin_untimeout',{p_user:b.dataset.u})}
+    else if(a=='aun'){await sb.rpc('admin_unban',{p_user:b.dataset.u})}
     else if(a=='adel'){
       if(c.dataset.t=='post'){const im=(await sb.from('posts').select('image_url').eq('id',c.dataset.i).maybeSingle()).data;await sb.from('posts').delete().eq('id',c.dataset.i);if(im)removeImg(im.image_url)}
       else await sb.from('comments').delete().eq('id',c.dataset.i);
@@ -492,6 +543,24 @@ $('am').onclick=async e=>{
     else if(a=='aign'){await resolveRep(c,'dismissed')}
   }catch(err){}
   loadAdmin();loadPosts();
+};
+function openMove(id,cat){MV=id;$('mvCats').innerHTML=chips('mc',cat,true);$('mvMsg').textContent='';$('mv').classList.add('on')}
+$('mvClose').onclick=()=>$('mv').classList.remove('on');
+$('mvSave').onclick=async()=>{
+  const v=(document.querySelector('input[name=mc]:checked')||{}).value||null;
+  const r=await sb.from('posts').update({category_id:v}).eq('id',MV);
+  if(r.error){$('mvMsg').textContent='Fehler: '+r.error.message;return}
+  $('mv').classList.remove('on');loadPosts();
+};
+$('addCat').onclick=async()=>{
+  const n=prompt('Name der neuen Kategorie (zum Beispiel Server 2027):');if(!n||!n.trim())return;
+  const r=await sb.from('categories').insert({name:n.trim().slice(0,40)});if(r.error)alert('Fehler: '+r.error.message);
+  loadPosts();
+};
+$('tChips').onclick=async e=>{
+  const b=e.target.closest('button');if(!b||!PVID)return;const m=+b.dataset.m;
+  const r=m?await sb.rpc('admin_timeout',{p_user:PVID,p_minutes:m,p_reason:'Admin'}):await sb.rpc('admin_untimeout',{p_user:PVID});
+  $('pvMsg').textContent=r.error?'Fehler: '+r.error.message:(m?'Timeout gesetzt: '+b.textContent:'Timeout aufgehoben');
 };
 function openL(k){document.querySelectorAll('.legal').forEach(x=>{x.style.display=x.id=='l-'+k?'block':'none'});$('lg').classList.add('on');$('lg').querySelector('.box').scrollTop=0}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-l]');if(a){e.preventDefault();openL(a.dataset.l)}});
