@@ -110,7 +110,7 @@ select.in option{background:#1a0d33;color:#f5ecff}
 .cath{display:flex;align-items:center;gap:8px;margin:26px 0 12px}
 .catt{flex:1;text-align:left;background:none;border:0;color:var(--t);font:800 20px Outfit,system-ui,sans-serif;cursor:pointer;padding:0}
 .catt small{color:var(--m);font-weight:400;font-size:14px}
-.cat.col .posts,.cat.col .cempty{display:none}
+.cat.col .posts,.cat.col .cempty,.cat.col .cmore{display:none}
 .cchips,.chips{display:flex;flex-wrap:wrap;gap:8px}.chips{justify-content:center}
 .chip{position:relative;cursor:pointer}.chip input{position:absolute;opacity:0;pointer-events:none}
 .chip span{display:block;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.06);font-size:14px;transition:.15s}
@@ -362,29 +362,39 @@ function postHTML(p,likes,coms){
     +'<div class="cm">'+cm+'</div>'
     +(can?'<div class="row"><input type="text" placeholder="Kommentieren …" maxlength="200"><button class="btn" data-a="com">Senden</button></div>':'')+'</div></article>';
 }
+const LIM={};
 const colState=()=>{try{return JSON.parse(localStorage.getItem('bc_col')||'[]')}catch(e){return []}};
 function toggleCat(id){
   const a=colState(),i=a.indexOf(id);if(i<0)a.push(id);else a.splice(i,1);
   try{localStorage.setItem('bc_col',JSON.stringify(a))}catch(e){}
-  document.querySelectorAll('.cat').forEach(c=>{if(c.dataset.c==id){c.classList.toggle('col');c.querySelector('.arr').textContent=c.classList.contains('col')?'▸':'▾'}});
+  document.querySelectorAll('.cat').forEach(c=>{if(c.dataset.c==id){c.classList.toggle('col');c.querySelector('.arr').textContent=c.classList.contains('col')?'▸':'▾';if(!c.classList.contains('col'))loadPosts()}});
 }
 const chips=(nm,sel,none)=>{const has=CATS.some(c=>c.id==sel);return (none?'<label class="chip"><input type="radio" name="'+nm+'" value=""'+(has?'':' checked')+'><span>Ohne Kategorie</span></label>':'')+CATS.map((c,i)=>'<label class="chip"><input type="radio" name="'+nm+'" value="'+c.id+'"'+((has?c.id==sel:(!none&&i==0))?' checked':'')+'><span>'+esc(c.name)+'</span></label>').join('')};
 async function loadPosts(){
   if(!sb){$('posts').innerHTML='';return}
   try{
-    const [pr,cg]=await Promise.all([sb.from('posts').select('*').order('pinned',{ascending:false}).order('created_at',{ascending:false}).limit(100),sb.from('categories').select('*').order('sort',{ascending:true}).order('created_at',{ascending:false})]);
-    CATS=cg.data||[];const ps=pr.data||[];
+    const [cg,al]=await Promise.all([sb.from('categories').select('*').order('sort',{ascending:true}).order('created_at',{ascending:false}),sb.from('posts').select('category_id').limit(1000)]);
+    CATS=cg.data||[];
     const old=(document.querySelector('input[name=uc]:checked')||{}).value;$('upCats').innerHTML=chips('uc',old);
-    if(!ps.length&&!CATS.length){$('posts').innerHTML='<p class="sub">Noch keine Bilder. Sei der Erste!</p>';return}
-    const ids=ps.map(p=>p.id);
+    const cnt={};(al.data||[]).forEach(x=>{const k=CATS.some(c=>c.id==x.category_id)?x.category_id:'none';cnt[k]=(cnt[k]||0)+1});
+    const groups=CATS.map(c=>({id:c.id,name:c.name})).concat(cnt.none?[{id:'none',name:'Ohne Kategorie'}]:[]);
+    if(!groups.length){$('posts').innerHTML='<p class="sub">Noch keine Bilder. Sei der Erste!</p>';return}
+    const col=colState();
+    await Promise.all(groups.filter(g=>!col.includes(g.id)).map(async g=>{
+      let q=sb.from('posts').select('*').order('pinned',{ascending:false}).order('created_at',{ascending:false}).limit(LIM[g.id]||12);
+      q=g.id=='none'?q.is('category_id',null):q.eq('category_id',g.id);
+      g.list=(await q).data||[];
+    }));
+    const ps=groups.flatMap(g=>g.list||[]),ids=ps.map(p=>p.id);
     const [lr,cr]=ids.length?await Promise.all([sb.from('likes').select('post_id,user_id').in('post_id',ids),sb.from('comments').select('*').in('post_id',ids).order('created_at')]):[{data:[]},{data:[]}];
     const uids=[...new Set(ps.map(p=>p.user_id).concat((cr.data||[]).map(c=>c.user_id)))];
     const pf=uids.length?await sb.from('profiles').select('user_id,username,bio,avatar_url,mc_name').in('user_id',uids):{data:[]};
     (pf.data||[]).forEach(x=>{PROF[x.user_id]=x});
-    const groups=CATS.map(c=>({id:c.id,name:c.name,list:ps.filter(p=>p.category_id==c.id)}));
-    const rest=ps.filter(p=>!CATS.some(c=>c.id==p.category_id));if(rest.length)groups.push({id:'none',name:'Ohne Kategorie',list:rest});
-    const col=colState();
-    $('posts').innerHTML=groups.map((g,gi)=>{const cl=col.includes(g.id);return '<div class="cat'+(cl?' col':'')+'" data-c="'+g.id+'" data-n="'+esc(g.name)+'"><div class="cath"><button class="catt" data-a="tog"><span class="arr">'+(cl?'▸':'▾')+'</span> '+esc(g.name)+' <small>('+g.list.length+')</small></button>'+(ADMIN&&g.id!='none'?(gi>0?'<button class="ib" data-a="up" title="Nach oben">▲</button>':'')+(gi<CATS.length-1?'<button class="ib" data-a="dn" title="Nach unten">▼</button>':'')+'<button class="ib" data-a="ren" title="Umbenennen">✎</button><button class="ib" data-a="dcat" title="Kategorie löschen">🗑</button>':'')+'</div>'+(g.list.length?'<div class="posts">'+g.list.map(p=>postHTML(p,lr.data||[],cr.data||[])).join('')+'</div>':'<p class="sub cempty">Noch keine Bilder in dieser Kategorie.</p>')+'</div>'}).join('');
+    $('posts').innerHTML=groups.map((g,gi)=>{
+      const cl=col.includes(g.id),n=cnt[g.id]||0,l=g.list||[];
+      return '<div class="cat'+(cl?' col':'')+'" data-c="'+g.id+'" data-n="'+esc(g.name)+'"><div class="cath"><button class="catt" data-a="tog"><span class="arr">'+(cl?'▸':'▾')+'</span> '+esc(g.name)+' <small>('+n+')</small></button>'+(ADMIN&&g.id!='none'?(gi>0?'<button class="ib" data-a="up" title="Nach oben">▲</button>':'')+(gi<CATS.length-1?'<button class="ib" data-a="dn" title="Nach unten">▼</button>':'')+'<button class="ib" data-a="ren" title="Umbenennen">✎</button><button class="ib" data-a="dcat" title="Kategorie löschen">🗑</button>':'')+'</div>'
+        +(cl?'':(l.length?'<div class="posts">'+l.map(p=>postHTML(p,lr.data||[],cr.data||[])).join('')+'</div>'+(n>l.length?'<div class="cmore" style="text-align:center;margin-top:14px"><button class="btn ghost" data-a="more">Mehr anzeigen ('+(n-l.length)+')</button></div>':''):'<p class="sub cempty">Noch keine Bilder in dieser Kategorie.</p>'))+'</div>';
+    }).join('');
   }catch(e){$('posts').innerHTML='<p class="sub">Galerie konnte nicht geladen werden.</p>'}
 }
 $('posts').onclick=async e=>{
@@ -393,6 +403,7 @@ $('posts').onclick=async e=>{
   const b=e.target.closest('button');if(!b)return;
   const a=b.dataset.a,cat=b.closest('.cat');
   if(a=='tog'){toggleCat(cat.dataset.c);return}
+  if(a=='more'){LIM[cat.dataset.c]=(LIM[cat.dataset.c]||12)+12;loadPosts();return}
   if(!cur)return;
   if(a=='up'||a=='dn'){
     const o=CATS.map(c=>c.id),i=o.indexOf(cat.dataset.c),j=a=='up'?i-1:i+1;
@@ -438,7 +449,7 @@ $('up').onclick=async()=>{
     let r=await sb.storage.from('images').upload(path,b,{contentType:'image/jpeg'});if(r.error)throw r.error;
     const url=sb.storage.from('images').getPublicUrl(path).data.publicUrl;
     r=await sb.from('posts').insert({user_id:cur.id,user_name:name(),image_url:url,caption:$('cap').value.slice(0,200),category_id:(document.querySelector('input[name=uc]:checked')||{}).value||null});if(r.error)throw r.error;
-    $('file').value=$('cap').value='';showFile();$('upMsg').textContent='Hochgeladen!';loadPosts();
+    $('file').value=$('cap').value='';showFile();$('upMsg').textContent='Hochgeladen!';const k=(document.querySelector('input[name=uc]:checked')||{}).value;if(k){try{localStorage.setItem('bc_col',JSON.stringify(colState().filter(x=>x!=k)))}catch(e){}}loadPosts();
   }catch(e){$('upMsg').textContent='Fehler: '+(e.message||e)}
 };
 function showFile(){
