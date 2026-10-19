@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://hzvnbtksanoonvkblded.supabase.co; font-src 'self'; connect-src 'self' https://hzvnbtksanoonvkblded.supabase.co https://api.mcsrvstat.us; object-src 'none'; base-uri 'self'; form-action 'none'">
 <title>Inkogniflix – Minecraft Community</title>
 <link rel="icon" href="logo.png">
 <style>
@@ -431,7 +432,7 @@ function postHTML(p,likes,coms){
     +(can?'<div class="row"><input type="text" placeholder="Kommentieren …" maxlength="200"><button class="btn" data-a="com">Senden</button></div>':'')+'</div></article>';
 }
 const SIGNED={};
-const su=u=>SIGNED[u]||u;
+const su=u=>SIGNED[u]||(/^blob:/.test(u)||pathOf(u)?u:'');
 function pathOf(u){const m=String(u||'').match(/\/images\/(.+?)(\?|$)/);return m?decodeURIComponent(m[1]):null}
 async function signAll(urls){
   const need=[...new Set(urls.filter(u=>u&&!SIGNED[u]&&pathOf(u)))];if(!need.length)return;
@@ -565,7 +566,7 @@ $('lb').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTo
 $('lb').onclick=()=>$('lb').classList.remove('on');
 document.addEventListener('keydown',e=>{if(e.key=='Escape')$('lb').classList.remove('on')});
 const dn=(id,fb)=>(PROF[id]&&PROF[id].username)||fb||'Anonym';
-const avH=(url,nm,big)=>url?'<img class="av'+(big?' avbig':'')+'" src="'+esc(su(url))+'" alt="">':'<span class="av ph'+(big?' avbig':'')+'">'+esc((nm||'?').charAt(0).toUpperCase())+'</span>';
+const avH=(url,nm,big)=>su(url)?'<img class="av'+(big?' avbig':'')+'" src="'+esc(su(url))+'" alt="">':'<span class="av ph'+(big?' avbig':'')+'">'+esc((nm||'?').charAt(0).toUpperCase())+'</span>';
 const av=(id,big)=>avH(PROF[id]&&PROF[id].avatar_url,dn(id),big);
 function statLine(mc){
   if(!mc)return '';
