@@ -78,8 +78,8 @@ input:focus{outline:2px solid var(--p)}
 .ip{display:inline-flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center;background:rgba(0,0,0,.35);border:1px solid var(--p);border-radius:999px;padding:10px 12px 10px 22px;box-shadow:var(--glow);font-family:ui-monospace,monospace;font-size:17px;margin:12px 0}
 .dot{width:10px;height:10px;border-radius:50%;background:#4ade80;box-shadow:0 0 10px #4ade80;display:inline-block;margin-right:8px}
 footer{text-align:center;padding:28px 16px;color:var(--m);font-size:13px;border-top:1px solid var(--line)}
-#modal,#pm,#pv,#lg,#em,#rm,#am,#mv,#sm,#tm{position:fixed;inset:0;background:rgba(5,2,12,.75);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
-#modal.on,#pm.on,#pv.on,#lg.on,#em.on,#rm.on,#am.on,#mv.on,#sm.on,#tm.on{display:flex}
+#modal,#pm,#pv,#lg,#em,#rm,#am,#mv,#sm,#tm,#pw{position:fixed;inset:0;background:rgba(5,2,12,.75);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
+#modal.on,#pm.on,#pv.on,#lg.on,#em.on,#rm.on,#am.on,#mv.on,#sm.on,#tm.on,#pw.on{display:flex}
 #lg{z-index:40}#lg .box{max-width:680px;text-align:left}
 .box{background:#1a0d33;border:1px solid var(--line);border-radius:28px;padding:24px;width:100%;max-width:350px;max-height:92vh;overflow:auto;box-shadow:var(--glow)}
 .tabs{display:flex;gap:8px;margin-bottom:12px}.tabs .btn{flex:1;padding:10px}
@@ -116,6 +116,11 @@ footer a{color:var(--m);margin:0 8px;text-decoration:none}footer a:hover{color:#
 .pin{font-size:12px;color:var(--p2);font-weight:600;margin-bottom:6px}
 select.in option{background:#1a0d33;color:#f5ecff}
 #gate{display:none}body.locked #gate{display:block}
+#gText{margin:0 0 26px}
+#hello:empty{display:none}
+body.locked .hero{padding-bottom:8px}
+body.locked #gate{padding-top:16px}
+.btn.pressed{transform:scale(.96);filter:brightness(.9)}
 body.locked #features,body.locked #spiel,body.locked #galerie,body.locked #zeitleiste,body.locked #rangliste,body.locked #karte,body.locked #server,body.locked nav a:not(.brand),body.locked .hero .btns{display:none}
 .cm input.ce{width:60%;margin:0;padding:6px 10px}
 .cath{display:flex;align-items:center;gap:8px;margin:26px 0 12px}
@@ -256,7 +261,7 @@ input[type=date]{color-scheme:dark}
 <h3>2. Hosting (GitHub Pages)</h3><p>Die Website wird über GitHub Pages bereitgestellt (GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA). Beim Aufruf verarbeitet GitHub technisch notwendige Daten, vor allem deine IP-Adresse, um die Seite auszuliefern und Missbrauch abzuwehren. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (sicherer, stabiler Betrieb). Für Übermittlungen in die USA beruft sich GitHub auf Garantien wie das EU-US Data Privacy Framework oder Standardvertragsklauseln.</p>
 <h3>3. Schriften und Skripte</h3><p>Schriftart und Skripte werden vom selben Server geladen. Es gibt keine Verbindung zu Google Fonts oder anderen CDNs. Wir setzen keine Analyse-, Tracking- oder Werbedienste ein.</p>
 <h3>4. Serverstatus (mcsrvstat.us)</h3><p>Die Startseite zeigt an, ob der Minecraft-Server online ist. Dafür ruft dein Browser beim Laden der Seite (und danach etwa jede Minute, solange sie offen ist) den Statusdienst mcsrvstat.us ab. Dabei wird deine IP-Adresse an den Betreiber dieses Dienstes übertragen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (Anzeige des Serverstatus für die Community).</p>
-<h3>5. Konto und Community (Supabase)</h3><p>Für Registrierung, Login und Community-Funktionen nutzen wir Supabase als Auftragsverarbeiter (Supabase Inc., USA). Gespeichert werden: E-Mail-Adresse, Passwort (nur als Hash, nicht lesbar), Benutzername, Beschreibung, Profilbild, optional dein Minecraft-Name, hochgeladene Bilder, Kommentare, Likes, Spielstand des Mining-Minispiels (Inventar, Münzen, Spitzhacke, abgebaute Blöcke) sowie Zeitstempel. Bestätigungs-E-Mails werden über Supabase versendet. Der Datenbankstandort ist Irland (AWS-Region eu-west-1, also innerhalb der EU). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Nutzungsvertrag). Meldungen von Beiträgen und Kommentaren (Melder, Grund) sowie Kontosperren und Timeouts werden zur Moderation gespeichert (Art. 6 Abs. 1 lit. f DSGVO). Für die Freischaltung speichern wir deine E-Mail-Adresse und den Zeitpunkt deiner Anfrage, bis du freigeschaltet oder abgelehnt wirst.</p>
+<h3>5. Konto und Community (Supabase)</h3><p>Für Registrierung, Login und Community-Funktionen nutzen wir Supabase als Auftragsverarbeiter (Supabase Inc., USA). Gespeichert werden: Benutzername, Passwort (nur als Hash, nicht lesbar), optional eine E-Mail-Adresse, Beschreibung, Profilbild, optional dein Minecraft-Name, hochgeladene Bilder, Kommentare, Likes, Spielstand des Mining-Minispiels (Inventar, Münzen, Spitzhacke, abgebaute Blöcke) sowie Zeitstempel. Bestätigungs-E-Mails werden über Supabase versendet. Der Datenbankstandort ist Irland (AWS-Region eu-west-1, also innerhalb der EU). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Nutzungsvertrag). Meldungen von Beiträgen und Kommentaren (Melder, Grund) sowie Kontosperren und Timeouts werden zur Moderation gespeichert (Art. 6 Abs. 1 lit. f DSGVO). Für die Freischaltung speichern wir deinen Benutzernamen und den Zeitpunkt deiner Anfrage, bis du freigeschaltet oder abgelehnt wirst.</p>
 <h3>6. Öffentliche Inhalte</h3><p>Benutzername, Profilbild, Beschreibung, Minecraft-Name, Bilder, Kommentare, Likes und die Mining-Rangliste (Name und Anzahl abgebauter Blöcke) sind für alle Besucher sichtbar, auch ohne Login. Deine E-Mail-Adresse ist nicht öffentlich. Bitte veröffentliche keine personenbezogenen Daten Dritter und keine Fotos von Personen ohne deren Einwilligung.</p>
 <h3>7. Rangliste (Spielzeit)</h3><p>Die Rangliste zeigt Minecraft-Spielernamen und die auf dem Server verbrachte Spielzeit öffentlich an. Die Daten stammen vom Minecraft-Server (Hoster: G-Portal) und werden regelmäßig automatisch in Supabase gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Wenn du nicht in der Rangliste stehen möchtest, schreib mir eine E-Mail, dann entferne ich dich.</p>
 <h3>8. Lokale Speicherung</h3><p>Deine Login-Sitzung wird im Speicher deines Browsers (localStorage) abgelegt. Das ist für den Login technisch erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Tracking- oder Werbe-Cookies setzen wir nicht.</p>
@@ -337,6 +342,15 @@ input[type=date]{color-scheme:dark}
   <button class="btn ghost" id="mvClose" style="width:100%;margin-top:8px">Abbrechen</button>
 </div></div>
 
+<div id="pw"><div class="box center">
+  <h3 style="margin-top:0" id="pwTitle">Passwort ändern</h3>
+  <input type="password" id="pwNew" placeholder="Neues Passwort (mind. 8 Zeichen)" autocomplete="new-password">
+  <p class="msg" id="pwMsg"></p>
+  <button class="btn" id="pwSave" style="width:100%">Speichern</button>
+  <button class="btn ghost" id="pwMail" style="width:100%;margin-top:8px;display:none">Link per E-Mail senden</button>
+  <button class="btn ghost" id="pwClose" style="width:100%;margin-top:8px">Schließen</button>
+</div></div>
+
 <div id="pm"><div class="box center">
   <label for="avfile" style="cursor:pointer;display:inline-block" title="Profilbild ändern"><span id="pAv"></span></label>
   <input type="file" id="avfile" accept="image/*">
@@ -345,6 +359,10 @@ input[type=date]{color-scheme:dark}
   <textarea class="in" id="pBio" rows="4" maxlength="300" placeholder="Über mich …"></textarea>
   <input type="text" id="pMc" placeholder="Minecraft-Name (optional)" maxlength="16">
   <p id="pStat" style="margin:2px 0 0;font-size:14px;color:var(--p2)"></p>
+  <p id="pEmailSt" style="margin:14px 0 4px;font-size:13px;color:var(--m)"></p>
+  <input type="text" id="pEmail" placeholder="Private E-Mail (optional)" maxlength="120" autocomplete="email">
+  <button class="btn ghost" id="pEmailBtn" style="width:100%;margin-top:6px">E-Mail bestätigen lassen</button>
+  <button class="btn ghost" id="pPwBtn" style="width:100%;margin-top:8px">Passwort ändern oder zurücksetzen</button>
   <p class="msg" id="pMsg"></p>
   <button class="btn" id="pSave" style="width:100%">Speichern</button>
   <button class="btn ghost" id="pClose" style="width:100%;margin-top:8px">Schließen</button>
@@ -358,7 +376,7 @@ input[type=date]{color-scheme:dark}
 
 <div id="pv"><div class="box center">
   <div id="pvAv"></div><h3 id="pvName"></h3><p id="pvMc" style="color:var(--p2);margin:2px 0 8px"></p><p id="pvBio" style="color:var(--m)"></p>
-  <div id="pvAdm" style="display:none;margin:10px 0"><p class="sub" style="margin:0 0 8px;font-size:13px">Admin: Timeout (nicht posten oder kommentieren)</p><div class="chips" id="tChips"><button class="chip2" data-m="60">1 Std</button><button class="chip2" data-m="360">6 Std</button><button class="chip2" data-m="1440">1 Tag</button><button class="chip2" data-m="4320">3 Tage</button><button class="chip2" data-m="10080">1 Woche</button><button class="chip2" data-m="20160">2 Wochen</button><button class="chip2" data-m="0">Aufheben</button></div><p class="msg" id="pvMsg"></p></div>
+  <div id="pvAdm" style="display:none;margin:10px 0"><p class="sub" style="margin:0 0 8px;font-size:13px">Admin: Timeout (nicht posten oder kommentieren)</p><div class="chips" id="tChips"><button class="chip2" data-m="60">1 Std</button><button class="chip2" data-m="360">6 Std</button><button class="chip2" data-m="1440">1 Tag</button><button class="chip2" data-m="4320">3 Tage</button><button class="chip2" data-m="10080">1 Woche</button><button class="chip2" data-m="20160">2 Wochen</button><button class="chip2" data-m="0">Aufheben</button></div><div class="row" style="margin-top:8px"><input type="text" id="apw" placeholder="Neues Passwort setzen (mind. 8)" maxlength="72"><button class="chip2" id="apwBtn">Setzen</button></div><p class="msg" id="pvMsg"></p></div>
   <button class="btn ghost" id="pvClose" style="width:100%">Schließen</button>
 </div></div>
 
@@ -367,8 +385,10 @@ input[type=date]{color-scheme:dark}
 <div id="modal">
   <div class="box">
     <div class="tabs"><button class="btn" id="tLogin">Login</button><button class="btn ghost" id="tReg">Registrieren</button></div>
-    <input id="user" type="email" placeholder="E-Mail" autocomplete="email">
-    <input id="pass" type="password" placeholder="Passwort (mind. 6 Zeichen)" autocomplete="current-password">
+    <input id="user" type="text" placeholder="Benutzername oder E-Mail" autocomplete="username" autocapitalize="none" spellcheck="false">
+    <input id="pass" type="password" placeholder="Passwort" autocomplete="current-password">
+    <a href="#" id="forgot" style="display:block;text-align:right;font-size:13px;color:var(--p2);margin:2px 0 4px">Passwort vergessen?</a>
+    <p id="regHint" style="display:none;font-size:13px;color:var(--m);margin:6px 0">Du brauchst keine E-Mail. Eine private E-Mail kannst du später im Profil eintragen. Das Passwort braucht mindestens 8 Zeichen.</p>
     <label id="acc" style="display:none;gap:8px;align-items:flex-start;font-size:13px;color:var(--m);margin:8px 0"><input type="checkbox" id="accCb" style="margin:3px 0 0"><span>Ich bin mindestens 16 Jahre alt und akzeptiere die <a href="#l-nutzung" data-l="nutzung">Regeln</a> und die <a href="#l-datenschutz" data-l="datenschutz">Datenschutzhinweise</a>.</span></label>
     <p class="msg" id="msg"></p>
     <button class="btn" id="go" style="width:100%">Anmelden</button>
@@ -411,7 +431,7 @@ function render(){
 }
 async function setUser(u){
   cur=u||null;items={};me={};ADMIN=false;BANNED=false;MUTE=null;MEMBER=false;PEND=0;G={blocks:0,pick:1,coins:0,last:null};
-  if(cur){try{const r=await sb.from('inventory').select('items,blocks,pick,coins,last_daily').eq('user_id',cur.id).maybeSingle();items=(r.data&&r.data.items)||{};if(r.data)G={blocks:r.data.blocks||0,pick:r.data.pick||1,coins:r.data.coins||0,last:r.data.last_daily||null};const pr=await sb.from('profiles').select('*').eq('user_id',cur.id).maybeSingle();me=pr.data||{};const ad=await sb.from('admins').select('user_id').eq('user_id',cur.id).maybeSingle();ADMIN=!!ad.data;const bn=await sb.from('banned_users').select('user_id').eq('user_id',cur.id).maybeSingle();BANNED=!!bn.data;const to=await sb.from('timeouts').select('ends_at').eq('user_id',cur.id).maybeSingle();MUTE=to.data&&new Date(to.data.ends_at)>new Date()?new Date(to.data.ends_at):null;const mb=await sb.from('members').select('user_id').eq('user_id',cur.id).maybeSingle();MEMBER=!!mb.data||ADMIN;if(!MEMBER){await sb.from('join_requests').upsert({user_id:cur.id,email:cur.email},{onConflict:'user_id',ignoreDuplicates:true})}else{await signAll([me.avatar_url]);if(ADMIN){const jc=await sb.from('join_requests').select('user_id');PEND=(jc.data||[]).length}}}catch(e){}}
+  if(cur){try{const r=await sb.from('inventory').select('items,blocks,pick,coins,last_daily').eq('user_id',cur.id).maybeSingle();items=(r.data&&r.data.items)||{};if(r.data)G={blocks:r.data.blocks||0,pick:r.data.pick||1,coins:r.data.coins||0,last:r.data.last_daily||null};const pr=await sb.from('profiles').select('*').eq('user_id',cur.id).maybeSingle();me=pr.data||{};const ad=await sb.from('admins').select('user_id').eq('user_id',cur.id).maybeSingle();ADMIN=!!ad.data;const bn=await sb.from('banned_users').select('user_id').eq('user_id',cur.id).maybeSingle();BANNED=!!bn.data;const to=await sb.from('timeouts').select('ends_at').eq('user_id',cur.id).maybeSingle();MUTE=to.data&&new Date(to.data.ends_at)>new Date()?new Date(to.data.ends_at):null;const mb=await sb.from('members').select('user_id').eq('user_id',cur.id).maybeSingle();MEMBER=!!mb.data||ADMIN;if(!MEMBER){await sb.from('join_requests').upsert({user_id:cur.id,email:isAlias(cur.email)?cur.email.split('@')[0]:cur.email},{onConflict:'user_id',ignoreDuplicates:true})}else{await signAll([me.avatar_url]);if(ADMIN){const jc=await sb.from('join_requests').select('user_id');PEND=(jc.data||[]).length}}}catch(e){}}
   READY=true;render();if(MEMBER){loadPosts();loadMiners();loadTimeline();loadConfig();loadBoard()}
 }
 async function saveItems(){if(cur){try{await sb.from('inventory').upsert({user_id:cur.id,items,blocks:G.blocks,pick:G.pick,coins:G.coins,last_daily:G.last,user_name:name()})}catch(e){}}}
@@ -575,7 +595,7 @@ function statLine(mc){
   const m=BOARD[i].minutes;return 'Spielzeit: '+Math.floor(m/60)+' h '+(m%60)+' min · Platz '+(i+1);
 }
 function openPv(id){const p=PROF[id]||{};PVID=id;$('pvAdm').style.display=ADMIN&&cur&&id!=cur.id?'':'none';$('pvMsg').textContent='';$('pvMc').textContent=p.mc_name?('Minecraft: '+p.mc_name+(statLine(p.mc_name)?' · '+statLine(p.mc_name):'')):'';$('pvAv').innerHTML=av(id,1);$('pvName').textContent=dn(id);$('pvBio').textContent=p.bio||'Noch keine Beschreibung.';$('pv').classList.add('on')}
-function openPm(){newAv=null;$('pAv').innerHTML=avH(me.avatar_url,name(),1);$('pName').value=me.username||'';$('pBio').value=me.bio||'';$('pMc').value=me.mc_name||'';$('pStat').textContent=statLine(me.mc_name);$('pMsg').textContent='';$('delbox').style.display='none';$('pDel').style.display='';$('pm').classList.add('on')}
+function openPm(){newAv=null;$('pAv').innerHTML=avH(me.avatar_url,name(),1);$('pName').value=me.username||'';$('pBio').value=me.bio||'';$('pMc').value=me.mc_name||'';$('pStat').textContent=statLine(me.mc_name);$('pEmail').value='';emailStatus();$('pMsg').textContent='';$('delbox').style.display='none';$('pDel').style.display='';$('pm').classList.add('on')}
 function avatarBlob(f){return new Promise((ok,no)=>{const im=new Image();im.onload=()=>{const m=Math.min(im.width,im.height),c=document.createElement('canvas');c.width=c.height=256;c.getContext('2d').drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,256,256);c.toBlob(b=>b?ok(b):no(new Error('Bild nicht lesbar')),'image/jpeg',.88)};im.onerror=()=>no(new Error('Bild nicht lesbar'));im.src=URL.createObjectURL(f)})}
 $('profBtn').onclick=openPm;
 $('pClose').onclick=()=>$('pm').classList.remove('on');
@@ -632,8 +652,9 @@ const resolveRep=(c,st)=>sb.from('reports').update({status:st}).eq('target_type'
 async function loadAdmin(){
   const rl=$('repList'),bl=$('banList');rl.textContent='Lade …';
   const jr=await sb.from('join_requests').select('*').order('created_at'),J=jr.data||[];
+  const jp=J.length?await sb.from('profiles').select('user_id,username').in('user_id',J.map(x=>x.user_id)):{data:[]},jn={};(jp.data||[]).forEach(x=>{jn[x.user_id]=x.username});
   PEND=J.length;$('adminBtn').textContent='Admin'+(PEND?' ('+PEND+')':'');
-  $('jrList').innerHTML=J.length?J.map(x=>'<div class="lbrow" style="grid-template-columns:1fr auto auto"><div><b>'+esc(x.email||'?')+'</b><br><small>'+fmt(x.created_at)+'</small></div><button class="btn" data-a="aok" data-u="'+x.user_id+'">Freischalten</button><button class="btn ghost" data-a="ano" data-u="'+x.user_id+'">Ablehnen</button></div>').join(''):'<p class="sub">Keine offenen Anfragen.</p>';
+  $('jrList').innerHTML=J.length?J.map(x=>'<div class="lbrow" style="grid-template-columns:1fr auto auto"><div><b>'+esc(jn[x.user_id]||String(x.email||'?').split('@')[0])+'</b><br><small>'+fmt(x.created_at)+'</small></div><button class="btn" data-a="aok" data-u="'+x.user_id+'">Freischalten</button><button class="btn ghost" data-a="ano" data-u="'+x.user_id+'">Ablehnen</button></div>').join(''):'<p class="sub">Keine offenen Anfragen.</p>';
   const rr=await sb.from('reports').select('*').eq('status','open').order('created_at',{ascending:false}).limit(50);
   const R=rr.data||[];
   const pid=R.filter(x=>x.target_type=='post').map(x=>x.target_id),cid=R.filter(x=>x.target_type=='comment').map(x=>x.target_id);
@@ -729,6 +750,54 @@ $('tl').onclick=async e=>{
   if(b.dataset.a=='eev'){openEv(id);return}
   if(b.dataset.a=='dev'&&confirm('Dieses Ereignis löschen?')){await sb.from('timeline_events').delete().eq('id',id);loadTimeline()}
 };
+const ALIAS='zk1mo.github.io';
+const alias=n=>n.toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/[^a-z0-9_-]/g,'-')+'@'+ALIAS;
+const isAlias=e=>String(e||'').toLowerCase().endsWith('@'+ALIAS);
+const NAME_RE=/^[A-Za-z0-9][A-Za-z0-9_.äöüÄÖÜß-]{2,19}$/;
+const press=b=>{b.classList.add('pressed');setTimeout(()=>b.classList.remove('pressed'),160);b.click()};
+[['user','go'],['pass','go'],['pwNew','pwSave']].forEach(x=>$(x[0]).addEventListener('keydown',e=>{if(e.key=='Enter'&&!e.isComposing){e.preventDefault();press($(x[1]))}}));
+$('forgot').onclick=async e=>{
+  e.preventDefault();const u=$('user').value.trim();
+  if(u.includes('@')){const r=await sb.auth.resetPasswordForEmail(u,{redirectTo:location.origin+location.pathname});$('msg').textContent=r.error?'Fehler: '+r.error.message:'Wenn die Adresse bekannt ist, kommt gleich eine E-Mail mit einem Link.'}
+  else $('msg').textContent='Gib hier deine E-Mail ein, falls du eine im Profil bestätigt hast. Sonst frag den Admin, er setzt dir ein neues Passwort.';
+};
+function emailStatus(){
+  const e=cur&&cur.email,n=cur&&cur.new_email;
+  $('pEmailSt').textContent=n?'Bestätigung ausstehend für '+n+'. Klicke auf den Link in der E-Mail.':(e&&!isAlias(e)?'E-Mail: '+e+' (bestätigt)':'Keine E-Mail hinterlegt. Ohne E-Mail kann nur der Admin dein Passwort zurücksetzen.');
+}
+$('pEmailBtn').onclick=async()=>{
+  const e=$('pEmail').value.trim().toLowerCase();
+  if(!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(e)||isAlias(e)){$('pMsg').textContent='Bitte eine gültige E-Mail-Adresse eintragen.';return}
+  $('pMsg').textContent='Sende …';
+  const r=await sb.auth.updateUser({email:e},{emailRedirectTo:location.origin+location.pathname});
+  if(r.error){$('pMsg').textContent='Fehler: '+r.error.message;return}
+  if(r.data&&r.data.user)cur=r.data.user;
+  emailStatus();$('pMsg').textContent='Fast fertig: Wir haben dir eine E-Mail geschickt. Klicke auf den Link darin.';
+};
+function openPw(recovery){
+  $('pwTitle').textContent=recovery===true?'Neues Passwort festlegen':'Passwort ändern';$('pwNew').value='';$('pwMsg').textContent='';
+  $('pwMail').style.display=cur&&cur.email&&!isAlias(cur.email)&&recovery!==true?'':'none';$('pw').classList.add('on');
+}
+$('pPwBtn').onclick=()=>openPw();
+$('pwClose').onclick=()=>$('pw').classList.remove('on');
+$('pwSave').onclick=async()=>{
+  const p=$('pwNew').value;
+  if(p.length<8){$('pwMsg').textContent='Das Passwort braucht mindestens 8 Zeichen.';return}
+  const r=await sb.auth.updateUser({password:p});
+  $('pwMsg').textContent=r.error?'Fehler: '+r.error.message:'Passwort geändert.';
+  if(!r.error)$('pwNew').value='';
+};
+$('pwMail').onclick=async()=>{
+  const r=await sb.auth.resetPasswordForEmail(cur.email,{redirectTo:location.origin+location.pathname});
+  $('pwMsg').textContent=r.error?'Fehler: '+r.error.message:'E-Mail mit Link ist unterwegs.';
+};
+$('apwBtn').onclick=async()=>{
+  const p=$('apw').value;
+  if(p.length<8){$('pvMsg').textContent='Mindestens 8 Zeichen.';return}
+  const r=await sb.rpc('admin_set_password',{p_user:PVID,p_password:p});
+  $('pvMsg').textContent=r.error?'Fehler: '+r.error.message:'Neues Passwort gesetzt. Gib es dem Spieler weiter.';
+  if(!r.error)$('apw').value='';
+};
 function openMove(id,cat){MV=id;$('mvCats').innerHTML=chips('mc',cat,true);$('mvMsg').textContent='';$('mv').classList.add('on')}
 $('mvClose').onclick=()=>$('mv').classList.remove('on');
 $('mvSave').onclick=async()=>{
@@ -754,7 +823,7 @@ document.addEventListener('keydown',e=>{if(e.key=='Escape')$('lg').classList.rem
 if(location.hash.startsWith('#l-'))openL(location.hash.slice(3));
 function setMode(m){
   mode=m;$('tLogin').className='btn'+(m=='login'?'':' ghost');$('tReg').className='btn'+(m=='reg'?'':' ghost');
-  $('go').textContent=m=='login'?'Anmelden':'Konto erstellen';$('acc').style.display=m=='reg'?'flex':'none';$('msg').textContent='';
+  $('go').textContent=m=='login'?'Anmelden':'Konto erstellen';$('acc').style.display=m=='reg'?'flex':'none';$('msg').textContent='';$('user').placeholder=m=='reg'?'Benutzername (3–20 Zeichen)':'Benutzername oder E-Mail';$('pass').autocomplete=m=='reg'?'new-password':'current-password';$('forgot').style.display=m=='reg'?'none':'';$('regHint').style.display=m=='reg'?'':'none';
 }
 $('authBtn').onclick=async()=>{
   if(cur){await sb.auth.signOut()}
@@ -764,13 +833,29 @@ $('authBtn').onclick=async()=>{
 $('close').onclick=()=>$('modal').classList.remove('on');
 $('tLogin').onclick=()=>setMode('login');$('tReg').onclick=()=>setMode('reg');
 $('go').onclick=async()=>{
-  const email=$('user').value.trim(),password=$('pass').value;
-  if(!email.includes('@')||password.length<6){$('msg').textContent='Gültige E-Mail und mind. 6 Zeichen Passwort.';return}
-  if(mode=='reg'&&!$('accCb').checked){$('msg').textContent='Bitte bestätige Alter und Bedingungen.';return}
-  $('msg').textContent='Einen Moment …';
-  const r=mode=='reg'?await sb.auth.signUp({email,password}):await sb.auth.signInWithPassword({email,password});
-  if(r.error){$('msg').textContent=r.error.message;return}
-  if(mode=='reg'&&!r.data.session){$('msg').textContent='Bitte bestätige deine E-Mail und melde dich dann an.';return}
+  const u=$('user').value.trim(),password=$('pass').value,msg=t=>{$('msg').textContent=t};
+  if(!u||!password){msg('Bitte alles ausfüllen.');return}
+  if(mode=='reg'){
+    if(!NAME_RE.test(u)){msg('Benutzername: 3–20 Zeichen, am Anfang Buchstabe oder Zahl, erlaubt sind Buchstaben, Zahlen, _ . -');return}
+    if(password.length<8){msg('Das Passwort braucht mindestens 8 Zeichen.');return}
+    if(!$('accCb').checked){msg('Bitte bestätige Alter und Bedingungen.');return}
+    msg('Einen Moment …');
+    const av=await sb.rpc('username_available',{p_name:u});
+    if(av.error){msg('Fehler: '+av.error.message);return}
+    if(av.data===false){msg('Dieser Benutzername ist schon vergeben.');return}
+    const r=await sb.auth.signUp({email:alias(u),password});
+    const hint='Registrierung gerade nicht möglich: Der Admin muss in Supabase „Confirm email“ ausschalten.';
+    if(r.error){msg(/registered|exists/i.test(r.error.message)?'Dieser Benutzername ist schon vergeben.':(/sending|authorized|confirm/i.test(r.error.message)?hint:r.error.message));return}
+    if(!r.data.session){msg(hint);return}
+    const p=await sb.from('profiles').upsert({user_id:r.data.user.id,username:u});
+    if(p.error){await sb.rpc('delete_my_account');await sb.auth.signOut({scope:'local'});msg(p.error.code=='23505'?'Dieser Benutzername ist schon vergeben.':'Fehler: '+p.error.message);return}
+    $('modal').classList.remove('on');$('user').value=$('pass').value='';await setUser(r.data.user);return;
+  }
+  msg('Einen Moment …');
+  const mail=u.includes('@');
+  let r=await sb.auth.signInWithPassword({email:mail?u:alias(u),password});
+  if(r.error&&!mail){const q=await sb.rpc('login_email',{p_login:u,p_password:password});if(q.data)r=await sb.auth.signInWithPassword({email:q.data,password})}
+  if(r.error){msg(/invalid login|credentials/i.test(r.error.message)?'Benutzername oder Passwort falsch.':r.error.message);return}
   $('modal').classList.remove('on');$('user').value=$('pass').value='';
 };
 const PICKS=['Holz','Stein','Eisen','Diamant','Netherit'],COST=[0,50,150,400,1000],VAL={Erde:1,Stein:2,Eisen:5,Gold:10,Amethyst:15,Diamant:40};
@@ -852,7 +937,7 @@ checkSrv();setInterval(checkSrv,60000);
 try{
   if(window.supabase){
     sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-    sb.auth.onAuthStateChange((_e,s)=>{setUser(s&&s.user)});
+    sb.auth.onAuthStateChange((ev,s)=>{if(ev=='PASSWORD_RECOVERY')openPw(true);setUser(s&&s.user)});
   }
 }catch(e){sb=null}
 if(!sb)READY=true;
