@@ -10,7 +10,7 @@ const HOST=need('FTP_HOST'),USER=need('FTP_USER'),PASS=need('FTP_PASS');
 const SB=need('SUPABASE_URL').replace(/\/$/,''),KEY=need('SUPABASE_SERVICE_KEY');
 const PORT=Number(E.FTP_PORT||21),WORLD=E.WORLD_DIR||'world',SECURE=E.FTP_SECURE==='true';
 const EXCL=(E.EXCLUDE_NAMES||'').split(',').map(s=>s.trim().toLowerCase()).filter(Boolean);
-const TRIES=Number(E.RETRIES||4),DELAY=Number(E.RETRY_DELAY_MS||15000);
+const TRIES=Number(E.RETRIES||5),DELAY=Number(E.RETRY_DELAY_MS||20000);
 const UUID_RE=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 
@@ -69,7 +69,10 @@ function summary(text){
 }
 
 try{
-  const {dir,players,cache}=await retry('FTP',readStats);
+  let data;
+  try{data=await retry('FTP',readStats)}
+  catch(e){e.net=/ECONNREFUSED|ETIMEDOUT|ECONNRESET|EHOSTUNREACH|ENETUNREACH|ENOTFOUND|EAI_AGAIN|timeout/i.test(e.message);throw e}
+  const {dir,players,cache}=data;
 
   // Namen: usercache.json des Servers, dann bereits gespeicherte Namen, zuletzt Mojang
   const names=new Map(cache.map(c=>[String(c.uuid).toLowerCase(),c.name]));
@@ -93,7 +96,20 @@ try{
 
   if(rows.length)await retry('Supabase speichern',()=>sbFetch(`${SB}/rest/v1/playtime?on_conflict=uuid`,{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(rows)}));
   for(const n of EXCL){try{await sbFetch(`${SB}/rest/v1/playtime?name=ilike.${encodeURIComponent(n)}`,{method:'DELETE'})}catch(e){console.error('Ausnahme-Name nicht entfernt: '+n+' ('+e.message+')')}}
+  try{await sbFetch(`${SB}/rest/v1/site_config?on_conflict=key`,{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify([{key:'playtime_last_ok',value:new Date().toISOString()}])})}
+  catch(e){console.error('Hinweis: Zeitstempel nicht gespeichert ('+e.message+')')}
   summary(`Fertig: ${rows.length} Spieler gespeichert (Ordner ${dir}), ${skipped} ohne bekannten Namen übersprungen.`);
 }catch(e){
-  summary('Fehler: '+e.message);process.exitCode=1;
+  if(e.net){
+    // Server oder FTP gerade nicht erreichbar (zum Beispiel Neustart): kein Alarm, solange der letzte Erfolg nicht lange her ist
+    let hours=null;
+    try{const r=await sbFetch(`${SB}/rest/v1/site_config?key=eq.playtime_last_ok&select=value`);if(r&&r[0])hours=(Date.now()-new Date(r[0].value).getTime())/36e5}catch{}
+    if(hours!==null&&hours<=6){
+      console.log('::warning::FTP gerade nicht erreichbar, der nächste Lauf versucht es erneut.');
+      summary(`Hinweis: FTP gerade nicht erreichbar (${e.message}). Letzter Erfolg vor ${hours.toFixed(1)} Stunden. Der nächste Lauf versucht es erneut.`);
+    }else{
+      summary(`Fehler: FTP seit ${hours===null?'dem Start (noch nie erfolgreich)':'über '+Math.round(hours)+' Stunden'} nicht erreichbar (${e.message}). Prüfe Adresse, Port und Passwort im G-Portal-Menü „Status“ und die GitHub-Secrets.`);
+      process.exitCode=1;
+    }
+  }else{summary('Fehler: '+e.message);process.exitCode=1}
 }
