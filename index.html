@@ -234,7 +234,7 @@ input[type=date]{color-scheme:dark}
   </div>
   <p class="sub" id="gHint"></p>
   <div class="tools"><input type="text" id="q" placeholder="Suchen (Beschreibung oder Name) …" maxlength="40"><div class="chips" id="sortChips"><button class="chip2" data-s="new">Neueste</button><button class="chip2" data-s="old">Älteste</button><button class="chip2" data-s="likes">Meiste Likes</button></div></div>
-  <div id="catAdd" style="display:none;margin-bottom:10px;gap:8px;flex-wrap:wrap"><button class="btn ghost" id="addCat">＋ Neue Kategorie</button><button class="btn ghost" id="selBtn">☑ Mehrere auswählen</button></div>
+  <div id="catAdd" style="display:none;margin-bottom:10px;gap:14px;flex-wrap:wrap"><button class="btn ghost" id="addCat">＋ Neue Kategorie</button><button class="btn ghost" id="selBtn">☑ Mehrere auswählen</button></div>
   <div id="posts"></div>
 </section>
 
@@ -434,7 +434,7 @@ function render(){
   $('hello').textContent=cur?'Willkommen zurück, '+name()+'!':'';
   $('profBtn').style.display=cur?'':'none';
   $('adminBtn').style.display=ADMIN?'':'none';
-  $('catAdd').style.display=ADMIN?'':'none';
+  $('catAdd').style.display=ADMIN?'flex':'none';
   $('tlAdd').style.display=ADMIN?'':'none';
   $('upbox').style.display=cur&&!BANNED&&!MUTE?'grid':'none';
   $('gHint').textContent=!sb?'Galerie nicht verfügbar (Supabase fehlt).':(cur?(BANNED?'Dein Konto ist gesperrt. Du kannst weiter lesen, aber nichts mehr posten.':(MUTE?'Timeout bis '+fmt(MUTE)+': Du kannst gerade nichts posten oder kommentieren, aber liken.':'')):'Melde dich an, um Bilder hochzuladen, zu liken und zu kommentieren.');
@@ -489,7 +489,7 @@ async function loadConfig(){
 }
 $('gBtn').onclick=()=>{if(cur)setUser(cur);else $('authBtn').click()};
 const LIM={};
-const colState=()=>{try{const v=localStorage.getItem('bc_col');return v===null?['top']:JSON.parse(v)}catch(e){return ['top']}};
+const colState=()=>{try{const v=localStorage.getItem('bc_col');return v===null?[]:JSON.parse(v)}catch(e){return []}};
 function toggleCat(id){
   const a=colState(),i=a.indexOf(id);if(i<0)a.push(id);else a.splice(i,1);
   try{localStorage.setItem('bc_col',JSON.stringify(a))}catch(e){}
@@ -504,7 +504,7 @@ function markSort(){document.querySelectorAll('#sortChips button').forEach(b=>b.
 async function loadPosts(){
   if(!sb){$('posts').innerHTML='';return}
   try{
-    const [cg,al,tc]=await Promise.all([sb.from('categories').select('*').order('sort',{ascending:true}).order('created_at',{ascending:false}),sb.from('posts').select('category_id').limit(1000),sb.from('posts').select('id',{count:'exact',head:true}).gt('like_count',0)]);
+    const [cg,al]=await Promise.all([sb.from('categories').select('*').order('sort',{ascending:true}).order('created_at',{ascending:false}),sb.from('posts').select('category_id').limit(1000)]);
     CATS=cg.data||[];
     const old=(document.querySelector('input[name=uc]:checked')||{}).value;$('upCats').innerHTML=chips('uc',old);
     const col=colState(),cnt={};let groups;
@@ -519,12 +519,10 @@ async function loadPosts(){
     }else{
       (al.data||[]).forEach(x=>{const k=CATS.some(c=>c.id==x.category_id)?x.category_id:'none';cnt[k]=(cnt[k]||0)+1});
       groups=CATS.map(c=>({id:c.id,name:c.name})).concat(cnt.none?[{id:'none',name:'Ohne Kategorie'}]:[]);
-      if(tc.count){cnt.top=tc.count;groups.unshift({id:'top',name:'🏆 Meistgeliebte Bilder'})}
       if(!groups.length){$('posts').innerHTML='<p class="sub">Noch keine Bilder. Sei der Erste!</p>';return}
       await Promise.all(groups.filter(g=>!col.includes(g.id)).map(async g=>{
-        let q;
-        if(g.id=='top')q=sb.from('posts').select('*').gt('like_count',0).order('like_count',{ascending:false}).limit(LIM.top||6);
-        else{q=ordered(sb.from('posts').select('*')).limit(LIM[g.id]||12);q=g.id=='none'?q.is('category_id',null):q.eq('category_id',g.id)}
+        let q=ordered(sb.from('posts').select('*')).limit(LIM[g.id]||12);
+        q=g.id=='none'?q.is('category_id',null):q.eq('category_id',g.id);
         g.list=(await q).data||[];
       }));
     }
@@ -536,7 +534,7 @@ async function loadPosts(){
     await signAll(ps.map(p=>p.image_url).concat((pf.data||[]).map(x=>x.avatar_url)));
     $('posts').innerHTML=groups.map((g,gi)=>{
       const cl=col.includes(g.id),n=cnt[g.id]||0,l=g.list||[],more=g.more!==undefined?g.more:n>l.length;
-      return '<div class="cat'+(cl?' col':'')+'" data-c="'+g.id+'" data-n="'+esc(g.name)+'"><div class="cath"><button class="catt" data-a="tog"><span class="arr">'+(cl?'▸':'▾')+'</span> '+esc(g.name)+' <small>('+n+')</small></button>'+(ADMIN&&g.id!='search'&&g.id!='top'?'<button class="ib selall" data-a="selall" title="Alle auswählen">☑</button>':'')+(ADMIN&&CATS.some(c=>c.id==g.id)?(gi>0?'<button class="ib" data-a="up" title="Nach oben">▲</button>':'')+(gi<CATS.length-1?'<button class="ib" data-a="dn" title="Nach unten">▼</button>':'')+'<button class="ib" data-a="info" title="Steckbrief bearbeiten">📋</button><button class="ib" data-a="ren" title="Umbenennen">✎</button><button class="ib" data-a="dcat" title="Kategorie löschen">🗑</button>':'')+'</div>'
+      return '<div class="cat'+(cl?' col':'')+'" data-c="'+g.id+'" data-n="'+esc(g.name)+'"><div class="cath"><button class="catt" data-a="tog"><span class="arr">'+(cl?'▸':'▾')+'</span> '+esc(g.name)+' <small>('+n+')</small></button>'+(ADMIN&&g.id!='search'?'<button class="ib selall" data-a="selall" title="Alle auswählen">☑</button>':'')+(ADMIN&&CATS.some(c=>c.id==g.id)?(gi>0?'<button class="ib" data-a="up" title="Nach oben">▲</button>':'')+(gi<CATS.length-1?'<button class="ib" data-a="dn" title="Nach unten">▼</button>':'')+'<button class="ib" data-a="info" title="Steckbrief bearbeiten">📋</button><button class="ib" data-a="ren" title="Umbenennen">✎</button><button class="ib" data-a="dcat" title="Kategorie löschen">🗑</button>':'')+'</div>'
         +(cl?'':sheetHTML(g.id)+(l.length?'<div class="posts">'+l.map(p=>postHTML(p,lr.data||[],cr.data||[])).join('')+'</div>'+(more?'<div class="cmore" style="text-align:center;margin-top:14px"><button class="btn ghost" data-a="more">Mehr anzeigen'+(g.id=='search'?'':' ('+(n-l.length)+')')+'</button></div>':''):'<p class="sub cempty">'+(g.id=='search'?'Keine Treffer.':'Noch keine Bilder in dieser Kategorie.')+'</p>'))+'</div>';
     }).join('');
   }catch(e){$('posts').innerHTML='<p class="sub">Galerie konnte nicht geladen werden.</p>'}
@@ -1017,6 +1015,7 @@ try{
     sb.auth.onAuthStateChange((ev,s)=>{if(ev=='PASSWORD_RECOVERY')openPw(true);setUser(s&&s.user)});
   }
 }catch(e){sb=null}
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 if(!sb)READY=true;
 render();
 </script>
