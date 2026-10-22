@@ -3,6 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b0618">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Inkogniflix">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://hzvnbtksanoonvkblded.supabase.co; font-src 'self'; connect-src 'self' https://hzvnbtksanoonvkblded.supabase.co https://api.mcsrvstat.us; object-src 'none'; base-uri 'self'; form-action 'none'">
 <title>Inkogniflix – Minecraft Community</title>
 <link rel="icon" href="logo.png">
@@ -143,6 +148,15 @@ input[type=date]{color-scheme:dark}
 .chip input:checked+span{border-color:var(--p2);background:rgba(168,85,247,.28);box-shadow:var(--glow)}
 .chip2{border:1px solid var(--line);background:rgba(255,255,255,.07);color:var(--t);border-radius:999px;padding:7px 12px;cursor:pointer;font:600 13px Outfit,system-ui,sans-serif}
 .chip2:hover{background:rgba(255,255,255,.15)}
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.tools input{flex:1;min-width:200px;margin:0}
+.chip2.on{background:linear-gradient(135deg,var(--p),var(--p2));border-color:transparent;box-shadow:var(--glow)}
+.pick{position:absolute;top:10px;right:10px;z-index:3;width:22px;height:22px;accent-color:var(--p2);cursor:pointer;display:none}
+#posts.selmode .pick{display:block}
+.selall{display:none}#posts.selmode .selall{display:inline-flex}
+#selbar{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:15;display:none;align-items:center;gap:10px;background:rgba(26,13,51,.95);border:1px solid var(--line);border-radius:999px;padding:8px 10px 8px 18px;box-shadow:var(--glow);white-space:nowrap}
+.fin{margin-top:12px}.fin ol{margin:6px 0 0;padding-left:22px;color:var(--m)}.fin li span{color:var(--p2);font-weight:600;margin-left:6px}
+.lbtool{position:absolute;top:14px;right:14px;z-index:2;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.14);color:#fff;font-size:20px;cursor:pointer;backdrop-filter:blur(6px)}
 .gst{color:var(--m);margin:18px 0 10px}
 .btns2{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .mh{margin:30px 0 10px;font-size:18px;color:var(--p2)}
@@ -210,15 +224,17 @@ input[type=date]{color-scheme:dark}
   <h2>Community-Galerie</h2>
   <p class="sub">Lade deine besten Screenshots hoch, like und kommentiere.</p>
   <div class="card upl" id="upbox" style="display:none">
-    <label class="drop" id="drop" for="file"><span class="di" id="di">📷</span><span id="fname">Bild auswählen oder hierher ziehen</span><img id="prev" alt=""></label>
-    <input type="file" id="file" accept="image/*">
+    <label class="drop" id="drop" for="file"><span class="di" id="di">📷</span><span id="fname">Bilder auswählen oder hierher ziehen</span><img id="prev" alt=""></label>
+    <input type="file" id="file" accept="image/*" multiple>
     <div class="cchips" id="upCats"></div>
-    <input type="text" id="cap" placeholder="Beschreibung (optional)" maxlength="200">
+    <label style="display:block;font-size:12px;color:var(--m)">Datum der Bilder (leer = automatisch aus dem Dateinamen)<input class="in" type="date" id="upDate"></label>
+    <input type="text" id="cap" placeholder="Beschreibung für alle Bilder (optional)" maxlength="200">
     <button class="btn" id="up">Bild hochladen</button>
     <div class="msg" id="upMsg"></div>
   </div>
   <p class="sub" id="gHint"></p>
-  <div id="catAdd" style="display:none;margin-bottom:6px"><button class="btn ghost" id="addCat">＋ Neue Kategorie</button></div>
+  <div class="tools"><input type="text" id="q" placeholder="Suchen (Beschreibung oder Name) …" maxlength="40"><div class="chips" id="sortChips"><button class="chip2" data-s="new">Neueste</button><button class="chip2" data-s="old">Älteste</button><button class="chip2" data-s="likes">Meiste Likes</button></div></div>
+  <div id="catAdd" style="display:none;margin-bottom:10px;gap:8px;flex-wrap:wrap"><button class="btn ghost" id="addCat">＋ Neue Kategorie</button><button class="btn ghost" id="selBtn">☑ Mehrere auswählen</button></div>
   <div id="posts"></div>
 </section>
 
@@ -253,7 +269,7 @@ input[type=date]{color-scheme:dark}
   </div>
 </section>
 
-<footer><div style="margin-bottom:8px"><a href="#l-datenschutz" data-l="datenschutz">Datenschutz</a><a href="#l-nutzung" data-l="nutzung">Regeln</a></div>© 2026 Inkogniflix · Fan-Projekt, nicht mit Mojang oder Microsoft verbunden.</footer>
+<footer><div style="margin-bottom:8px"><a href="#l-datenschutz" data-l="datenschutz">Datenschutz</a><a href="#l-nutzung" data-l="nutzung">Regeln</a><a href="#" id="pwaBtn">App installieren</a></div>© 2026 Inkogniflix · Fan-Projekt, nicht mit Mojang oder Microsoft verbunden.</footer>
 
 <div id="lg"><div class="box"><div id="lgBody">
 <div class="legal" id="l-datenschutz"><h2>Datenschutzhinweise</h2><p>Stand: Oktober 2026</p>
@@ -282,6 +298,7 @@ input[type=date]{color-scheme:dark}
   <label class="btn ghost" for="eFile" style="margin-bottom:10px">Bild ersetzen</label>
   <input type="file" id="eFile" accept="image/*">
   <textarea class="in" id="eCap" rows="3" maxlength="200" placeholder="Beschreibung"></textarea>
+  <label style="display:block;text-align:left;font-size:12px;color:var(--m);margin:6px 0">Datum des Bildes<input class="in" type="date" id="eDate"></label>
   <p class="msg" id="eMsg"></p>
   <button class="btn" id="eSave" style="width:100%">Speichern</button>
   <button class="btn ghost" id="eClose" style="width:100%;margin-top:8px">Abbrechen</button>
@@ -319,6 +336,8 @@ input[type=date]{color-scheme:dark}
   <input type="text" id="sSpawn" placeholder="Spawn (zum Beispiel x -843 / z -1592)" maxlength="40">
   <input type="text" id="sMap" placeholder="Link zur Weltkarte (http:// oder https://)" maxlength="300">
   <textarea class="in" id="sDesc" rows="3" maxlength="500" placeholder="Beschreibung und Highlights"></textarea>
+  <button class="btn ghost" id="sFinal" style="width:100%;margin-top:6px">🏆 Endstand-Rangliste speichern</button>
+  <button class="btn ghost" id="sFinalDel" style="width:100%;margin-top:6px">Endstand löschen</button>
   <p class="msg" id="sMsg"></p>
   <button class="btn" id="sSave" style="width:100%">Speichern</button>
   <button class="btn ghost" id="sClose" style="width:100%;margin-top:8px">Abbrechen</button>
@@ -333,6 +352,8 @@ input[type=date]{color-scheme:dark}
   <button class="btn" id="tSave" style="width:100%">Speichern</button>
   <button class="btn ghost" id="tClose" style="width:100%;margin-top:8px">Abbrechen</button>
 </div></div>
+
+<div id="selbar"><span id="selN">0 ausgewählt</span><button class="btn" id="selMove">Verschieben</button><button class="btn ghost" id="selOff">Fertig</button></div>
 
 <div id="mv"><div class="box center">
   <h3 style="margin-top:0">In Kategorie verschieben</h3>
@@ -380,7 +401,7 @@ input[type=date]{color-scheme:dark}
   <button class="btn ghost" id="pvClose" style="width:100%">Schließen</button>
 </div></div>
 
-<div id="lb"><button class="lbn lbp" id="lbPrev" aria-label="Vorheriges Bild"><span>‹</span></button><img id="lbi" alt=""><button class="lbn lbx" id="lbNext" aria-label="Nächstes Bild"><span>›</span></button><div id="lbInfo"></div></div>
+<div id="lb"><button class="lbtool" id="lbDl" title="Bild speichern" aria-label="Bild speichern">⬇</button><button class="lbn lbp" id="lbPrev" aria-label="Vorheriges Bild"><span>‹</span></button><img id="lbi" alt=""><button class="lbn lbx" id="lbNext" aria-label="Nächstes Bild"><span>›</span></button><div id="lbInfo"></div></div>
 
 <div id="modal">
   <div class="box">
@@ -404,7 +425,7 @@ const SUPABASE_KEY='sb_publishable_BXqu2VmFxndAXpF4FAqlAg_3Dpr4Lsf';
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=t=>t?new Date(t).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}):'';
-let mode='login',sb=null,cur=null,hits=0,items={},BOARD=[],MEMBER=false,READY=false,PEND=0,SRV_IP='',ADMIN=false,BANNED=false,MUTE=null,CATS=[],MV=null,PVID=null,EDIT=null,REP=null,G={blocks:0,pick:1,coins:0,last:null};
+let mode='login',sb=null,cur=null,hits=0,items={},BOARD=[],SELMODE=false,MVM=false,MEMBER=false,READY=false,PEND=0,SRV_IP='',ADMIN=false,BANNED=false,MUTE=null,CATS=[],MV=null,PVID=null,EDIT=null,REP=null,G={blocks:0,pick:1,coins:0,last:null};
 const LOOT=[['Erde','🟫',32],['Stein','⬜',28],['Eisen','🔩',15],['Gold','🟨',10],['Amethyst','🔮',10],['Diamant','💎',5]];
 let me={},PROF={},newAv=null;
 const name=()=>(me.username||'Spieler-'+cur.id.slice(0,4));
@@ -441,7 +462,7 @@ function postHTML(p,likes,coms){
     +(can&&own?'<button class="cdel" data-a="cedit" title="Bearbeiten">✎</button>':'')
     +((own||ADMIN)?'<button class="cdel" data-a="delc" data-c="'+c.id+'" title="Löschen">✕</button>':'')
     +(live&&!own?'<button class="cdel" data-a="repc" data-c="'+c.id+'" data-u="'+c.user_id+'" title="Melden">⚑</button>':'')+'</span></p>'}).join('');
-  return '<article class="card post" data-id="'+p.id+'" data-u="'+p.user_id+'" data-cat="'+(p.category_id||'')+'">'+(p.pinned?'<span class="pinb" title="Angepinnt">📌</span>':'')+'<img src="'+esc(su(p.image_url))+'" data-raw="'+esc(p.image_url)+'" alt="" loading="lazy"><div class="pb"><div class="who" data-u="'+p.user_id+'">'+av(p.user_id)+'<div><b>'+esc(dn(p.user_id,p.user_name))+'</b><div class="pd">'+fmt(p.created_at)+(p.edited_at?' · bearbeitet':'')+'</div></div></div><p>'+esc(p.caption||'')+'</p>'
+  return '<article class="card post" data-id="'+p.id+'" data-u="'+p.user_id+'" data-cat="'+(p.category_id||'')+'" data-taken="'+esc(p.taken_at||p.created_at)+'">'+(ADMIN?'<input type="checkbox" class="pick" data-a="pick"'+(SEL.has(p.id)?' checked':'')+'>':'')+(p.pinned?'<span class="pinb" title="Angepinnt">📌</span>':'')+'<img src="'+esc(su(p.image_url))+'" data-raw="'+esc(p.image_url)+'" alt="" loading="lazy"><div class="pb"><div class="who" data-u="'+p.user_id+'">'+av(p.user_id)+'<div><b>'+esc(dn(p.user_id,p.user_name))+'</b><div class="pd">'+pdate(p)+'</div></div></div><p>'+esc(p.caption||'')+'</p>'
     +'<div class="acts"><button class="like'+(liked?' on':'')+'" data-a="like">♥ '+l.length+'</button><span class="sp"></span>'
     +(ADMIN?'<button class="ib'+(p.pinned?' on':'')+'" data-a="pin" title="'+(p.pinned?'Lösen':'Anpinnen')+'">📌</button>':'')
     +((mine&&can)||ADMIN?'<button class="ib" data-a="mv" title="In Kategorie verschieben">📁</button>':'')
@@ -468,49 +489,68 @@ async function loadConfig(){
 }
 $('gBtn').onclick=()=>{if(cur)setUser(cur);else $('authBtn').click()};
 const LIM={};
-const colState=()=>{try{return JSON.parse(localStorage.getItem('bc_col')||'[]')}catch(e){return []}};
+const colState=()=>{try{const v=localStorage.getItem('bc_col');return v===null?['top']:JSON.parse(v)}catch(e){return ['top']}};
 function toggleCat(id){
   const a=colState(),i=a.indexOf(id);if(i<0)a.push(id);else a.splice(i,1);
   try{localStorage.setItem('bc_col',JSON.stringify(a))}catch(e){}
   document.querySelectorAll('.cat').forEach(c=>{if(c.dataset.c==id){c.classList.toggle('col');c.querySelector('.arr').textContent=c.classList.contains('col')?'▸':'▾';if(!c.classList.contains('col'))loadPosts()}});
 }
 const chips=(nm,sel,none)=>{const has=CATS.some(c=>c.id==sel);return (none?'<label class="chip"><input type="radio" name="'+nm+'" value=""'+(has?'':' checked')+'><span>Ohne Kategorie</span></label>':'')+CATS.map((c,i)=>'<label class="chip"><input type="radio" name="'+nm+'" value="'+c.id+'"'+((has?c.id==sel:(!none&&i==0))?' checked':'')+'><span>'+esc(c.name)+'</span></label>').join('')};
+const SEL=new Set();
+let SORT=(()=>{try{return localStorage.getItem('bc_sort')||'new'}catch(e){return 'new'}})(),Q='';
+const ordered=q=>{q=q.order('pinned',{ascending:false});return SORT=='likes'?q.order('like_count',{ascending:false}).order('taken_at',{ascending:false}):q.order('taken_at',{ascending:SORT=='old'})};
+const pdate=p=>{const t=p.taken_at||p.created_at,far=Math.abs(new Date(t)-new Date(p.created_at))>864e5;return (far?fd(new Date(t).toLocaleDateString('sv-SE'))+' · hochgeladen '+fd(new Date(p.created_at).toLocaleDateString('sv-SE')):fmt(p.created_at))+(p.edited_at?' · bearbeitet':'')};
+function markSort(){document.querySelectorAll('#sortChips button').forEach(b=>b.classList.toggle('on',b.dataset.s==SORT))}
 async function loadPosts(){
   if(!sb){$('posts').innerHTML='';return}
   try{
-    const [cg,al]=await Promise.all([sb.from('categories').select('*').order('sort',{ascending:true}).order('created_at',{ascending:false}),sb.from('posts').select('category_id').limit(1000)]);
+    const [cg,al,tc]=await Promise.all([sb.from('categories').select('*').order('sort',{ascending:true}).order('created_at',{ascending:false}),sb.from('posts').select('category_id').limit(1000),sb.from('posts').select('id',{count:'exact',head:true}).gt('like_count',0)]);
     CATS=cg.data||[];
     const old=(document.querySelector('input[name=uc]:checked')||{}).value;$('upCats').innerHTML=chips('uc',old);
-    const cnt={};(al.data||[]).forEach(x=>{const k=CATS.some(c=>c.id==x.category_id)?x.category_id:'none';cnt[k]=(cnt[k]||0)+1});
-    const groups=CATS.map(c=>({id:c.id,name:c.name})).concat(cnt.none?[{id:'none',name:'Ohne Kategorie'}]:[]);
-    if(!groups.length){$('posts').innerHTML='<p class="sub">Noch keine Bilder. Sei der Erste!</p>';return}
-    const col=colState();
-    await Promise.all(groups.filter(g=>!col.includes(g.id)).map(async g=>{
-      let q=sb.from('posts').select('*').order('pinned',{ascending:false}).order('created_at',{ascending:false}).limit(LIM[g.id]||12);
-      q=g.id=='none'?q.is('category_id',null):q.eq('category_id',g.id);
-      g.list=(await q).data||[];
-    }));
-    const ps=groups.flatMap(g=>g.list||[]),ids=ps.map(p=>p.id);
+    const col=colState(),cnt={};let groups;
+    if(Q.length>=2){
+      const qs=Q.replace(/[^\p{L}\p{N} _-]/gu,'').trim();let list=[],lim=LIM.search||24;
+      if(qs.length>=2){
+        const pu=await sb.from('profiles').select('user_id').ilike('username','%'+qs+'%').limit(30),ids=(pu.data||[]).map(x=>x.user_id);
+        const r=await ordered(sb.from('posts').select('*').or('caption.ilike.*'+qs+'*'+(ids.length?',user_id.in.('+ids.join(',')+')':''))).limit(lim);
+        list=r.data||[];
+      }
+      cnt.search=list.length;groups=[{id:'search',name:'Suchergebnisse für „'+Q+'“',list,more:list.length>=lim}];
+    }else{
+      (al.data||[]).forEach(x=>{const k=CATS.some(c=>c.id==x.category_id)?x.category_id:'none';cnt[k]=(cnt[k]||0)+1});
+      groups=CATS.map(c=>({id:c.id,name:c.name})).concat(cnt.none?[{id:'none',name:'Ohne Kategorie'}]:[]);
+      if(tc.count){cnt.top=tc.count;groups.unshift({id:'top',name:'🏆 Meistgeliebte Bilder'})}
+      if(!groups.length){$('posts').innerHTML='<p class="sub">Noch keine Bilder. Sei der Erste!</p>';return}
+      await Promise.all(groups.filter(g=>!col.includes(g.id)).map(async g=>{
+        let q;
+        if(g.id=='top')q=sb.from('posts').select('*').gt('like_count',0).order('like_count',{ascending:false}).limit(LIM.top||6);
+        else{q=ordered(sb.from('posts').select('*')).limit(LIM[g.id]||12);q=g.id=='none'?q.is('category_id',null):q.eq('category_id',g.id)}
+        g.list=(await q).data||[];
+      }));
+    }
+    const ps=groups.flatMap(g=>g.list||[]),ids=[...new Set(ps.map(p=>p.id))];
     const [lr,cr]=ids.length?await Promise.all([sb.from('likes').select('post_id,user_id').in('post_id',ids),sb.from('comments').select('*').in('post_id',ids).order('created_at')]):[{data:[]},{data:[]}];
     const uids=[...new Set(ps.map(p=>p.user_id).concat((cr.data||[]).map(c=>c.user_id)))];
     const pf=uids.length?await sb.from('profiles').select('user_id,username,bio,avatar_url,mc_name').in('user_id',uids):{data:[]};
     (pf.data||[]).forEach(x=>{PROF[x.user_id]=x});
     await signAll(ps.map(p=>p.image_url).concat((pf.data||[]).map(x=>x.avatar_url)));
     $('posts').innerHTML=groups.map((g,gi)=>{
-      const cl=col.includes(g.id),n=cnt[g.id]||0,l=g.list||[];
-      return '<div class="cat'+(cl?' col':'')+'" data-c="'+g.id+'" data-n="'+esc(g.name)+'"><div class="cath"><button class="catt" data-a="tog"><span class="arr">'+(cl?'▸':'▾')+'</span> '+esc(g.name)+' <small>('+n+')</small></button>'+(ADMIN&&g.id!='none'?(gi>0?'<button class="ib" data-a="up" title="Nach oben">▲</button>':'')+(gi<CATS.length-1?'<button class="ib" data-a="dn" title="Nach unten">▼</button>':'')+'<button class="ib" data-a="info" title="Steckbrief bearbeiten">📋</button><button class="ib" data-a="ren" title="Umbenennen">✎</button><button class="ib" data-a="dcat" title="Kategorie löschen">🗑</button>':'')+'</div>'
-        +(cl?'':sheetHTML(g.id)+(l.length?'<div class="posts">'+l.map(p=>postHTML(p,lr.data||[],cr.data||[])).join('')+'</div>'+(n>l.length?'<div class="cmore" style="text-align:center;margin-top:14px"><button class="btn ghost" data-a="more">Mehr anzeigen ('+(n-l.length)+')</button></div>':''):'<p class="sub cempty">Noch keine Bilder in dieser Kategorie.</p>'))+'</div>';
+      const cl=col.includes(g.id),n=cnt[g.id]||0,l=g.list||[],more=g.more!==undefined?g.more:n>l.length;
+      return '<div class="cat'+(cl?' col':'')+'" data-c="'+g.id+'" data-n="'+esc(g.name)+'"><div class="cath"><button class="catt" data-a="tog"><span class="arr">'+(cl?'▸':'▾')+'</span> '+esc(g.name)+' <small>('+n+')</small></button>'+(ADMIN&&g.id!='search'&&g.id!='top'?'<button class="ib selall" data-a="selall" title="Alle auswählen">☑</button>':'')+(ADMIN&&CATS.some(c=>c.id==g.id)?(gi>0?'<button class="ib" data-a="up" title="Nach oben">▲</button>':'')+(gi<CATS.length-1?'<button class="ib" data-a="dn" title="Nach unten">▼</button>':'')+'<button class="ib" data-a="info" title="Steckbrief bearbeiten">📋</button><button class="ib" data-a="ren" title="Umbenennen">✎</button><button class="ib" data-a="dcat" title="Kategorie löschen">🗑</button>':'')+'</div>'
+        +(cl?'':sheetHTML(g.id)+(l.length?'<div class="posts">'+l.map(p=>postHTML(p,lr.data||[],cr.data||[])).join('')+'</div>'+(more?'<div class="cmore" style="text-align:center;margin-top:14px"><button class="btn ghost" data-a="more">Mehr anzeigen'+(g.id=='search'?'':' ('+(n-l.length)+')')+'</button></div>':''):'<p class="sub cempty">'+(g.id=='search'?'Keine Treffer.':'Noch keine Bilder in dieser Kategorie.')+'</p>'))+'</div>';
     }).join('');
   }catch(e){$('posts').innerHTML='<p class="sub">Galerie konnte nicht geladen werden.</p>'}
 }
 $('posts').onclick=async e=>{
   if(e.target.matches('.post>img')){openLb(e.target);return}
   const w=e.target.closest('.who,.cn');if(w){openPv(w.dataset.u);return}
+  if(e.target.classList.contains('pick')){const pid=e.target.closest('.post').dataset.id;if(e.target.checked)SEL.add(pid);else SEL.delete(pid);updSel();return}
   const b=e.target.closest('button');if(!b)return;
   const a=b.dataset.a,cat=b.closest('.cat');
   if(a=='tog'){toggleCat(cat.dataset.c);return}
   if(a=='more'){LIM[cat.dataset.c]=(LIM[cat.dataset.c]||12)+12;loadPosts();return}
   if(!cur)return;
+  if(a=='selall'){cat.querySelectorAll('.post').forEach(p=>{SEL.add(p.dataset.id);const k=p.querySelector('.pick');if(k)k.checked=true});updSel();return}
   if(a=='info'){openSheet(cat.dataset.c);return}
   if(a=='up'||a=='dn'){
     const o=CATS.map(c=>c.id),i=o.indexOf(cat.dataset.c),j=a=='up'?i-1:i+1;
@@ -548,20 +588,29 @@ $('posts').onclick=async e=>{
   loadPosts();
 };
 function shrink(f){return new Promise((ok,no)=>{const im=new Image();im.onload=()=>{const s=Math.min(1,1200/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);c.toBlob(b=>b?ok(b):no(new Error('Bild nicht lesbar')),'image/jpeg',.85)};im.onerror=()=>no(new Error('Bild nicht lesbar'));im.src=URL.createObjectURL(f)})}
+const guessDate=f=>{const m=String(f.name).match(/(\d{4})-(\d{2})-(\d{2})[_ T-](\d{2})[.:-](\d{2})[.:-](\d{2})/);if(m){const d=new Date(+m[1],+m[2]-1,+m[3],+m[4],+m[5],+m[6]);if(!isNaN(d)&&d.getFullYear()>2009&&d<=new Date())return d}return f.lastModified?new Date(f.lastModified):new Date()};
 $('up').onclick=async()=>{
-  const f=$('file').files[0];if(!f){$('upMsg').textContent='Bitte zuerst ein Bild wählen.';return}
-  $('upMsg').textContent='Lade hoch …';
-  try{
-    const b=await shrink(f),path=cur.id+'/'+Date.now()+'.jpg';
-    let r=await sb.storage.from('images').upload(path,b,{contentType:'image/jpeg'});if(r.error)throw r.error;
-    const url=sb.storage.from('images').getPublicUrl(path).data.publicUrl;
-    r=await sb.from('posts').insert({user_id:cur.id,user_name:name(),image_url:url,caption:$('cap').value.slice(0,200),category_id:(document.querySelector('input[name=uc]:checked')||{}).value||null});if(r.error)throw r.error;
-    $('file').value=$('cap').value='';showFile();$('upMsg').textContent='Hochgeladen!';const k=(document.querySelector('input[name=uc]:checked')||{}).value;if(k){try{localStorage.setItem('bc_col',JSON.stringify(colState().filter(x=>x!=k)))}catch(e){}}loadPosts();
-  }catch(e){$('upMsg').textContent='Fehler: '+(e.message||e)}
+  const fs=[...$('file').files].filter(f=>/^image\//.test(f.type)).slice(0,40);
+  if(!fs.length){$('upMsg').textContent='Bitte zuerst Bilder wählen.';return}
+  const cat=(document.querySelector('input[name=uc]:checked')||{}).value||null,cap=$('cap').value.slice(0,200),dv=$('upDate').value;
+  $('up').disabled=true;let ok=0,fail=0,last='';
+  for(let i=0;i<fs.length;i++){
+    $('upMsg').textContent='Lade '+(i+1)+' von '+fs.length+' hoch …';
+    try{
+      const b=await shrink(fs[i]),path=cur.id+'/'+Date.now()+'-'+i+'.jpg';
+      let r=await sb.storage.from('images').upload(path,b,{contentType:'image/jpeg'});if(r.error)throw r.error;
+      const url=sb.storage.from('images').getPublicUrl(path).data.publicUrl,taken=dv?new Date(dv+'T12:00:00'):guessDate(fs[i]);
+      r=await sb.from('posts').insert({user_id:cur.id,user_name:name(),image_url:url,caption:cap,category_id:cat,taken_at:taken.toISOString()});if(r.error)throw r.error;
+      ok++;
+    }catch(e){fail++;last=e.message||String(e)}
+  }
+  $('up').disabled=false;
+  if(ok){$('file').value=$('cap').value=$('upDate').value='';showFile();if(cat){try{localStorage.setItem('bc_col',JSON.stringify(colState().filter(x=>x!=cat)))}catch(e){}}loadPosts()}
+  $('upMsg').textContent=ok+(ok==1?' Bild':' Bilder')+' hochgeladen'+(fail?', '+fail+' fehlgeschlagen ('+last+')':'.');
 };
 function showFile(){
-  const f=$('file').files[0],p=$('prev');
-  $('fname').textContent=f?f.name:'Bild auswählen oder hierher ziehen';
+  const fs=[...$('file').files],f=fs[0],p=$('prev');
+  $('fname').textContent=!f?'Bilder auswählen oder hierher ziehen':(fs.length==1?f.name:fs.length+' Bilder ausgewählt');
   $('di').style.display=f?'none':'';
   if(f){p.src=URL.createObjectURL(f);p.style.display='block'}else{p.style.display='none';p.removeAttribute('src')}
 }
@@ -627,7 +676,7 @@ $('delYes').onclick=async()=>{
   }catch(e){$('pMsg').textContent='Fehler: '+(e.message||e)}
 };
 async function removeImg(u){try{const p=pathOf(u);if(p)await sb.storage.from('images').remove([p])}catch(e){}}
-function openEdit(id,post){EDIT={id,img:post.querySelector('img').dataset.raw,blob:null};$('eImg').src=su(EDIT.img);$('eCap').value=post.querySelector('.pb>p').textContent;$('eMsg').textContent='';$('em').classList.add('on')}
+function openEdit(id,post){EDIT={id,img:post.querySelector('img').dataset.raw,blob:null};$('eImg').src=su(EDIT.img);EDIT.td=new Date(post.dataset.taken).toLocaleDateString('sv-SE');$('eDate').value=EDIT.td;$('eCap').value=post.querySelector('.pb>p').textContent;$('eMsg').textContent='';$('em').classList.add('on')}
 $('eFile').onchange=async()=>{const f=$('eFile').files[0];if(!f)return;try{EDIT.blob=await shrink(f);$('eImg').src=URL.createObjectURL(EDIT.blob)}catch(e){$('eMsg').textContent=e.message}};
 $('eClose').onclick=()=>$('em').classList.remove('on');
 $('eSave').onclick=async()=>{
@@ -635,7 +684,8 @@ $('eSave').onclick=async()=>{
   try{
     let url=EDIT.img;
     if(EDIT.blob){const path=cur.id+'/'+Date.now()+'.jpg';const u=await sb.storage.from('images').upload(path,EDIT.blob,{contentType:'image/jpeg'});if(u.error)throw u.error;url=sb.storage.from('images').getPublicUrl(path).data.publicUrl}
-    const r=await sb.from('posts').update({caption:$('eCap').value.trim().slice(0,200),image_url:url,edited_at:new Date().toISOString()}).eq('id',EDIT.id);if(r.error)throw r.error;
+    const row={caption:$('eCap').value.trim().slice(0,200),image_url:url,edited_at:new Date().toISOString()},dv=$('eDate').value;if(dv&&dv!==EDIT.td)row.taken_at=new Date(dv+'T12:00:00').toISOString();
+    const r=await sb.from('posts').update(row).eq('id',EDIT.id);if(r.error)throw r.error;
     if(EDIT.blob)removeImg(EDIT.img);
     $('em').classList.remove('on');loadPosts();
   }catch(e){$('eMsg').textContent='Fehler: '+(e.message||e)}
@@ -690,6 +740,32 @@ $('am').onclick=async e=>{
   }catch(err){}
   loadAdmin();loadPosts();
 };
+const boardHTML=c=>{const b=c.final_board;if(!b||!b.rows||!b.rows.length)return '';return '<div class="fin"><b>🏆 Endstand Spielzeit</b> <small>(Stand '+fd(String(b.at).slice(0,10))+')</small><ol>'+b.rows.map(r=>'<li>'+esc(r.name)+' <span>'+Math.floor(r.minutes/60)+' h '+(r.minutes%60)+' min</span></li>').join('')+'</ol></div>'};
+function updSel(){$('selN').textContent=SEL.size+' ausgewählt';$('selbar').style.display=SELMODE?'flex':'none'}
+$('selBtn').onclick=()=>{SELMODE=!SELMODE;$('posts').classList.toggle('selmode',SELMODE);if(!SELMODE)SEL.clear();document.querySelectorAll('.pick').forEach(c=>{c.checked=SEL.has(c.closest('.post').dataset.id)});updSel();$('selBtn').textContent=SELMODE?'✕ Auswahl beenden':'☑ Mehrere auswählen'};
+$('selOff').onclick=()=>{if(SELMODE)$('selBtn').click()};
+$('selMove').onclick=()=>{if(!SEL.size)return;MVM=true;MV=null;$('mvCats').innerHTML=chips('mc','',true);$('mvMsg').textContent=SEL.size+' Bilder werden verschoben.';$('mv').classList.add('on')};
+$('sFinal').onclick=async()=>{
+  if(!BOARD.length){$('sMsg').textContent='Keine Spielzeit-Daten vorhanden.';return}
+  if(!confirm('Die aktuelle Top 10 der Spielzeit als Endstand dieses Servers speichern?'))return;
+  const r=await sb.from('categories').update({final_board:{at:new Date().toISOString(),rows:BOARD.slice(0,10).map(x=>({name:x.name,minutes:x.minutes}))}}).eq('id',SHEET);
+  $('sMsg').textContent=r.error?'Fehler: '+r.error.message:'Endstand gespeichert.';if(!r.error)loadPosts();
+};
+$('sFinalDel').onclick=async()=>{
+  if(!confirm('Gespeicherten Endstand löschen?'))return;
+  const r=await sb.from('categories').update({final_board:null}).eq('id',SHEET);
+  $('sMsg').textContent=r.error?'Fehler: '+r.error.message:'Endstand gelöscht.';if(!r.error)loadPosts();
+};
+$('sortChips').onclick=e=>{const b=e.target.closest('button');if(!b)return;SORT=b.dataset.s;try{localStorage.setItem('bc_sort',SORT)}catch(x){}markSort();loadPosts()};
+let qt=null;$('q').addEventListener('input',()=>{clearTimeout(qt);qt=setTimeout(()=>{Q=$('q').value.trim();LIM.search=0;loadPosts()},350)});
+$('lbDl').onclick=async e=>{
+  e.stopPropagation();const el=LB.els[LB.i];if(!el)return;
+  try{const r=await fetch(el.src),b=await r.blob(),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='inkogniflix-'+String(pathOf(el.dataset.raw)||'bild.jpg').split('/').pop();document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),3000)}
+  catch(x){window.open(el.src,'_blank')}
+};
+let DP=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();DP=e});
+$('pwaBtn').onclick=e=>{e.preventDefault();if(DP){DP.prompt();DP=null}else alert('So legst du die Seite als App ab:\n\n• iPhone/iPad (Safari): Teilen-Symbol → „Zum Home-Bildschirm“\n• Android (Chrome): Menü ⋮ → „App installieren“\n• Computer (Chrome/Edge): Installieren-Symbol in der Adressleiste')};
+markSort();
 const fd=d=>d?new Date(d+'T00:00').toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'}):'';
 function sheetHTML(id){
   const c=CATS.find(x=>x.id==id);if(!c)return '';
@@ -697,8 +773,8 @@ function sheetHTML(id){
   if(c.start_date||c.end_date)f.push(['Zeitraum',fd(c.start_date)+' – '+(c.end_date?fd(c.end_date):'läuft noch')]);
   [['Version',c.version],['Modpack',c.modpack],['Seed',c.seed],['Spawn',c.spawn]].forEach(x=>{if(x[1])f.push(x)});
   const map=c.map_url&&/^https?:\/\//i.test(c.map_url);
-  if(!f.length&&!c.description&&!map)return '';
-  return '<div class="sheet"><div class="facts">'+f.map(x=>'<span><small>'+x[0]+'</small>'+esc(x[1])+'</span>').join('')+'</div>'+(c.description?'<p>'+esc(c.description)+'</p>':'')+(map?'<a class="btn ghost" href="'+esc(c.map_url)+'" target="_blank" rel="noopener">🗺 Weltkarte dieses Servers</a>':'')+'</div>';
+  const fin=boardHTML(c);if(!f.length&&!c.description&&!map&&!fin)return '';
+  return '<div class="sheet"><div class="facts">'+f.map(x=>'<span><small>'+x[0]+'</small>'+esc(x[1])+'</span>').join('')+'</div>'+(c.description?'<p>'+esc(c.description)+'</p>':'')+(map?'<a class="btn ghost" href="'+esc(c.map_url)+'" target="_blank" rel="noopener">🗺 Weltkarte dieses Servers</a>':'')+fin+'</div>';
 }
 let SHEET=null,TE=null;
 function openSheet(id){
@@ -798,12 +874,13 @@ $('apwBtn').onclick=async()=>{
   $('pvMsg').textContent=r.error?'Fehler: '+r.error.message:'Neues Passwort gesetzt. Gib es dem Spieler weiter.';
   if(!r.error)$('apw').value='';
 };
-function openMove(id,cat){MV=id;$('mvCats').innerHTML=chips('mc',cat,true);$('mvMsg').textContent='';$('mv').classList.add('on')}
+function openMove(id,cat){MVM=false;MV=id;$('mvCats').innerHTML=chips('mc',cat,true);$('mvMsg').textContent='';$('mv').classList.add('on')}
 $('mvClose').onclick=()=>$('mv').classList.remove('on');
 $('mvSave').onclick=async()=>{
   const v=(document.querySelector('input[name=mc]:checked')||{}).value||null;
-  const r=await sb.from('posts').update({category_id:v}).eq('id',MV);
+  const r=MVM?await sb.from('posts').update({category_id:v}).in('id',[...SEL]):await sb.from('posts').update({category_id:v}).eq('id',MV);
   if(r.error){$('mvMsg').textContent='Fehler: '+r.error.message;return}
+  if(MVM){SEL.clear();updSel()}
   $('mv').classList.remove('on');loadPosts();
 };
 $('addCat').onclick=async()=>{
