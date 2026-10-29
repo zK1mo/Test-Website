@@ -83,8 +83,8 @@ input:focus{outline:2px solid var(--p)}
 .ip{display:inline-flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center;background:rgba(0,0,0,.35);border:1px solid var(--p);border-radius:999px;padding:10px 12px 10px 22px;box-shadow:var(--glow);font-family:ui-monospace,monospace;font-size:17px;margin:12px 0}
 .dot{width:10px;height:10px;border-radius:50%;background:#4ade80;box-shadow:0 0 10px #4ade80;display:inline-block;margin-right:8px}
 footer{text-align:center;padding:28px 16px;color:var(--m);font-size:13px;border-top:1px solid var(--line)}
-#modal,#pm,#pv,#lg,#em,#rm,#am,#mv,#sm,#tm,#pw{position:fixed;inset:0;background:rgba(5,2,12,.75);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
-#modal.on,#pm.on,#pv.on,#lg.on,#em.on,#rm.on,#am.on,#mv.on,#sm.on,#tm.on,#pw.on{display:flex}
+#modal,#pm,#pv,#lg,#em,#rm,#am,#mv,#sm,#tm,#pw,#nm,#pp{position:fixed;inset:0;background:rgba(5,2,12,.75);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
+#modal.on,#pm.on,#pv.on,#lg.on,#em.on,#rm.on,#am.on,#mv.on,#sm.on,#tm.on,#pw.on,#nm.on,#pp.on{display:flex}
 #lg{z-index:40}#lg .box{max-width:680px;text-align:left}
 .box{background:#1a0d33;border:1px solid var(--line);border-radius:28px;padding:24px;width:100%;max-width:350px;max-height:92vh;overflow:auto;box-shadow:var(--glow)}
 .tabs{display:flex;gap:8px;margin-bottom:12px}.tabs .btn{flex:1;padding:10px}
@@ -126,7 +126,16 @@ select.in option{background:#1a0d33;color:#f5ecff}
 body.locked .hero{padding-bottom:8px}
 body.locked #gate{padding-top:16px}
 .btn.pressed{transform:scale(.96);filter:brightness(.9)}
-body.locked #features,body.locked #spiel,body.locked #galerie,body.locked #zeitleiste,body.locked #rangliste,body.locked #karte,body.locked #server,body.locked nav a:not(.brand),body.locked .hero .btns{display:none}
+body.locked .links a,body.locked .hero .btns{display:none}
+section[data-view]{display:none}
+body[data-v="start"] section[data-view~="start"],body[data-v="galerie"] section[data-view~="galerie"],body[data-v="zeitleiste"] section[data-view~="zeitleiste"],body[data-v="ranglisten"] section[data-view~="ranglisten"],body[data-v="spiel"] section[data-view~="spiel"],body[data-v="rueckblick"] section[data-view~="rueckblick"]{display:block}
+body.locked section[data-view]{display:none!important}
+body.locked .hero{display:block!important}
+.links{display:flex;align-items:center;gap:14px;margin-left:auto;flex-wrap:wrap}
+.links a.on{color:#fff;text-shadow:0 0 12px rgba(168,85,247,.9)}
+#navToggle{display:none;margin-left:auto;padding:8px 16px;font-size:18px}
+a.card.lk{display:block;text-decoration:none;color:var(--t);transition:.2s}a.card.lk:hover{transform:translateY(-3px);box-shadow:var(--glow)}
+@media (max-width:820px){#navToggle{display:inline-flex}.links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:8px;padding:14px 18px;background:rgba(11,6,24,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);margin-left:0}.links.open{display:flex}.links a{padding:8px 4px;font-size:17px}.links .btn{width:100%}}
 .cm input.ce{width:60%;margin:0;padding:6px 10px}
 .cath{display:flex;align-items:center;gap:8px;margin:26px 0 12px}
 .catt{flex:1;text-align:left;background:none;border:0;color:var(--t);font:800 20px Outfit,system-ui,sans-serif;cursor:pointer;padding:0}
@@ -158,6 +167,30 @@ input[type=date]{color-scheme:dark}
 .fin{margin-top:12px}.fin ol{margin:6px 0 0;padding-left:22px;color:var(--m)}.fin li span{color:var(--p2);font-weight:600;margin-left:6px}
 .lbtool{position:absolute;top:14px;right:14px;z-index:2;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.14);color:#fff;font-size:20px;cursor:pointer;backdrop-filter:blur(6px)}
 .gst{color:var(--m);margin:18px 0 10px}
+.ybt{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;align-items:center}.ybt .av{width:24px;height:24px;vertical-align:middle}
+.yb{padding:20px}.yb h3{margin:0 0 4px;font-size:22px}
+.yg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:14px}
+.yt{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:18px;padding:12px;text-align:center}
+.yt span{font-size:26px;display:block}.yt b{display:block;font-size:19px}.yt small{color:var(--m)}.yt .up{display:block;color:#4ade80;font-size:12px}
+.ybi{max-width:100%;border-radius:18px;margin-top:14px;display:block}
+.mn{color:var(--p2);font-weight:600;cursor:pointer}.mn:hover{text-decoration:underline}
+.rep{margin:2px 0 4px 14px;padding-left:12px;border-left:2px solid var(--line)}.rbox{margin:6px 0 8px}
+.nit{padding:10px 12px;border:1px solid var(--line);border-radius:14px;margin-bottom:8px;cursor:pointer}.nit.un{background:rgba(168,85,247,.18);border-color:var(--p2)}
+#bellN{font-weight:700;color:var(--p2)}
+#block[data-l="1"]{background:repeating-linear-gradient(90deg,rgba(255,255,255,.06) 0 2px,transparent 2px 30px),repeating-linear-gradient(0deg,rgba(255,255,255,.06) 0 2px,transparent 2px 30px),linear-gradient(135deg,#334155,#64748b)}
+#block[data-l="2"]{background:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 2px,transparent 2px 30px),repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 2px,transparent 2px 30px),linear-gradient(135deg,#0f172a,#3b0764)}
+#block[data-l="3"]{background:repeating-linear-gradient(90deg,rgba(0,0,0,.18) 0 2px,transparent 2px 30px),repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 2px,transparent 2px 30px),linear-gradient(135deg,#7f1d1d,#f97316);border-color:#fb923c}
+.shop{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-top:14px}
+.sc{text-align:center;padding:16px}.sc .pv{min-height:56px;display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.sc .btn{width:100%;margin-top:10px;padding:10px 12px;font-size:14px}
+.ttl{font-size:11px;padding:1px 8px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.08);color:var(--p2);margin-left:6px;font-weight:600;white-space:nowrap}
+.nc-gold{color:#f5c542}.nc-cyan{color:#22d3ee}.nc-gruen{color:#34d399}.nc-rot{color:#f87171}.nc-pink{color:#f472b6}
+.nc-regenbogen{background:linear-gradient(90deg,#f87171,#fbbf24,#34d399,#22d3ee,#a78bfa,#f472b6,#f87171);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:rb 4s linear infinite}
+@keyframes rb{to{background-position:200% 0}}@keyframes hue{to{filter:hue-rotate(360deg)}}@keyframes pls{50%{box-shadow:0 0 0 3px #f97316,0 0 26px #ef4444}}
+.av.fr-amethyst{box-shadow:0 0 0 3px #a855f7,0 0 16px #c084fc}.av.fr-gold{box-shadow:0 0 0 3px #f5c542,0 0 16px #fde68a}
+.av.fr-diamant{box-shadow:0 0 0 3px #22d3ee,0 0 18px #67e8f9}.av.fr-smaragd{box-shadow:0 0 0 3px #10b981,0 0 18px #6ee7b7}
+.av.fr-lava{box-shadow:0 0 0 3px #f97316,0 0 18px #ef4444;animation:pls 2s ease-in-out infinite}
+.av.fr-regenbogen{box-shadow:0 0 0 3px #f0f,0 0 16px #0ff;animation:hue 4s linear infinite}
 .btns2{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .mh{margin:30px 0 10px;font-size:18px;color:var(--p2)}
 #miners{max-width:520px;margin:0 auto;text-align:left}
@@ -171,23 +204,27 @@ input[type=date]{color-scheme:dark}
 .dot.chk{background:#9ca3af;box-shadow:none}
 </style>
 </head>
-<body class="locked">
+<body class="locked" data-v="start">
 <nav>
-  <a class="brand" href="#top"><img src="logo.png" alt="" onerror="this.style.display='none'">INKOGNIFLIX</a>
-  <a href="#spiel">Mining</a><a href="#galerie">Galerie</a><a href="#zeitleiste">Zeitleiste</a><a href="#rangliste">Rangliste</a><a href="#karte" id="navMap" style="display:none">Karte</a><a href="#server">Server</a>
-  <button class="btn ghost" id="adminBtn" style="display:none">Admin</button>
-  <button class="btn ghost" id="profBtn" style="display:none">Profil</button>
-  <button class="btn" id="authBtn">Anmelden</button>
+  <a class="brand" href="#/"><img src="logo.png" alt="" onerror="this.style.display='none'">INKOGNIFLIX</a>
+  <button class="btn ghost" id="navToggle" aria-label="Menü öffnen" aria-expanded="false">☰</button>
+  <div class="links" id="navLinks">
+    <a href="#/galerie" data-r="galerie">Galerie</a><a href="#/zeitleiste" data-r="zeitleiste">Zeitleiste</a><a href="#/ranglisten" data-r="ranglisten">Ranglisten</a><a href="#/spiel" data-r="spiel">Spiel</a><a href="#/rueckblick" data-r="rueckblick">Rückblick</a>
+    <button class="btn ghost" id="bell" style="display:none" aria-label="Benachrichtigungen">🔔<span id="bellN"></span></button>
+    <button class="btn ghost" id="adminBtn" style="display:none">Admin</button>
+    <button class="btn ghost" id="profBtn" style="display:none">Profil</button>
+    <button class="btn" id="authBtn">Anmelden</button>
+  </div>
 </nav>
 
-<section class="hero" id="top">
+<section class="hero" id="top" data-view="start">
   <div class="cube" style="width:70px;height:70px;left:6%;top:70px"></div>
   <div class="cube" style="width:44px;height:44px;right:9%;top:150px;animation-delay:-2s"></div>
   <div class="cube" style="width:90px;height:90px;right:4%;bottom:40px;animation-delay:-4s"></div>
   <img class="logo" src="logo.png" alt="Inkogniflix Logo" onerror="this.style.display='none'">
   <h1>INKOGNIFLIX</h1>
   <p>Deine Minecraft-Community im Verborgenen. Baue, teile deine Screenshots und spiele mit uns auf dem Server.</p>
-  <div class="btns"><a class="btn" href="#server">Server-IP</a><a class="btn ghost" href="#galerie">Galerie ansehen</a></div>
+  <div class="btns"><a class="btn" href="#/galerie">Galerie ansehen</a><a class="btn ghost" href="#/spiel">Mining-Spiel</a></div>
   <p id="hello" style="margin-top:22px;color:var(--p2);font-weight:600"></p>
 </section>
 
@@ -199,28 +236,33 @@ input[type=date]{color-scheme:dark}
   </div>
 </section>
 
-<section id="features">
+<section id="features" data-view="start">
   <div class="grid">
-    <div class="card"><div class="ic">🌌</div><h3>Survival</h3><p>Große Welt, faire Regeln, nette Leute.</p></div>
-    <div class="card"><div class="ic">🏗</div><h3>Bauen</h3><p>Zeige deine Projekte in der Community-Galerie.</p></div>
-    <div class="card"><div class="ic">💜</div><h3>Community</h3><p>Liken, kommentieren und gemeinsam Neues entdecken.</p></div>
+    <a class="card lk" href="#/galerie"><div class="ic">📷</div><h3>Galerie</h3><p>Screenshots aus allen unseren Servern.</p></a>
+    <a class="card lk" href="#/zeitleiste"><div class="ic">🕰</div><h3>Zeitleiste</h3><p>Die Geschichte unserer Server.</p></a>
+    <a class="card lk" href="#/ranglisten"><div class="ic">🏆</div><h3>Ranglisten</h3><p>Spielzeit und Top Miner.</p></a>
+    <a class="card lk" href="#/spiel"><div class="ic">⛏</div><h3>Mining-Spiel</h3><p>Abbauen, Upgrades und Shop.</p></a>
+    <a class="card lk" href="#/rueckblick"><div class="ic">🎁</div><h3>Jahresrückblick</h3><p>Dein Jahr auf einen Blick.</p></a>
   </div>
 </section>
 
-<section id="spiel" class="center">
+<section id="spiel" class="center" data-view="spiel">
   <h2>Mining-Minispiel</h2>
-  <p class="sub">Klicke 5-mal auf den Block. Dein Inventar wird bei deinem Konto gespeichert.</p>
+  <p class="sub">Klicke auf den Block, um ihn abzubauen. Mit besseren Spitzhacken kommst du in tiefere Schichten.</p>
+  <div class="chips" id="layers" style="margin-bottom:6px"></div>
   <div id="block"><div id="crack"></div></div>
   <div class="bar"><i id="prog"></i></div>
   <div class="inv" id="inv"></div>
   <p class="gst" id="gstat"></p>
   <div class="btns2"><button class="btn" id="upg">Upgrade</button><button class="btn ghost" id="daily">🎁 Tägliche Belohnung</button></div>
   <p class="msg" id="gmsg"></p>
-  <h3 class="mh">Top Miner</h3>
-  <div id="miners"></div>
+  <h3 class="mh">Shop</h3>
+  <p class="sub" style="margin-bottom:10px">Gib deine Münzen für Profilrahmen, Namensfarben und Titel aus. Alle sehen, was du trägst.</p>
+  <div class="chips" id="shopTabs"><button class="chip2 on" data-k="frame">Profilrahmen</button><button class="chip2" data-k="color">Namensfarben</button><button class="chip2" data-k="title">Titel</button></div>
+  <div class="shop" id="shop"></div>
 </section>
 
-<section id="galerie">
+<section id="galerie" data-view="galerie">
   <h2>Community-Galerie</h2>
   <p class="sub">Lade deine besten Screenshots hoch, like und kommentiere.</p>
   <div class="card upl" id="upbox" style="display:none">
@@ -238,35 +280,35 @@ input[type=date]{color-scheme:dark}
   <div id="posts"></div>
 </section>
 
-<section id="zeitleiste">
+<section id="zeitleiste" data-view="zeitleiste">
   <h2>Zeitleiste</h2>
   <p class="sub">Die Geschichte unserer Server und wichtige Ereignisse.</p>
   <div id="tlAdd" style="display:none;margin-bottom:12px"><button class="btn ghost" id="addEv">＋ Ereignis</button></div>
   <div class="tl" id="tl"></div>
 </section>
 
-<section id="rangliste">
-  <h2>Rangliste</h2>
-  <p class="sub">Wer hat die meisten Stunden auf dem Server verbracht? <span id="lbUp"></span></p>
+<section id="rangliste" data-view="ranglisten">
+  <h2>Ranglisten</h2>
+  <h3 class="mh" style="margin-top:6px">Spielzeit auf dem Server <small id="lbUp" style="color:var(--m);font-weight:400;font-size:13px"></small></h3>
   <div id="board"></div>
+  <h3 class="mh">Top Miner (Mining-Spiel)</h3>
+  <div id="miners"></div>
 </section>
 
-<section id="karte" class="center" style="display:none">
-  <h2>Weltkarte</h2>
-  <p class="sub">Schau dir unsere Welt von oben an, mit allen Bauten und Spielern.</p>
-  <div class="card">
-    <a class="btn" id="mapBtn" href="#" target="_blank" rel="noopener">🗺 Karte öffnen</a>
-    <p class="sub" style="margin:14px 0 0;font-size:14px">Öffnet sich in einem neuen Tab. Die Karte lädt beim ersten Mal etwas länger.</p>
-  </div>
-</section>
-
-<section id="server" class="center">
+<section id="server" class="center" data-view="start">
   <h2>Server beitreten</h2>
   <div class="card">
     <p id="srv"><span class="dot chk" id="sdot"></span><span id="stxt">Status wird geprüft …</span></p>
     <div class="ip"><span id="ip">…</span><button class="btn" id="copy">Kopieren</button></div>
     <p class="msg" id="copyMsg"></p>
+    <a class="btn ghost" id="mapBtn" href="#" target="_blank" rel="noopener" style="display:none">🗺 Weltkarte öffnen</a>
   </div>
+</section>
+
+<section id="rueckblick" data-view="rueckblick">
+  <h2>Jahresrückblick</h2>
+  <p class="sub">Dein Jahr auf dem Server und in der Community. Jeder gespeicherte Rückblick bleibt erhalten.</p>
+  <div id="rbBody"></div>
 </section>
 
 <footer><div style="margin-bottom:8px"><a href="#l-datenschutz" data-l="datenschutz">Datenschutz</a><a href="#l-nutzung" data-l="nutzung">Regeln</a><a href="#" id="pwaBtn">App installieren</a></div>© 2026 Inkogniflix · Fan-Projekt, nicht mit Mojang oder Microsoft verbunden.</footer>
@@ -277,9 +319,9 @@ input[type=date]{color-scheme:dark}
 <h3>2. Hosting (GitHub Pages)</h3><p>Die Website wird über GitHub Pages bereitgestellt (GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA). Beim Aufruf verarbeitet GitHub technisch notwendige Daten, vor allem deine IP-Adresse, um die Seite auszuliefern und Missbrauch abzuwehren. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (sicherer, stabiler Betrieb). Für Übermittlungen in die USA beruft sich GitHub auf Garantien wie das EU-US Data Privacy Framework oder Standardvertragsklauseln.</p>
 <h3>3. Schriften und Skripte</h3><p>Schriftart und Skripte werden vom selben Server geladen. Es gibt keine Verbindung zu Google Fonts oder anderen CDNs. Wir setzen keine Analyse-, Tracking- oder Werbedienste ein.</p>
 <h3>4. Serverstatus (mcsrvstat.us)</h3><p>Die Startseite zeigt an, ob der Minecraft-Server online ist. Dafür ruft dein Browser beim Laden der Seite (und danach etwa jede Minute, solange sie offen ist) den Statusdienst mcsrvstat.us ab. Dabei wird deine IP-Adresse an den Betreiber dieses Dienstes übertragen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (Anzeige des Serverstatus für die Community).</p>
-<h3>5. Konto und Community (Supabase)</h3><p>Für Registrierung, Login und Community-Funktionen nutzen wir Supabase als Auftragsverarbeiter (Supabase Inc., USA). Gespeichert werden: Benutzername, Passwort (nur als Hash, nicht lesbar), optional eine E-Mail-Adresse, Beschreibung, Profilbild, optional dein Minecraft-Name, hochgeladene Bilder, Kommentare, Likes, Spielstand des Mining-Minispiels (Inventar, Münzen, Spitzhacke, abgebaute Blöcke) sowie Zeitstempel. Bestätigungs-E-Mails werden über Supabase versendet. Der Datenbankstandort ist Irland (AWS-Region eu-west-1, also innerhalb der EU). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Nutzungsvertrag). Meldungen von Beiträgen und Kommentaren (Melder, Grund) sowie Kontosperren und Timeouts werden zur Moderation gespeichert (Art. 6 Abs. 1 lit. f DSGVO). Für die Freischaltung speichern wir deinen Benutzernamen und den Zeitpunkt deiner Anfrage, bis du freigeschaltet oder abgelehnt wirst.</p>
-<h3>6. Öffentliche Inhalte</h3><p>Benutzername, Profilbild, Beschreibung, Minecraft-Name, Bilder, Kommentare, Likes und die Mining-Rangliste (Name und Anzahl abgebauter Blöcke) sind für alle Besucher sichtbar, auch ohne Login. Deine E-Mail-Adresse ist nicht öffentlich. Bitte veröffentliche keine personenbezogenen Daten Dritter und keine Fotos von Personen ohne deren Einwilligung.</p>
-<h3>7. Rangliste (Spielzeit)</h3><p>Die Rangliste zeigt Minecraft-Spielernamen und die auf dem Server verbrachte Spielzeit öffentlich an. Die Daten stammen vom Minecraft-Server (Hoster: G-Portal) und werden regelmäßig automatisch in Supabase gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Wenn du nicht in der Rangliste stehen möchtest, schreib mir eine E-Mail, dann entferne ich dich.</p>
+<h3>5. Konto und Community (Supabase)</h3><p>Für Registrierung, Login und Community-Funktionen nutzen wir Supabase als Auftragsverarbeiter (Supabase Inc., USA). Gespeichert werden: Benutzername, Passwort (nur als Hash, nicht lesbar), optional eine E-Mail-Adresse, Beschreibung, Profilbild, optional dein Minecraft-Name, hochgeladene Bilder, Kommentare, Likes, Spielstand des Mining-Minispiels (Inventar, Münzen, Spitzhacke, abgebaute Blöcke, Serie), gekaufte Profil-Extras (Rahmen, Namensfarben, Titel), gespeicherte Jahresrückblicke, Benachrichtigungen (Erwähnungen und Antworten) sowie Zeitstempel. E-Mails (zum Beispiel zur Bestätigung einer verknüpften Adresse oder für einen Passwort-Link) werden nur auf deinen Wunsch über Supabase versendet. Der Datenbankstandort ist Irland (AWS-Region eu-west-1, also innerhalb der EU). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Nutzungsvertrag). Meldungen von Beiträgen und Kommentaren (Melder, Grund) sowie Kontosperren und Timeouts werden zur Moderation gespeichert (Art. 6 Abs. 1 lit. f DSGVO). Für die Freischaltung speichern wir deinen Benutzernamen und den Zeitpunkt deiner Anfrage, bis du freigeschaltet oder abgelehnt wirst.</p>
+<h3>6. Für Mitglieder sichtbare Inhalte</h3><p>Benutzername, Profilbild, Beschreibung, Minecraft-Name, Bilder, Kommentare, Likes, Jahresrückblicke, Profil-Extras und die Mining-Rangliste (Name und Anzahl abgebauter Blöcke) sind für alle freigeschalteten Mitglieder sichtbar, nicht für Besucher ohne Zugang. Deine E-Mail-Adresse ist nicht öffentlich. Bitte veröffentliche keine personenbezogenen Daten Dritter und keine Fotos von Personen ohne deren Einwilligung.</p>
+<h3>7. Rangliste (Spielzeit)</h3><p>Die Rangliste zeigt Minecraft-Spielernamen und die auf dem Server verbrachte Spielzeit für alle Mitglieder an, dazu einige Server-Statistiken (Tode, besiegte Mobs, Strecke, abgebaute Blöcke), die im Jahresrückblick erscheinen. Die Daten stammen vom Minecraft-Server (Hoster: G-Portal) und werden regelmäßig automatisch in Supabase gespeichert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Wenn du nicht in der Rangliste stehen möchtest, schreib mir eine E-Mail, dann entferne ich dich.</p>
 <h3>8. Lokale Speicherung</h3><p>Deine Login-Sitzung wird im Speicher deines Browsers (localStorage) abgelegt. Das ist für den Login technisch erforderlich (§ 25 Abs. 2 Nr. 2 TDDDG). Tracking- oder Werbe-Cookies setzen wir nicht.</p>
 <h3>9. Speicherdauer und Löschung</h3><p>Wir speichern deine Daten, bis du dein Profil löschst. Die Funktion „Profil löschen“ entfernt Konto, Profil, Bilder, Kommentare, Likes und Spielstand. Gesetzliche Aufbewahrungspflichten und die Speicherfristen von GitHub für Server-Protokolle bleiben unberührt.</p>
 <h3>10. Deine Rechte</h3><p>Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch (Art. 15 bis 21 DSGVO) sowie auf Widerruf erteilter Einwilligungen. Schreib uns dazu eine E-Mail. Du kannst dich außerdem bei einer Datenschutzaufsichtsbehörde beschweren, zum Beispiel beim Landesbeauftragten für den Datenschutz und die Informationsfreiheit Rheinland-Pfalz.</p>
@@ -324,6 +366,7 @@ input[type=date]{color-scheme:dark}
   <h3 class="mh">Offene Meldungen</h3><div id="repList"></div>
   <h3 class="mh">Aktive Timeouts</h3><div id="toList"></div>
   <h3 class="mh">Gesperrte Nutzer</h3><div id="banList"></div>
+  <h3 class="mh">Archiv</h3><p class="sub" style="font-size:13px;margin-bottom:8px">Lade alle Daten oder alle Bilder als Datei auf deinen Computer.</p><div class="row" style="flex-wrap:wrap;gap:8px"><button class="btn ghost" id="exJson">Daten (JSON)</button><button class="btn ghost" id="exZip">Bilder (ZIP)</button></div><p class="msg" id="exMsg"></p>
   <button class="btn ghost" id="amClose" style="width:100%;margin-top:14px">Schließen</button>
 </div></div>
 
@@ -354,6 +397,12 @@ input[type=date]{color-scheme:dark}
 </div></div>
 
 <div id="selbar"><span id="selN">0 ausgewählt</span><button class="btn" id="selMove">Verschieben</button><button class="btn ghost" id="selOff">Fertig</button></div>
+
+<div id="nm"><div class="box"><h3 style="margin-top:0">Benachrichtigungen</h3><div id="nList"></div>
+  <button class="btn ghost" id="nAll" style="width:100%;margin-top:10px">Alle als gelesen markieren</button>
+  <button class="btn ghost" id="nClose" style="width:100%;margin-top:8px">Schließen</button></div></div>
+
+<div id="pp"><div class="box" style="max-width:520px"><div id="ppBody"></div><button class="btn ghost" id="ppClose" style="width:100%;margin-top:12px">Schließen</button></div></div>
 
 <div id="mv"><div class="box center">
   <h3 style="margin-top:0">In Kategorie verschieben</h3>
@@ -386,6 +435,7 @@ input[type=date]{color-scheme:dark}
   <button class="btn ghost" id="pPwBtn" style="width:100%;margin-top:8px">Passwort ändern oder zurücksetzen</button>
   <p class="msg" id="pMsg"></p>
   <button class="btn" id="pSave" style="width:100%">Speichern</button>
+  <button class="btn ghost" id="pRb" style="width:100%;margin-top:8px">🎁 Meinen Jahresrückblick öffnen</button>
   <button class="btn ghost" id="pClose" style="width:100%;margin-top:8px">Schließen</button>
   <button class="btn ghost" id="pDel" style="width:100%;margin-top:18px;border-color:#f43f5e;color:#fda4af">Profil löschen</button>
   <div id="delbox" style="display:none;margin-top:14px">
@@ -398,6 +448,7 @@ input[type=date]{color-scheme:dark}
 <div id="pv"><div class="box center">
   <div id="pvAv"></div><h3 id="pvName"></h3><p id="pvMc" style="color:var(--p2);margin:2px 0 8px"></p><p id="pvBio" style="color:var(--m)"></p>
   <div id="pvAdm" style="display:none;margin:10px 0"><p class="sub" style="margin:0 0 8px;font-size:13px">Admin: Timeout (nicht posten oder kommentieren)</p><div class="chips" id="tChips"><button class="chip2" data-m="60">1 Std</button><button class="chip2" data-m="360">6 Std</button><button class="chip2" data-m="1440">1 Tag</button><button class="chip2" data-m="4320">3 Tage</button><button class="chip2" data-m="10080">1 Woche</button><button class="chip2" data-m="20160">2 Wochen</button><button class="chip2" data-m="0">Aufheben</button></div><div class="row" style="margin-top:8px"><input type="text" id="apw" placeholder="Neues Passwort setzen (mind. 8)" maxlength="72"><button class="chip2" id="apwBtn">Setzen</button></div><p class="msg" id="pvMsg"></p></div>
+  <button class="btn ghost" id="pvRb" style="width:100%;margin-bottom:8px">🎁 Jahresrückblicke ansehen</button>
   <button class="btn ghost" id="pvClose" style="width:100%">Schließen</button>
 </div></div>
 
@@ -426,7 +477,13 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt=t=>t?new Date(t).toLocaleString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}):'';
 let mode='login',sb=null,cur=null,hits=0,items={},BOARD=[],SELMODE=false,MVM=false,MEMBER=false,READY=false,PEND=0,SRV_IP='',ADMIN=false,BANNED=false,MUTE=null,CATS=[],MV=null,PVID=null,EDIT=null,REP=null,G={blocks:0,pick:1,coins:0,last:null};
-const LOOT=[['Erde','🟫',32],['Stein','⬜',28],['Eisen','🔩',15],['Gold','🟨',10],['Amethyst','🔮',10],['Diamant','💎',5]];
+const ITEM={Erde:['🟫',1],Stein:['⬜',2],Eisen:['🔩',5],Gold:['🟨',10],Amethyst:['🔮',15],Diamant:['💎',40],Netherrack:['🟥',3],Quarz:['🔷',8],'Antiker Schutt':['🟤',60],Netherit:['⬛',120]};
+const LOOT=Object.keys(ITEM).map(k=>[k,ITEM[k][0]]);
+const LAYERS=[{n:'Oberfläche',min:1,hard:0,loot:[['Erde',34],['Stein',34],['Eisen',18],['Gold',9],['Diamant',5]]},{n:'Höhle',min:2,hard:0,loot:[['Stein',22],['Eisen',30],['Gold',20],['Amethyst',18],['Diamant',10]]},{n:'Tiefe',min:3,hard:1,loot:[['Eisen',12],['Gold',28],['Amethyst',28],['Diamant',32]]},{n:'Nether',min:4,hard:2,loot:[['Netherrack',30],['Quarz',28],['Gold',20],['Antiker Schutt',16],['Netherit',6]]}];
+const SHOP={frame:[{id:'amethyst',n:'Amethyst-Schein',p:150},{id:'gold',n:'Goldrahmen',p:300},{id:'diamant',n:'Diamant-Glanz',p:600},{id:'smaragd',n:'Smaragd-Rahmen',p:600},{id:'lava',n:'Lava-Puls',p:900},{id:'regenbogen',n:'Regenbogen',p:1500}],color:[{id:'gold',n:'Gold',p:120},{id:'cyan',n:'Diamantblau',p:120},{id:'gruen',n:'Smaragdgrün',p:120},{id:'rot',n:'Redstone-Rot',p:120},{id:'pink',n:'Rosa',p:200},{id:'regenbogen',n:'Regenbogen',p:900}],title:[{id:'miner',n:'Miner',p:80},{id:'baumeister',n:'Baumeister',p:200},{id:'redstone',n:'Redstone-Profi',p:300},{id:'creeper',n:'Creeper-Flüsterer',p:400},{id:'legende',n:'Netherit-Legende',p:1500}]};
+const mapOf=a=>Object.fromEntries(a.map(x=>[x.id,x.n])),FRAMES=mapOf(SHOP.frame),COLORS=mapOf(SHOP.color),TITLES=mapOf(SHOP.title);
+let COSM={frame:[],color:[],title:[]},LAYER=0,SHOPK='frame';
+try{LAYER=+localStorage.getItem('bc_layer')||0}catch(e){}
 let me={},PROF={},newAv=null;
 const name=()=>(me.username||'Spieler-'+cur.id.slice(0,4));
 function render(){
@@ -451,18 +508,22 @@ function render(){
   }
 }
 async function setUser(u){
-  cur=u||null;items={};me={};ADMIN=false;BANNED=false;MUTE=null;MEMBER=false;PEND=0;G={blocks:0,pick:1,coins:0,last:null};
-  if(cur){try{const r=await sb.from('inventory').select('items,blocks,pick,coins,last_daily').eq('user_id',cur.id).maybeSingle();items=(r.data&&r.data.items)||{};if(r.data)G={blocks:r.data.blocks||0,pick:r.data.pick||1,coins:r.data.coins||0,last:r.data.last_daily||null};const pr=await sb.from('profiles').select('*').eq('user_id',cur.id).maybeSingle();me=pr.data||{};const ad=await sb.from('admins').select('user_id').eq('user_id',cur.id).maybeSingle();ADMIN=!!ad.data;const bn=await sb.from('banned_users').select('user_id').eq('user_id',cur.id).maybeSingle();BANNED=!!bn.data;const to=await sb.from('timeouts').select('ends_at').eq('user_id',cur.id).maybeSingle();MUTE=to.data&&new Date(to.data.ends_at)>new Date()?new Date(to.data.ends_at):null;const mb=await sb.from('members').select('user_id').eq('user_id',cur.id).maybeSingle();MEMBER=!!mb.data||ADMIN;if(!MEMBER){await sb.from('join_requests').upsert({user_id:cur.id,email:isAlias(cur.email)?cur.email.split('@')[0]:cur.email},{onConflict:'user_id',ignoreDuplicates:true})}else{await signAll([me.avatar_url]);if(ADMIN){const jc=await sb.from('join_requests').select('user_id');PEND=(jc.data||[]).length}}}catch(e){}}
-  READY=true;render();if(MEMBER){loadPosts();loadMiners();loadTimeline();loadConfig();loadBoard()}
+  cur=u||null;items={};me={};ADMIN=false;BANNED=false;MUTE=null;MEMBER=false;PEND=0;COSM={frame:[],color:[],title:[]};G={blocks:0,pick:1,coins:0,last:null};
+  if(cur){try{const r=await sb.from('inventory').select('items,blocks,pick,coins,last_daily,streak,cosmetics').eq('user_id',cur.id).maybeSingle();items=(r.data&&r.data.items)||{};if(r.data){G={blocks:r.data.blocks||0,pick:r.data.pick||1,coins:r.data.coins||0,last:r.data.last_daily||null,streak:r.data.streak||0};COSM=Object.assign({frame:[],color:[],title:[]},r.data.cosmetics||{})}const pr=await sb.from('profiles').select('*').eq('user_id',cur.id).maybeSingle();me=pr.data||{};const ad=await sb.from('admins').select('user_id').eq('user_id',cur.id).maybeSingle();ADMIN=!!ad.data;const bn=await sb.from('banned_users').select('user_id').eq('user_id',cur.id).maybeSingle();BANNED=!!bn.data;const to=await sb.from('timeouts').select('ends_at').eq('user_id',cur.id).maybeSingle();MUTE=to.data&&new Date(to.data.ends_at)>new Date()?new Date(to.data.ends_at):null;const mb=await sb.from('members').select('user_id').eq('user_id',cur.id).maybeSingle();MEMBER=!!mb.data||ADMIN;if(!MEMBER){await sb.from('join_requests').upsert({user_id:cur.id,email:isAlias(cur.email)?cur.email.split('@')[0]:cur.email},{onConflict:'user_id',ignoreDuplicates:true})}else{await signAll([me.avatar_url]);if(ADMIN){const jc=await sb.from('join_requests').select('user_id');PEND=(jc.data||[]).length}}}catch(e){}}
+  READY=true;render();if(MEMBER){loadPosts();loadMiners();loadTimeline();loadConfig();loadBoard();loadNotifs();if(document.body.dataset.v=='rueckblick')openRueckblick()}
 }
-async function saveItems(){if(cur){try{await sb.from('inventory').upsert({user_id:cur.id,items,blocks:G.blocks,pick:G.pick,coins:G.coins,last_daily:G.last,user_name:name()})}catch(e){}}}
+async function saveItems(){if(cur){try{await sb.from('inventory').upsert({user_id:cur.id,items,blocks:G.blocks,pick:G.pick,coins:G.coins,last_daily:G.last,streak:G.streak||0,cosmetics:COSM,user_name:name()})}catch(e){}}}
 function postHTML(p,likes,coms){
   const l=likes.filter(x=>x.post_id==p.id),liked=cur&&l.some(x=>x.user_id==cur.id),cs=coms.filter(x=>x.post_id==p.id),can=cur&&!BANNED&&!MUTE,live=cur&&!BANNED,mine=cur&&p.user_id==cur.id;
-  const cm=cs.map(c=>{const own=cur&&c.user_id==cur.id;return '<p data-c="'+c.id+'" data-body="'+esc(c.body)+'"><span class="ctx"><b class="cn" data-u="'+c.user_id+'">'+esc(dn(c.user_id,c.user_name))+'</b>: '+esc(c.body)+'</span><span class="cx"><span class="ct">'+fmt(c.created_at)+(c.edited_at?' · bearbeitet':'')+'</span>'
+  const one=c=>{const own=cur&&c.user_id==cur.id;return '<p data-c="'+c.id+'" data-u="'+c.user_id+'" data-par="'+(c.parent_id||'')+'" data-body="'+esc(c.body)+'"><span class="ctx"><b class="cn" data-u="'+c.user_id+'">'+nmH(c.user_id,c.user_name)+'</b>: '+bodyH(c.body)+'</span><span class="cx"><span class="ct">'+fmt(c.created_at)+(c.edited_at?' · bearbeitet':'')+'</span>'
+    +(can?'<button class="cdel" data-a="rpl" title="Antworten">↩</button>':'')
     +(can&&own?'<button class="cdel" data-a="cedit" title="Bearbeiten">✎</button>':'')
     +((own||ADMIN)?'<button class="cdel" data-a="delc" data-c="'+c.id+'" title="Löschen">✕</button>':'')
-    +(live&&!own?'<button class="cdel" data-a="repc" data-c="'+c.id+'" data-u="'+c.user_id+'" title="Melden">⚑</button>':'')+'</span></p>'}).join('');
-  return '<article class="card post" data-id="'+p.id+'" data-u="'+p.user_id+'" data-cat="'+(p.category_id||'')+'" data-taken="'+esc(p.taken_at||p.created_at)+'">'+(ADMIN?'<input type="checkbox" class="pick" data-a="pick"'+(SEL.has(p.id)?' checked':'')+'>':'')+(p.pinned?'<span class="pinb" title="Angepinnt">📌</span>':'')+'<img src="'+esc(su(p.image_url))+'" data-raw="'+esc(p.image_url)+'" alt="" loading="lazy"><div class="pb"><div class="who" data-u="'+p.user_id+'">'+av(p.user_id)+'<div><b>'+esc(dn(p.user_id,p.user_name))+'</b><div class="pd">'+pdate(p)+'</div></div></div><p>'+esc(p.caption||'')+'</p>'
+    +(live&&!own?'<button class="cdel" data-a="repc" data-c="'+c.id+'" data-u="'+c.user_id+'" title="Melden">⚑</button>':'')+'</span></p>'};
+  const rootOf=c=>{let x=c,g=0;while(x.parent_id&&g++<6){const p=cs.find(y=>y.id==x.parent_id);if(!p)break;x=p}return x};
+  const tops=cs.filter(c=>rootOf(c)===c),kids=c=>cs.filter(x=>x!==c&&rootOf(x)===c);
+  const cm=tops.map(c=>one(c)+(kids(c).length?'<div class="rep">'+kids(c).map(one).join('')+'</div>':'')).join('');
+  return '<article class="card post" data-id="'+p.id+'" data-u="'+p.user_id+'" data-cat="'+(p.category_id||'')+'" data-taken="'+esc(p.taken_at||p.created_at)+'">'+(ADMIN?'<input type="checkbox" class="pick" data-a="pick"'+(SEL.has(p.id)?' checked':'')+'>':'')+(p.pinned?'<span class="pinb" title="Angepinnt">📌</span>':'')+'<img src="'+esc(su(p.image_url))+'" data-raw="'+esc(p.image_url)+'" alt="" loading="lazy"><div class="pb"><div class="who" data-u="'+p.user_id+'">'+av(p.user_id)+'<div><b>'+nmH(p.user_id,p.user_name)+'</b><div class="pd">'+pdate(p)+'</div></div></div><p>'+esc(p.caption||'')+'</p>'
     +'<div class="acts"><button class="like'+(liked?' on':'')+'" data-a="like">♥ '+l.length+'</button><span class="sp"></span>'
     +(ADMIN?'<button class="ib'+(p.pinned?' on':'')+'" data-a="pin" title="'+(p.pinned?'Lösen':'Anpinnen')+'">📌</button>':'')
     +((mine&&can)||ADMIN?'<button class="ib" data-a="mv" title="In Kategorie verschieben">📁</button>':'')
@@ -484,7 +545,7 @@ async function loadConfig(){
     const r=await sb.from('site_config').select('key,value'),c={};
     (r.data||[]).forEach(x=>{c[x.key]=x.value});
     if(c.server_ip){SRV_IP=c.server_ip;$('ip').textContent=SRV_IP;checkSrv()}
-    if(c.map_url&&/^https?:\/\//i.test(c.map_url)){$('karte').style.display='';$('navMap').style.display='';$('mapBtn').href=c.map_url}
+    if(c.map_url&&/^https?:\/\//i.test(c.map_url)){$('mapBtn').style.display='';$('mapBtn').href=c.map_url}
   }catch(e){}
 }
 $('gBtn').onclick=()=>{if(cur)setUser(cur);else $('authBtn').click()};
@@ -529,7 +590,7 @@ async function loadPosts(){
     const ps=groups.flatMap(g=>g.list||[]),ids=[...new Set(ps.map(p=>p.id))];
     const [lr,cr]=ids.length?await Promise.all([sb.from('likes').select('post_id,user_id').in('post_id',ids),sb.from('comments').select('*').in('post_id',ids).order('created_at')]):[{data:[]},{data:[]}];
     const uids=[...new Set(ps.map(p=>p.user_id).concat((cr.data||[]).map(c=>c.user_id)))];
-    const pf=uids.length?await sb.from('profiles').select('user_id,username,bio,avatar_url,mc_name').in('user_id',uids):{data:[]};
+    const pf=uids.length?await sb.from('profiles').select('user_id,username,bio,avatar_url,mc_name,frame,name_color,title').in('user_id',uids):{data:[]};
     (pf.data||[]).forEach(x=>{PROF[x.user_id]=x});
     await signAll(ps.map(p=>p.image_url).concat((pf.data||[]).map(x=>x.avatar_url)));
     $('posts').innerHTML=groups.map((g,gi)=>{
@@ -541,6 +602,7 @@ async function loadPosts(){
 }
 $('posts').onclick=async e=>{
   if(e.target.matches('.post>img')){openLb(e.target);return}
+  const mn=e.target.closest('.mn');if(mn){openByName(mn.dataset.un);return}
   const w=e.target.closest('.who,.cn');if(w){openPv(w.dataset.u);return}
   if(e.target.classList.contains('pick')){const pid=e.target.closest('.post').dataset.id;if(e.target.checked)SEL.add(pid);else SEL.delete(pid);updSel();return}
   const b=e.target.closest('button');if(!b)return;
@@ -565,14 +627,21 @@ $('posts').onclick=async e=>{
     }catch(err){}
     loadPosts();return;
   }
-  const post=b.closest('.post'),id=post.dataset.id,cp=b.closest('p[data-c]');
+  const post=b.closest('.post');if(!post)return;const id=post.dataset.id,cp=b.closest('p[data-c]');
   try{
     if(a=='like'){
       if(b.classList.contains('on'))await sb.from('likes').delete().eq('post_id',id).eq('user_id',cur.id);
       else await sb.from('likes').insert({post_id:id,user_id:cur.id});
     }else if(a=='com'){
       const t=post.querySelector('input').value.trim();if(!t)return;
-      await sb.from('comments').insert({post_id:id,user_id:cur.id,user_name:name(),body:t});
+      await sendComment(id,t,null,null);
+    }else if(a=='rpl'){
+      post.querySelectorAll('.rbox').forEach(x=>x.remove());
+      const un=PROF[cp.dataset.u]&&PROF[cp.dataset.u].username;
+      cp.insertAdjacentHTML('afterend','<div class="row rbox" data-root="'+(cp.dataset.par||cp.dataset.c)+'" data-to="'+cp.dataset.u+'"><input type="text" maxlength="200" value="'+(un&&cp.dataset.u!=cur.id?'@'+esc(un)+' ':'')+'"><button class="btn" data-a="rsend">Antworten</button></div>');
+      const ii=post.querySelector('.rbox input');ii.focus();ii.setSelectionRange(ii.value.length,ii.value.length);return
+    }else if(a=='rsend'){
+      const bx=b.closest('.rbox'),t=bx.querySelector('input').value.trim();if(!t)return;await sendComment(id,t,bx.dataset.root,bx.dataset.to)
     }else if(a=='delc'){await sb.from('comments').delete().eq('id',b.dataset.c)
     }else if(a=='del'){const im=post.querySelector('img').dataset.raw;await sb.from('posts').delete().eq('id',id);removeImg(im)
     }else if(a=='pin'){await sb.rpc('admin_pin',{p_id:id,p_pinned:!post.querySelector('.pinb')})
@@ -583,7 +652,7 @@ $('posts').onclick=async e=>{
     }else if(a=='cedit'){cp.innerHTML='<input type="text" class="ce" maxlength="200"> <button class="cdel" style="opacity:1" data-a="csave">OK</button> <button class="cdel" style="opacity:1" data-a="ccancel">Abbrechen</button>';cp.querySelector('input').value=cp.dataset.body;return
     }else if(a=='csave'){const t=cp.querySelector('input').value.trim();if(t)await sb.from('comments').update({body:t,edited_at:new Date().toISOString()}).eq('id',cp.dataset.c)}
   }catch(err){}
-  loadPosts();
+  loadPosts();if(PPID)openPost(PPID);
 };
 function shrink(f){return new Promise((ok,no)=>{const im=new Image();im.onload=()=>{const s=Math.min(1,1200/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);c.toBlob(b=>b?ok(b):no(new Error('Bild nicht lesbar')),'image/jpeg',.85)};im.onerror=()=>no(new Error('Bild nicht lesbar'));im.src=URL.createObjectURL(f)})}
 const guessDate=f=>{const m=String(f.name).match(/(\d{4})-(\d{2})-(\d{2})[_ T-](\d{2})[.:-](\d{2})[.:-](\d{2})/);if(m){const d=new Date(+m[1],+m[2]-1,+m[3],+m[4],+m[5],+m[6]);if(!isNaN(d)&&d.getFullYear()>2009&&d<=new Date())return d}return f.lastModified?new Date(f.lastModified):new Date()};
@@ -633,21 +702,72 @@ $('lb').addEventListener('touchend',e=>{if(tx===null)return;const dx=e.changedTo
 $('lb').onclick=()=>$('lb').classList.remove('on');
 document.addEventListener('keydown',e=>{if(e.key=='Escape')$('lb').classList.remove('on')});
 const dn=(id,fb)=>(PROF[id]&&PROF[id].username)||fb||'Anonym';
-const avH=(url,nm,big)=>su(url)?'<img class="av'+(big?' avbig':'')+'" src="'+esc(su(url))+'" alt="">':'<span class="av ph'+(big?' avbig':'')+'">'+esc((nm||'?').charAt(0).toUpperCase())+'</span>';
-const av=(id,big)=>avH(PROF[id]&&PROF[id].avatar_url,dn(id),big);
+const MEN=/(^|\s)@([A-Za-z0-9äöüÄÖÜß_][A-Za-z0-9äöüÄÖÜß_.-]{1,18}[A-Za-z0-9äöüÄÖÜß_])/g;
+const bodyH=t=>esc(t).replace(MEN,(m,sp,n)=>sp+'<span class="mn" data-un="'+n+'">@'+n+'</span>');
+const lk=n=>n.replace(/[_%]/g,'\\$&');
+const PFSEL='user_id,username,bio,avatar_url,mc_name,frame,name_color,title';
+async function sendComment(pid,text,parent,parentUser){
+  const r=await sb.from('comments').insert({post_id:pid,user_id:cur.id,user_name:name(),body:text,parent_id:parent||null});
+  if(r.error)return;
+  const rec=new Map();if(parentUser&&parentUser!=cur.id)rec.set(parentUser,'reply');
+  for(const n of [...new Set([...text.matchAll(MEN)].map(m=>m[2]))].slice(0,5)){
+    const q=await sb.from('profiles').select('user_id').ilike('username',lk(n)).limit(1).maybeSingle(),id=q.data&&q.data.user_id;
+    if(id&&id!=cur.id&&!rec.has(id))rec.set(id,'mention');
+  }
+  if(rec.size)await sb.from('notifications').insert([...rec].map(([uid,k])=>({user_id:uid,from_user:cur.id,kind:k,post_id:pid,body:text.slice(0,120)})));
+}
+async function openByName(n){
+  let id=Object.keys(PROF).find(k=>PROF[k].username&&PROF[k].username.toLowerCase()==n.toLowerCase());
+  if(!id){const r=await sb.from('profiles').select(PFSEL).ilike('username',lk(n)).limit(1).maybeSingle();if(r.data){PROF[r.data.user_id]=r.data;await signAll([r.data.avatar_url]);id=r.data.user_id}}
+  if(id)openPv(id);
+}
+let NOTIFS=[],PPID=null;
+async function loadNotifs(){
+  if(!sb||!cur||!MEMBER){$('bell').style.display='none';return}
+  const r=await sb.from('notifications').select('*').eq('user_id',cur.id).order('created_at',{ascending:false}).limit(30);
+  NOTIFS=r.data||[];
+  const ids=[...new Set(NOTIFS.map(n=>n.from_user))];
+  if(ids.length){const pf=await sb.from('profiles').select(PFSEL).in('user_id',ids);(pf.data||[]).forEach(x=>{PROF[x.user_id]=x})}
+  const u=NOTIFS.filter(n=>!n.read).length;$('bell').style.display='';$('bellN').textContent=u?' '+u:'';
+}
+function openNotifs(){
+  $('nList').innerHTML=NOTIFS.length?NOTIFS.map(n=>'<div class="nit'+(n.read?'':' un')+'" data-id="'+n.id+'" data-p="'+(n.post_id||'')+'"><b>'+nmH(n.from_user)+'</b> '+(n.kind=='reply'?'hat auf deinen Kommentar geantwortet':'hat dich erwähnt')+'<br><small>„'+esc(n.body||'')+'“ · '+fmt(n.created_at)+'</small></div>').join(''):'<p class="sub">Keine Benachrichtigungen.</p>';
+  $('nm').classList.add('on');
+}
+$('bell').onclick=openNotifs;
+$('nClose').onclick=()=>$('nm').classList.remove('on');
+$('nAll').onclick=async()=>{await sb.from('notifications').update({read:true}).eq('user_id',cur.id).eq('read',false);await loadNotifs();openNotifs()};
+$('nList').onclick=async e=>{const it=e.target.closest('.nit');if(!it)return;await sb.from('notifications').update({read:true}).eq('id',it.dataset.id);$('nm').classList.remove('on');loadNotifs();if(it.dataset.p)openPost(it.dataset.p)};
+async function openPost(id){
+  PPID=id;
+  const pr=await sb.from('posts').select('*').eq('id',id).maybeSingle();
+  if(!pr.data){$('ppBody').innerHTML='<p class="sub">Dieser Beitrag existiert nicht mehr.</p>';$('pp').classList.add('on');return}
+  const [lr,cr]=await Promise.all([sb.from('likes').select('post_id,user_id').eq('post_id',id),sb.from('comments').select('*').eq('post_id',id).order('created_at')]);
+  const uids=[...new Set([pr.data.user_id].concat((cr.data||[]).map(c=>c.user_id)))];
+  const pf=await sb.from('profiles').select(PFSEL).in('user_id',uids);(pf.data||[]).forEach(x=>{PROF[x.user_id]=x});
+  await signAll([pr.data.image_url].concat((pf.data||[]).map(x=>x.avatar_url)));
+  $('ppBody').innerHTML='<div class="cat" data-c="pp"><div class="posts" style="grid-template-columns:1fr">'+postHTML(pr.data,lr.data||[],cr.data||[])+'</div></div>';
+  $('pp').classList.add('on');
+}
+$('ppClose').onclick=()=>{PPID=null;$('pp').classList.remove('on')};
+$('pp').onclick=e=>{if(e.target.closest('#ppClose'))return;if(e.target===$('pp')){PPID=null;$('pp').classList.remove('on');return}$('posts').onclick(e)};
+const fr=f=>FRAMES[f]?' fr-'+f:'';
+const avH=(url,nm,big,f)=>su(url)?'<img class="av'+(big?' avbig':'')+fr(f)+'" src="'+esc(su(url))+'" alt="">':'<span class="av ph'+(big?' avbig':'')+fr(f)+'">'+esc((nm||'?').charAt(0).toUpperCase())+'</span>';
+const nmH=(id,fb)=>{const p=PROF[id]||{};return '<span class="nm'+(COLORS[p.name_color]?' nc-'+p.name_color:'')+'">'+esc(dn(id,fb))+'</span>'+(TITLES[p.title]?'<span class="ttl">'+esc(TITLES[p.title])+'</span>':'')};
+const av=(id,big)=>avH(PROF[id]&&PROF[id].avatar_url,dn(id),big,PROF[id]&&PROF[id].frame);
 function statLine(mc){
   if(!mc)return '';
   const i=BOARD.findIndex(x=>x.name.toLowerCase()==mc.toLowerCase());
   if(i<0)return 'Noch keine Spielzeit gefunden.';
   const m=BOARD[i].minutes;return 'Spielzeit: '+Math.floor(m/60)+' h '+(m%60)+' min · Platz '+(i+1);
 }
-function openPv(id){const p=PROF[id]||{};PVID=id;$('pvAdm').style.display=ADMIN&&cur&&id!=cur.id?'':'none';$('pvMsg').textContent='';$('pvMc').textContent=p.mc_name?('Minecraft: '+p.mc_name+(statLine(p.mc_name)?' · '+statLine(p.mc_name):'')):'';$('pvAv').innerHTML=av(id,1);$('pvName').textContent=dn(id);$('pvBio').textContent=p.bio||'Noch keine Beschreibung.';$('pv').classList.add('on')}
-function openPm(){newAv=null;$('pAv').innerHTML=avH(me.avatar_url,name(),1);$('pName').value=me.username||'';$('pBio').value=me.bio||'';$('pMc').value=me.mc_name||'';$('pStat').textContent=statLine(me.mc_name);$('pEmail').value='';emailStatus();$('pMsg').textContent='';$('delbox').style.display='none';$('pDel').style.display='';$('pm').classList.add('on')}
+function openPv(id){const p=PROF[id]||{};PVID=id;$('pvAdm').style.display=ADMIN&&cur&&id!=cur.id?'':'none';$('pvMsg').textContent='';$('pvMc').textContent=p.mc_name?('Minecraft: '+p.mc_name+(statLine(p.mc_name)?' · '+statLine(p.mc_name):'')):'';$('pvAv').innerHTML=av(id,1);$('pvName').innerHTML=nmH(id);$('pvBio').textContent=p.bio||'Noch keine Beschreibung.';$('pv').classList.add('on')}
+function openPm(){newAv=null;$('pAv').innerHTML=avH(me.avatar_url,name(),1,me.frame);$('pName').value=me.username||'';$('pBio').value=me.bio||'';$('pMc').value=me.mc_name||'';$('pStat').textContent=statLine(me.mc_name);$('pEmail').value='';emailStatus();$('pMsg').textContent='';$('delbox').style.display='none';$('pDel').style.display='';$('pm').classList.add('on')}
 function avatarBlob(f){return new Promise((ok,no)=>{const im=new Image();im.onload=()=>{const m=Math.min(im.width,im.height),c=document.createElement('canvas');c.width=c.height=256;c.getContext('2d').drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,256,256);c.toBlob(b=>b?ok(b):no(new Error('Bild nicht lesbar')),'image/jpeg',.88)};im.onerror=()=>no(new Error('Bild nicht lesbar'));im.src=URL.createObjectURL(f)})}
 $('profBtn').onclick=openPm;
 $('pClose').onclick=()=>$('pm').classList.remove('on');
 $('pvClose').onclick=()=>$('pv').classList.remove('on');
-$('avfile').onchange=async()=>{const f=$('avfile').files[0];if(!f)return;try{newAv=await avatarBlob(f);$('pAv').innerHTML=avH(URL.createObjectURL(newAv),name(),1)}catch(e){$('pMsg').textContent=e.message}};
+$('avfile').onchange=async()=>{const f=$('avfile').files[0];if(!f)return;try{newAv=await avatarBlob(f);$('pAv').innerHTML=avH(URL.createObjectURL(newAv),name(),1,me.frame)}catch(e){$('pMsg').textContent=e.message}};
 $('pSave').onclick=async()=>{
   const un=$('pName').value.trim(),bio=$('pBio').value.trim().slice(0,300);
   if(!/^[A-Za-z0-9_.\-äöüÄÖÜß]{3,20}$/.test(un)){$('pMsg').textContent='Name: 3–20 Zeichen, nur Buchstaben, Zahlen, _ . -';return}
@@ -709,7 +829,7 @@ async function loadAdmin(){
   const [pp,cc,br,tr]=await Promise.all([pid.length?sb.from('posts').select('id,image_url,caption,user_name').in('id',pid):{data:[]},cid.length?sb.from('comments').select('id,body,user_name').in('id',cid):{data:[]},sb.from('banned_users').select('user_id'),sb.from('timeouts').select('user_id,ends_at').gt('ends_at',new Date().toISOString())]);
   const T={};(pp.data||[]).forEach(x=>{T['post'+x.id]=x});(cc.data||[]).forEach(x=>{T['comment'+x.id]=x});
   const B=br.data||[],TO=tr.data||[],ids=[...new Set(R.map(x=>x.target_user_id).concat(B.map(x=>x.user_id),TO.map(x=>x.user_id)).filter(Boolean))];
-  const pf=ids.length?await sb.from('profiles').select('user_id,username,bio,avatar_url,mc_name').in('user_id',ids):{data:[]};
+  const pf=ids.length?await sb.from('profiles').select('user_id,username,bio,avatar_url,mc_name,frame,name_color,title').in('user_id',ids):{data:[]};
   const nm={};(pf.data||[]).forEach(x=>{nm[x.user_id]=x.username;PROF[x.user_id]=x});
   await signAll((pp.data||[]).map(x=>x.image_url).concat((pf.data||[]).map(x=>x.avatar_url)));
   rl.innerHTML=R.length?R.map(x=>{const t=T[x.target_type+x.target_id];
@@ -933,23 +1053,33 @@ $('go').onclick=async()=>{
   if(r.error){msg(/invalid login|credentials/i.test(r.error.message)?'Benutzername oder Passwort falsch.':r.error.message);return}
   $('modal').classList.remove('on');$('user').value=$('pass').value='';
 };
-const PICKS=['Holz','Stein','Eisen','Diamant','Netherit'],COST=[0,50,150,400,1000],VAL={Erde:1,Stein:2,Eisen:5,Gold:10,Amethyst:15,Diamant:40};
-const clicksNeeded=()=>Math.max(1,6-G.pick);
+const PICKS=['Holz','Stein','Eisen','Diamant','Netherit'],COST=[0,50,150,400,1000];
+const layerOK=i=>G.pick>=LAYERS[i].min,clicksNeeded=()=>Math.max(1,6-G.pick+LAYERS[LAYER].hard);
+const today=()=>new Date().toLocaleDateString('sv-SE'),yest=()=>new Date(Date.now()-864e5).toLocaleDateString('sv-SE');
 function renderGame(){
-  $('gstat').textContent='⛏ '+PICKS[G.pick-1]+'spitzhacke (Stufe '+G.pick+') · 🪙 '+G.coins+' Münzen · 🧱 '+G.blocks+' Blöcke';
+  if(!layerOK(LAYER))LAYER=0;
+  $('gstat').textContent='⛏ '+PICKS[G.pick-1]+'spitzhacke (Stufe '+G.pick+') · 🪙 '+G.coins+' Münzen · 🧱 '+G.blocks+' Blöcke'+(G.streak?' · 🔥 Serie '+G.streak:'');
+  $('layers').innerHTML=LAYERS.map((l,i)=>'<button class="chip2'+(i==LAYER?' on':'')+'" data-l="'+i+'"'+(layerOK(i)?'':' disabled style="opacity:.45"')+'>'+l.n+(layerOK(i)?'':' 🔒')+'</button>').join('');
+  $('block').dataset.l=LAYER;
   const u=$('upg');
   if(G.pick>=5){u.textContent='Maximale Stufe erreicht';u.style.opacity=.5}
   else{u.textContent='Upgrade: '+PICKS[G.pick]+'spitzhacke ('+COST[G.pick]+' 🪙)';u.style.opacity=G.coins>=COST[G.pick]?1:.5}
+  renderShop();
 }
+$('layers').onclick=e=>{const b=e.target.closest('button[data-l]');if(!b||b.disabled)return;LAYER=+b.dataset.l;try{localStorage.setItem('bc_layer',LAYER)}catch(x){}hits=0;$('prog').style.width='0';$('crack').style.opacity=0;renderGame()};
 $('block').onclick=()=>{
   const b=$('block');b.classList.remove('hit');void b.offsetWidth;b.classList.add('hit');
   const n=clicksNeeded();hits++;$('prog').style.width=Math.min(100,hits/n*100)+'%';$('crack').style.opacity=Math.min(.9,hits/n*.9);
   if(hits>=n){
-    let r=Math.random()*100,d=LOOT[0];
-    for(const l of LOOT){if(r<l[2]){d=l;break}r-=l[2]}
-    items[d[0]]=(items[d[0]]||0)+1;G.blocks++;G.coins+=VAL[d[0]];saveItems();
+    const L=LAYERS[LAYER];let r=Math.random()*100,nm=L.loot[0][0];
+    for(const l of L.loot){if(r<l[1]){nm=l[0];break}r-=l[1]}
+    let coins=ITEM[nm][1],msg='+1 '+nm;
+    if(Math.random()<0.08+0.03*G.pick){coins*=2;msg='💥 Krit! '+msg}
+    if(Math.random()<0.01){coins+=100;msg='✨ Goldener Fund! '+msg}
+    coins=Math.round(coins*(1+LAYER*0.25));
+    items[nm]=(items[nm]||0)+1;G.blocks++;G.coins+=coins;saveItems();
     hits=0;$('prog').style.width='0';$('crack').style.opacity=0;
-    $('gmsg').textContent='+1 '+d[0]+' · +'+VAL[d[0]]+' 🪙';
+    $('gmsg').textContent=msg+' · +'+coins+' 🪙';
     render();if(G.blocks%5==0)loadMiners();
   }
 };
@@ -957,13 +1087,42 @@ $('upg').onclick=()=>{
   if(G.pick>=5)return;
   const c=COST[G.pick];
   if(G.coins<c){$('gmsg').textContent='Dir fehlen noch '+(c-G.coins)+' Münzen.';return}
-  G.coins-=c;G.pick++;saveItems();render();$('gmsg').textContent='Neue Spitzhacke: '+PICKS[G.pick-1]+'!';
+  G.coins-=c;G.pick++;saveItems();render();$('gmsg').textContent='Neue Spitzhacke: '+PICKS[G.pick-1]+(layerOK(G.pick-1)&&LAYERS[G.pick-2]?' · neue Schicht freigeschaltet: '+LAYERS[G.pick-2].n:'')+'!';
 };
 $('daily').onclick=()=>{
   if(!cur){$('gmsg').textContent='Melde dich an, um die Belohnung abzuholen.';return}
-  const t=new Date().toLocaleDateString('sv-SE');
+  const t=today();
   if(G.last===t){$('gmsg').textContent='Heute schon abgeholt. Komm morgen wieder!';return}
-  G.coins+=50;G.last=t;saveItems();render();$('gmsg').textContent='+50 🪙 Tagesbelohnung! Bis morgen.';
+  G.streak=G.last===yest()?(G.streak||0)+1:1;
+  const bonus=50+Math.min(G.streak,7)*10;
+  G.coins+=bonus;G.last=t;saveItems();render();$('gmsg').textContent='+'+bonus+' 🪙 Tagesbelohnung · Serie: '+G.streak+(G.streak==1?' Tag':' Tage');
+};
+const shopCard=(k,it)=>{
+  const act=(k=='frame'?me.frame:k=='color'?me.name_color:me.title)==it.id,own=COSM[k].includes(it.id);
+  const pv=k=='frame'?'<span class="av ph avbig fr-'+it.id+'">A</span>':k=='color'?'<b class="nc-'+it.id+'">'+esc(cur?name():'Dein Name')+'</b>':'<span class="ttl">'+esc(it.n)+'</span>';
+  const btn=act?'<button class="btn ghost" data-a="off">✓ Aktiv · Ablegen</button>':own?'<button class="btn" data-a="eq">Ausrüsten</button>':'<button class="btn ghost" data-a="buy"'+(G.coins<it.p?' style="opacity:.55"':'')+'>Kaufen · '+it.p+' 🪙</button>';
+  return '<div class="card sc" data-k="'+k+'" data-i="'+it.id+'"><div class="pv">'+pv+'</div><b>'+esc(it.n)+'</b>'+btn+'</div>';
+};
+function renderShop(){
+  $('shop').innerHTML=SHOP[SHOPK].map(it=>shopCard(SHOPK,it)).join('');
+  document.querySelectorAll('#shopTabs button').forEach(b=>b.classList.toggle('on',b.dataset.k==SHOPK));
+}
+async function equip(k,id){
+  const f={frame:'frame',color:'name_color',title:'title'}[k];me[f]=id;
+  const r=await sb.from('profiles').upsert({user_id:cur.id,[f]:id});
+  PROF[cur.id]=Object.assign({},PROF[cur.id],{user_id:cur.id,[f]:id});
+  render();loadPosts();
+  $('gmsg').textContent=r.error?'Fehler: '+r.error.message:(id?'Ausgerüstet!':'Abgelegt.');
+}
+$('shopTabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;SHOPK=b.dataset.k;renderShop()};
+$('shop').onclick=async e=>{
+  const b=e.target.closest('button[data-a]');if(!b)return;
+  const c=b.closest('.sc'),k=c.dataset.k,id=c.dataset.i,it=SHOP[k].find(x=>x.id==id);
+  if(!cur){$('gmsg').textContent='Melde dich an, um im Shop einzukaufen.';return}
+  if(b.dataset.a=='buy'){
+    if(G.coins<it.p){$('gmsg').textContent='Dir fehlen noch '+(it.p-G.coins)+' Münzen.';return}
+    G.coins-=it.p;COSM[k].push(id);await saveItems();equip(k,id);
+  }else equip(k,b.dataset.a=='eq'?id:null);
 };
 $('miners').onclick=e=>{const w=e.target.closest('.cn');if(w)openPv(w.dataset.u)};
 async function loadMiners(){
@@ -972,10 +1131,10 @@ async function loadMiners(){
     const r=await sb.from('inventory').select('user_id,user_name,blocks').gt('blocks',0).order('blocks',{ascending:false}).limit(5);
     const d=r.data||[];
     if(!d.length){box.innerHTML='<p class="sub">Noch keine Miner.</p>';return}
-    const pf=await sb.from('profiles').select('user_id,username,bio,avatar_url,mc_name').in('user_id',d.map(x=>x.user_id));
+    const pf=await sb.from('profiles').select('user_id,username,bio,avatar_url,mc_name,frame,name_color,title').in('user_id',d.map(x=>x.user_id));
     (pf.data||[]).forEach(x=>{PROF[x.user_id]=x});await signAll((pf.data||[]).map(x=>x.avatar_url));d.forEach(x=>{if(!PROF[x.user_id])PROF[x.user_id]={user_id:x.user_id,username:x.user_name}});
     const top=d[0].blocks,medal=['🥇','🥈','🥉'];
-    box.innerHTML=d.map((x,i)=>'<div class="lbrow"><span class="fb" style="width:'+Math.max(6,Math.round(x.blocks/top*100))+'%"></span><span class="rk">'+(medal[i]||(i+1))+'</span><b class="cn" data-u="'+x.user_id+'">'+esc(dn(x.user_id,x.user_name))+'</b><span class="h">'+x.blocks+' Blöcke</span></div>').join('');
+    box.innerHTML=d.map((x,i)=>'<div class="lbrow"><span class="fb" style="width:'+Math.max(6,Math.round(x.blocks/top*100))+'%"></span><span class="rk">'+(medal[i]||(i+1))+'</span><b class="cn" data-u="'+x.user_id+'">'+nmH(x.user_id,x.user_name)+'</b><span class="h">'+x.blocks+' Blöcke</span></div>').join('');
   }catch(e){box.innerHTML=''}
 }
 $('copy').onclick=async()=>{
@@ -985,7 +1144,7 @@ $('copy').onclick=async()=>{
 async function loadBoard(){
   const box=$('board');
   try{
-    const r=await sb.from('playtime').select('name,minutes,updated_at').order('minutes',{ascending:false}).limit(100);
+    const r=await sb.from('playtime').select('name,minutes,updated_at,stats').order('minutes',{ascending:false}).limit(100);
     const d=r.data||[];BOARD=d;
     if(!d.length){box.innerHTML='<p class="sub">Noch keine Daten.</p>';return}
     const top=d[0].minutes,medal=['🥇','🥈','🥉'];
@@ -1015,6 +1174,91 @@ try{
     sb.auth.onAuthStateChange((ev,s)=>{if(ev=='PASSWORD_RECOVERY')openPw(true);setUser(s&&s.user)});
   }
 }catch(e){sb=null}
+const VIEWS=['start','galerie','zeitleiste','ranglisten','spiel','rueckblick'];
+function route(){
+  const h=location.hash;if(h.startsWith('#l-'))return;
+  const m=h.match(/^#\/([a-z]+)(?:\/([0-9a-f-]{36}))?(?:\/(\d{4}))?/),v=m&&VIEWS.includes(m[1])?m[1]:'start';
+  document.body.dataset.v=v;
+  document.querySelectorAll('#navLinks a[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r==v));
+  $('navLinks').classList.remove('open');$('navToggle').setAttribute('aria-expanded','false');
+  if(v=='rueckblick'){if(m&&m[2])RB.uid=m[2];if(m&&m[3])RB.year=+m[3];if(typeof openRueckblick=='function')openRueckblick()}
+  window.scrollTo(0,0);
+}
+let RB={uid:null,year:null};
+window.addEventListener('hashchange',route);
+$('navToggle').onclick=()=>{const o=$('navLinks').classList.toggle('open');$('navToggle').setAttribute('aria-expanded',o)};
+document.addEventListener('click',e=>{if(!e.target.closest('nav'))$('navLinks').classList.remove('open')});
+const hm=m=>Math.floor(m/60)+' h '+(m%60)+' min';
+async function buildYearbook(y){
+  const f=y+'-01-01',t=(y+1)+'-01-01';
+  const [mp,cm,pv]=await Promise.all([sb.from('posts').select('id,image_url,created_at,like_count').eq('user_id',cur.id).limit(1000),sb.from('comments').select('id',{count:'exact',head:true}).eq('user_id',cur.id).gte('created_at',f).lt('created_at',t),sb.from('yearbooks').select('data').eq('user_id',cur.id).eq('year',y-1).maybeSingle()]);
+  const ps=mp.data||[],top=ps.slice().sort((a,b)=>(b.like_count||0)-(a.like_count||0))[0],likes=ps.reduce((a,p)=>a+(p.like_count||0),0);
+  const i=me.mc_name?BOARD.findIndex(x=>x.name.toLowerCase()==me.mc_name.toLowerCase()):-1,b=i>=0?BOARD[i]:null,st=(b&&b.stats)||{};
+  const d={v:1,site:{uploads:ps.filter(p=>new Date(p.created_at).getFullYear()==y).length,uploadsTotal:ps.length,likes,comments:cm.count||0,topUrl:top&&top.like_count>0?top.image_url:null,topLikes:top?top.like_count||0:0},
+    game:{blocks:G.blocks,coins:G.coins,pick:G.pick},
+    mc:b?{name:b.name,minutes:b.minutes,rank:i+1,deaths:st.deaths??null,mobs:st.mob_kills??null,km:st.km??null,mined:st.mined??null,jumps:st.jumps??null}:null};
+  const o=pv.data&&pv.data.data;
+  if(o){const dd=(a,c)=>a==null||c==null?null:Math.round((a-c)*10)/10;d.delta={minutes:dd(d.mc&&d.mc.minutes,o.mc&&o.mc.minutes),deaths:dd(d.mc&&d.mc.deaths,o.mc&&o.mc.deaths),mobs:dd(d.mc&&d.mc.mobs,o.mc&&o.mc.mobs),km:dd(d.mc&&d.mc.km,o.mc&&o.mc.km),mined:dd(d.mc&&d.mc.mined,o.mc&&o.mc.mined),blocks:dd(d.game.blocks,o.game&&o.game.blocks),likes:dd(d.site.likes,o.site&&o.site.likes),since:y-1}}
+  return d;
+}
+const nz=v=>Number(v)||0;
+function ybCard(uid,y,d,created){
+  const dl=(v,fmtf)=>v>0?'<i class="up">+'+(fmtf?fmtf(v):v)+' seit '+esc(d.delta.since)+'</i>':'',D=d.delta||{},M=d.mc,S=d.site||{},Gm=d.game||{},T=[];
+  if(M){T.push(['⏱','Spielzeit',hm(nz(M.minutes)),dl(nz(D.minutes),hm)],['🏆','Platz Spielzeit',M.rank?'#'+nz(M.rank):'–','']);
+    if(M.deaths!=null)T.push(['💀','Tode',nz(M.deaths),dl(nz(D.deaths))]);if(M.mobs!=null)T.push(['⚔','Mobs besiegt',nz(M.mobs),dl(nz(D.mobs))]);
+    if(M.mined!=null)T.push(['⛏','Blöcke abgebaut (Server)',nz(M.mined).toLocaleString('de-DE'),dl(nz(D.mined))]);if(M.km!=null)T.push(['👟','Strecke',nz(M.km)+' km',dl(nz(D.km))]);if(M.jumps!=null)T.push(['🦘','Sprünge',nz(M.jumps).toLocaleString('de-DE'),''])}
+  T.push(['📷','Bilder in '+y,nz(S.uploads),''],['❤','Likes erhalten',nz(S.likes),dl(nz(D.likes))],['💬','Kommentare in '+y,nz(S.comments),''],['🪙','Mining-Spiel: Blöcke',nz(Gm.blocks),dl(nz(D.blocks))],['🪙','Münzen',nz(Gm.coins),'']);
+  return '<div class="card yb"><h3>Jahresrückblick '+esc(y)+'</h3><div>'+nmH(uid)+(M&&M.name?' <small style="color:var(--m)">· Minecraft: '+esc(M.name)+'</small>':'')+'</div><div class="yg">'+T.map(x=>'<div class="yt"><span>'+x[0]+'</span><b>'+x[2]+'</b><small>'+esc(x[1])+'</small>'+x[3]+'</div>').join('')+'</div>'
+   +(S.topUrl&&su(S.topUrl)?'<img class="ybi" src="'+esc(su(S.topUrl))+'" alt=""><small style="color:var(--m)">Lieblingsbild · ❤ '+nz(S.topLikes)+'</small>':'')+'<p class="sub" style="margin:14px 0 0;font-size:13px">Gespeichert am '+fmt(created)+'. Die Werte zeigen den Stand zu diesem Zeitpunkt.</p></div>';
+}
+async function openRueckblick(){
+  const box=$('rbBody');if(!sb||!cur||!MEMBER){box.innerHTML='';return}
+  const cy=new Date().getFullYear();
+  const yr=await sb.from('yearbooks').select('user_id,year').order('year',{ascending:false}).limit(500),rows=yr.data||[];
+  const years=[...new Set(rows.map(r=>r.year).concat([cy]))].sort((a,b)=>b-a);
+  if(!RB.year||!years.includes(RB.year))RB.year=years.includes(cy)?cy:years[0];
+  const peers=[...new Set(rows.filter(r=>r.year==RB.year).map(r=>r.user_id))];
+  if(!RB.uid||(!peers.includes(RB.uid)&&RB.uid!=cur.id))RB.uid=cur.id;
+  const ids=[...new Set(peers.concat([cur.id,RB.uid]))],pf=await sb.from('profiles').select(PFSEL).in('user_id',ids);(pf.data||[]).forEach(x=>{PROF[x.user_id]=x});
+  const one=await sb.from('yearbooks').select('data,created_at').eq('user_id',RB.uid).eq('year',RB.year).maybeSingle(),d=one.data&&one.data.data;
+  await signAll((pf.data||[]).map(x=>x.avatar_url).concat([d&&d.site&&d.site.topUrl]));
+  const mine=RB.uid==cur.id;
+  box.innerHTML='<div class="ybt" id="ybY">'+years.map(y=>'<button class="chip2'+(y==RB.year?' on':'')+'" data-y="'+y+'">'+y+'</button>').join('')+'</div>'
+   +'<div class="ybt" id="ybP">'+[cur.id].concat(peers.filter(u=>u!=cur.id)).map(u=>'<button class="chip2'+(u==RB.uid?' on':'')+'" data-u="'+u+'">'+av(u)+' '+(u==cur.id?'Ich':esc(dn(u)))+'</button>').join('')+'</div>'
+   +(d?ybCard(RB.uid,RB.year,d,one.data.created_at):'<div class="card"><p class="sub" style="margin:0">'+(mine?'Du hast für '+RB.year+' noch keinen Rückblick gespeichert.':'Für diese Auswahl gibt es keinen Rückblick.')+'</p></div>')
+   +(mine?'<div class="ybt" style="margin-top:14px"><button class="btn" data-a="mk">'+(d?'Rückblick '+RB.year+' aktualisieren':'Rückblick '+RB.year+' erstellen')+'</button>'+(d?'<button class="btn ghost" data-a="rm">Löschen</button>':'')+'</div><p class="msg" id="rbMsg"></p><p class="sub" style="font-size:13px">Andere Jahre bleiben unverändert. Jeder Rückblick gehört genau zu einem Jahr.</p>':'');
+}
+$('rbBody').onclick=async e=>{
+  const b=e.target.closest('button');if(!b)return;
+  if(b.dataset.y){RB.year=+b.dataset.y;RB.uid=cur.id;return openRueckblick()}
+  if(b.dataset.u){RB.uid=b.dataset.u;return openRueckblick()}
+  if(b.dataset.a=='mk'){b.disabled=true;const d=await buildYearbook(RB.year);const r=await sb.from('yearbooks').upsert({user_id:cur.id,year:RB.year,data:d},{onConflict:'user_id,year'});await openRueckblick();if($('rbMsg'))$('rbMsg').textContent=r.error?'Fehler: '+r.error.message:'Gespeichert. Andere sehen ihn jetzt in deinem Profil und hier.'}
+  if(b.dataset.a=='rm'&&confirm('Rückblick '+RB.year+' löschen? Andere Jahre bleiben erhalten.')){await sb.from('yearbooks').delete().eq('user_id',cur.id).eq('year',RB.year);openRueckblick()}
+};
+$('pvRb').onclick=()=>{RB.uid=PVID;RB.year=null;$('pv').classList.remove('on');location.hash='#/rueckblick/'+PVID;route()};
+$('pRb').onclick=()=>{RB.uid=cur.id;RB.year=null;$('pm').classList.remove('on');location.hash='#/rueckblick/'+cur.id;route()};
+async function fetchAll(t){const ord={posts:'created_at',comments:'created_at',categories:'created_at',timeline_events:'created_at',yearbooks:'created_at',likes:'post_id',profiles:'user_id',inventory:'user_id',playtime:'uuid'}[t];let out=[],from=0;for(;;){const r=await sb.from(t).select('*').order(ord).range(from,from+999);if(r.error)throw r.error;out=out.concat(r.data||[]);if(!Array.isArray(r.data)||r.data.length<1000)break;from+=1000}return out}
+const dlFile=(blob,name)=>{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000)};
+$('exJson').onclick=async()=>{
+  try{const o={exported_at:new Date().toISOString(),tables:{}};
+    for(const t of ['categories','posts','comments','likes','profiles','timeline_events','playtime','yearbooks','inventory']){$('exMsg').textContent='Lade '+t+' …';o.tables[t]=await fetchAll(t)}
+    dlFile(new Blob([JSON.stringify(o,null,1)],{type:'application/json'}),'inkogniflix-archiv-'+today()+'.json');
+    $('exMsg').textContent='Fertig: '+Object.entries(o.tables).map(([k,v])=>k+' '+v.length).join(', ');
+  }catch(e){$('exMsg').textContent='Fehler: '+(e.message||e)}
+};
+const loadJSZip=()=>window.JSZip?Promise.resolve():new Promise((ok,no)=>{const s=document.createElement('script');s.src='jszip.min.js';s.onload=ok;s.onerror=()=>no(new Error('Die Datei jszip.min.js fehlt im Repository.'));document.head.appendChild(s)});
+$('exZip').onclick=async()=>{
+  try{await loadJSZip();const posts=await fetchAll('posts'),zip=new JSZip();let i=0,fail=0;
+    zip.file('bilder/_beitraege.json',JSON.stringify(posts.map(p=>({id:p.id,datei:(pathOf(p.image_url)||'').replace(/\//g,'_'),beschreibung:p.caption,aufgenommen:p.taken_at,hochgeladen:p.created_at,kategorie:p.category_id,nutzer:p.user_name})),null,1));
+    for(let k=0;k<posts.length;k+=40){const ch=posts.slice(k,k+40);await signAll(ch.map(p=>p.image_url));
+      for(const p of ch){i++;$('exMsg').textContent='Lade Bild '+i+' von '+posts.length+' …';
+        try{const r=await fetch(su(p.image_url));if(!r.ok)throw 0;zip.file('bilder/'+(pathOf(p.image_url)||p.id+'.jpg').replace(/\//g,'_'),await r.blob())}catch(x){fail++}}}
+    const blob=await zip.generateAsync({type:'blob'},m=>{$('exMsg').textContent='Packe ZIP … '+Math.round(m.percent)+' %'});
+    dlFile(blob,'inkogniflix-bilder-'+today()+'.zip');$('exMsg').textContent='Fertig: '+(posts.length-fail)+' von '+posts.length+' Bildern'+(fail?' ('+fail+' fehlgeschlagen)':'')+'.';
+  }catch(e){$('exMsg').textContent='Fehler: '+(e.message||e)}
+};
+route();
+setInterval(()=>{if(cur&&MEMBER)loadNotifs()},90000);
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 if(!sb)READY=true;
 render();
