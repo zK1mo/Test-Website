@@ -17,6 +17,10 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 // Spielzeit in Ticks (20 Ticks = 1 Sekunde); ältere Versionen nutzen play_one_minute
 const ticksOf=s=>{const c=(s&&s.stats&&s.stats['minecraft:custom'])||{};return c['minecraft:play_time']??c['minecraft:play_one_minute']??0};
 
+// Weitere Statistiken für den Jahresrückblick (alles aus derselben Datei)
+const statsOf=s=>{const c=(s&&s.stats&&s.stats['minecraft:custom'])||{},m=(s&&s.stats&&s.stats['minecraft:mined'])||{};
+  return {deaths:c['minecraft:deaths']||0,mob_kills:c['minecraft:mob_kills']||0,km:Math.round(((c['minecraft:walk_one_cm']||0)+(c['minecraft:sprint_one_cm']||0)+(c['minecraft:swim_one_cm']||0))/1e4)/10,mined:Object.values(m).reduce((a,b)=>a+(+b||0),0),jumps:c['minecraft:jump']||0}};
+
 const H={apikey:KEY,'Content-Type':'application/json'};
 if(!KEY.startsWith('sb_'))H.Authorization='Bearer '+KEY;
 
@@ -55,7 +59,7 @@ async function readStats(){
     let cache=[];try{cache=JSON.parse(await read('usercache.json'))}catch(e){console.error('Hinweis: usercache.json nicht lesbar ('+e.message+')')}
     const players=[];let bad=0;
     for(const f of files){
-      try{players.push({uuid:f.name.slice(0,-5).toLowerCase(),ticks:ticksOf(JSON.parse(await read(`${dir}/${f.name}`)))})}
+      try{const js=JSON.parse(await read(`${dir}/${f.name}`));players.push({uuid:f.name.slice(0,-5).toLowerCase(),ticks:ticksOf(js),stats:statsOf(js)})}
       catch(e){bad++;console.error('Datei übersprungen: '+f.name+' ('+e.message+')')}
     }
     if(bad>files.length/2)throw new Error(`Zu viele Dateien nicht lesbar (${bad} von ${files.length}).`);
@@ -91,7 +95,7 @@ try{
     }
     if(!name){skipped++;continue}
     if(EXCL.includes(name.toLowerCase()))continue;
-    rows.push({uuid:p.uuid,name,minutes,updated_at:new Date().toISOString()});
+    rows.push({uuid:p.uuid,name,minutes,stats:p.stats,updated_at:new Date().toISOString()});
   }
 
   if(rows.length)await retry('Supabase speichern',()=>sbFetch(`${SB}/rest/v1/playtime?on_conflict=uuid`,{method:'POST',headers:{Prefer:'resolution=merge-duplicates,return=minimal'},body:JSON.stringify(rows)}));
